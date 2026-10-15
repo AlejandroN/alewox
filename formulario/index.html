@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulario | Alewox</title>
+  <meta name="description" content="Formulario para crear la página web de tu negocio con Alewox.">
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --clay: #7a3b1e;
+      --clay-2: #9a4e28;
+      --sand: #f3ece4;
+      --ink: #111111;
+      --muted: #6b6b6b;
+      --line: #e6e1da;
+      --accent: #ff7a3d;
+      --ok: #1f9d55;
+      --err: #c0392b;
+      --ease: cubic-bezier(.2, .7, .2, 1);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter Tight', system-ui, sans-serif; color: var(--ink); background: var(--sand); line-height: 1.55; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; }
+    .serif { font-family: 'Instrument Serif', Georgia, serif; font-style: italic; font-weight: 400; }
+
+    header { background: var(--clay); color: #fff; padding: 22px 0 90px; position: relative; overflow: hidden; }
+    header::before { content: ""; position: absolute; width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(255, 140, 80, .35), transparent 60%); top: -260px; right: -160px; }
+    .wrap { width: min(760px, 100% - 32px); margin-inline: auto; position: relative; }
+    .logo { display: inline-flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.3rem; letter-spacing: -.04em; text-decoration: none; }
+    .logo-mark { width: 30px; height: 30px; border-radius: 9px; background: #fff; display: grid; place-items: center; color: var(--clay); font-size: 1rem; }
+    .logo b { color: var(--accent); }
+    header h1 { font-size: clamp(2.2rem, 6vw, 3.4rem); letter-spacing: -.04em; line-height: 1.05; margin: 44px 0 12px; font-weight: 700; }
+    header h1 .serif { color: #ffd2b8; }
+    header p { color: rgba(255,255,255,.82); max-width: 560px; }
+
+    main { margin-top: -56px; padding-bottom: 80px; }
+    .card { background: #fff; border-radius: 24px; box-shadow: 0 30px 60px rgba(17,17,17,.08); padding: 34px; }
+
+    .progress { display: flex; gap: 6px; margin-bottom: 8px; }
+    .progress span { flex: 1; height: 5px; border-radius: 5px; background: var(--line); overflow: hidden; position: relative; }
+    .progress span::after { content: ""; position: absolute; inset: 0; background: var(--clay); transform: scaleX(0); transform-origin: left; transition: transform .5s var(--ease); }
+    .progress span.done::after { transform: scaleX(1); }
+    .step-label { font-size: .85rem; color: var(--muted); margin-bottom: 26px; display: flex; justify-content: space-between; }
+
+    .step { display: none; animation: enter .5s var(--ease); }
+    .step.active { display: block; }
+    @keyframes enter { from { opacity: 0; transform: translateX(24px); } to { opacity: 1; transform: none; } }
+    .step h2 { font-size: 1.7rem; letter-spacing: -.03em; margin-bottom: 6px; }
+    .step > p { color: var(--muted); margin-bottom: 26px; }
+
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 18px; }
+    .full { grid-column: 1 / -1; }
+    label.f { display: grid; gap: 7px; font-weight: 600; font-size: .92rem; }
+    label.f small { font-weight: 400; color: var(--muted); }
+    label.f .lt small { display: block; margin-top: 2px; }
+    .req { color: var(--accent); }
+    input[type=text], input[type=tel], input[type=email], textarea, select {
+      width: 100%; padding: 13px 15px; border: 1.5px solid var(--line); border-radius: 12px; font: inherit; font-weight: 400; background: #fdfcfa; color: var(--ink); transition: border-color .2s, box-shadow .2s;
+    }
+    textarea { resize: vertical; min-height: 96px; }
+    input:focus, textarea:focus, select:focus { outline: none; border-color: var(--clay-2); box-shadow: 0 0 0 4px rgba(154, 78, 40, .12); }
+    .invalid { border-color: var(--err) !important; animation: shake .35s; }
+    @keyframes shake { 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+
+    /* Tarjetas de opción */
+    .options { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .opt { position: relative; }
+    .opt input { position: absolute; opacity: 0; pointer-events: none; }
+    .opt label { display: block; border: 1.5px solid var(--line); border-radius: 18px; padding: 20px; cursor: pointer; transition: border-color .25s, background .25s, transform .25s var(--ease); height: 100%; }
+    .opt label:hover { transform: translateY(-2px); }
+    .opt input:checked + label { border-color: var(--clay); background: #fbf4ee; box-shadow: 0 0 0 3px rgba(122, 59, 30, .12); }
+    .opt input:focus-visible + label { outline: 2px solid var(--accent); outline-offset: 2px; }
+    .opt .t { display: flex; justify-content: space-between; align-items: baseline; font-weight: 700; font-size: 1.15rem; }
+    .opt .t span { font-size: 1.4rem; letter-spacing: -.03em; }
+    .opt p { color: var(--muted); font-size: .9rem; margin-top: 6px; }
+    .chips { display: flex; flex-wrap: wrap; gap: 10px; }
+    .chips .opt label { padding: 10px 16px; border-radius: 999px; font-weight: 500; font-size: .92rem; }
+
+    .note { background: var(--sand); border-radius: 14px; padding: 14px 16px; font-size: .9rem; color: #4a4a4a; }
+    .pro-only { display: none; }
+    .is-pro .pro-only { display: block; }
+    .is-pro .grid > .pro-only { display: grid; }
+
+    .checks { display: grid; gap: 12px; }
+    .check { display: flex; gap: 12px; align-items: flex-start; padding: 14px 16px; border: 1.5px solid var(--line); border-radius: 14px; cursor: pointer; transition: border-color .2s, background .2s; }
+    .check:has(input:checked) { border-color: var(--ok); background: #f1faf4; }
+    .check input { width: 20px; height: 20px; margin-top: 2px; accent-color: var(--ok); flex-shrink: 0; }
+    .check.invalid { border-color: var(--err); }
+
+    .nav { display: flex; justify-content: space-between; gap: 12px; margin-top: 30px; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 15px 26px; border-radius: 999px; font: inherit; font-weight: 600; border: none; cursor: pointer; transition: transform .25s var(--ease), background .25s; text-decoration: none; }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-dark { background: var(--ink); color: #fff; }
+    .btn-dark:hover { background: #333; }
+    .btn-ghost { background: none; border: 1.5px solid var(--line); color: var(--ink); }
+    .btn-wa { background: #25d366; color: #fff; }
+    .btn-wa:hover { background: #1fb457; }
+    .btn[hidden] { display: none; }
+    .error-msg { color: var(--err); font-size: .9rem; margin-top: 14px; display: none; }
+
+    /* Resumen y final */
+    .summary { background: var(--sand); border-radius: 16px; padding: 18px 20px; font-size: .88rem; white-space: pre-wrap; max-height: 320px; overflow: auto; font-family: ui-monospace, Consolas, monospace; color: #333; }
+    .done { text-align: center; }
+    .done .big { width: 84px; height: 84px; border-radius: 50%; background: var(--ok); color: #fff; display: grid; place-items: center; font-size: 2.4rem; margin: 6px auto 18px; animation: pop .6s var(--ease); }
+    @keyframes pop { from { transform: scale(0); } 70% { transform: scale(1.12); } to { transform: scale(1); } }
+    .done ol { text-align: left; max-width: 480px; margin: 22px auto; display: grid; gap: 10px; padding-left: 22px; }
+    .done .row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 10px; }
+    footer { text-align: center; color: var(--muted); font-size: .85rem; padding: 0 16px 40px; }
+
+    .btn:focus-visible, input:focus-visible, textarea:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+    @media (max-width: 640px) {
+      .card { padding: 24px 18px; border-radius: 20px; }
+      .grid, .options { grid-template-columns: 1fr; }
+      .nav .btn { padding: 14px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="wrap">
+      <a href="../" class="logo"><span class="logo-mark">A</span>Alewox<b>.</b></a>
+      <h1>Cuéntame de tu <span class="serif">negocio</span></h1>
+      <p>Llena este formulario y con eso creo tu página. Toma unos 5 minutos. Al final se envía todo a mi WhatsApp.</p>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap">
+      <form class="card" id="form" novalidate>
+        <div class="progress" id="progress"></div>
+        <div class="step-label"><span id="stepName"></span><span id="stepCount"></span></div>
+
+        <!-- 1. Paquete y cliente -->
+        <section class="step" data-name="Tu paquete">
+          <h2>¿Qué paquete contrataste?</h2>
+          <p>Si aún no lo decides, elige el que más te interese; lo confirmamos por WhatsApp.</p>
+          <div class="options">
+            <div class="opt"><input type="radio" name="paquete" id="pEsencial" value="Esencial ($200 MXN)" required><label for="pEsencial"><div class="t">Esencial <span>$200</span></div><p>Toda la información esencial de tu negocio.</p></label></div>
+            <div class="opt"><input type="radio" name="paquete" id="pPro" value="PRO ($450 MXN)"><label for="pPro"><div class="t">PRO <span>$450</span></div><p>Animaciones, URL personalizada, actualizaciones al instante y formularios avanzados.</p></label></div>
+          </div>
+          <div class="grid" style="margin-top: 22px;">
+            <label class="f"><span class="lt">Tu nombre <span class="req">*</span></span><input type="text" name="cliente" autocomplete="name" required></label>
+            <label class="f"><span class="lt">Tu WhatsApp <span class="req">*</span></span><input type="tel" name="clienteTel" autocomplete="tel" placeholder="662 000 0000" required></label>
+          </div>
+        </section>
+
+        <!-- 2. Negocio -->
+        <section class="step" data-name="Tu negocio">
+          <h2>Tu negocio</h2>
+          <p>Lo básico para presentar tu negocio.</p>
+          <div class="grid">
+            <label class="f"><span class="lt">Nombre del negocio <span class="req">*</span></span><input type="text" name="negocio" required></label>
+            <label class="f"><span class="lt">Giro o actividad <span class="req">*</span></span><input type="text" name="giro" placeholder="Ej. taquería, estética, taller" required></label>
+            <label class="f full"><span class="lt">Ciudad o zona donde das servicio <span class="req">*</span></span><input type="text" name="zona" placeholder="Ej. Hermosillo, Sonora" required></label>
+            <label class="f full"><span class="lt">¿Qué hace especial a tu negocio? <span class="req">*</span><small>1 o 2 frases. Por qué te eligen tus clientes.</small></span><textarea name="especial" required></textarea></label>
+            <label class="f"><span class="lt">Colores que te gustan <small>(opcional)</small></span><input type="text" name="colores" placeholder="Ej. negro y dorado"></label>
+            <label class="f"><span class="lt">¿Tienes logo?</span>
+              <select name="logo"><option>Sí, lo envío por WhatsApp</option><option>No tengo logo</option></select>
+            </label>
+          </div>
+        </section>
+
+        <!-- 3. Contacto -->
+        <section class="step" data-name="Contacto">
+          <h2>Datos de contacto</h2>
+          <p>Esto es lo que verán tus clientes en la página.</p>
+          <div class="grid">
+            <label class="f"><span class="lt">WhatsApp del negocio <span class="req">*</span></span><input type="tel" name="wa" placeholder="662 000 0000" required></label>
+            <label class="f"><span class="lt">Teléfono <small>(opcional)</small></span><input type="tel" name="tel"></label>
+            <label class="f"><span class="lt">Correo <small>(opcional)</small></span><input type="email" name="correo"></label>
+            <label class="f"><span class="lt">Horario de atención</span><input type="text" name="horario" placeholder="Ej. Lun a Sáb 9:00 – 19:00"></label>
+            <label class="f full"><span class="lt">Dirección <small>(si atiendes en un local)</small></span><input type="text" name="direccion"></label>
+            <label class="f"><span class="lt">Instagram</span><input type="text" name="instagram" placeholder="@tunegocio"></label>
+            <label class="f"><span class="lt">Facebook</span><input type="text" name="facebook"></label>
+            <label class="f"><span class="lt">TikTok</span><input type="text" name="tiktok"></label>
+          </div>
+        </section>
+
+        <!-- 4. Contenido -->
+        <section class="step" data-name="Contenido">
+          <h2>Servicios y contenido</h2>
+          <p>Lo que vendes y lo que quieres mostrar.</p>
+          <div class="grid">
+            <label class="f full"><span class="lt">Servicios o productos, con precios si quieres mostrarlos <span class="req">*</span><small>Uno por línea. Ej. "Corte de dama – $250".</small></span><textarea name="servicios" rows="6" required></textarea></label>
+            <label class="f full"><span class="lt">Opiniones de tus clientes <small>(opcional; solo reales y con su permiso)</small></span><textarea name="testimonios" placeholder="Ej. “Excelente servicio” – María"></textarea></label>
+            <label class="f full"><span class="lt">Algo más que quieras incluir <small>(historia, promociones, etc.)</small></span><textarea name="extra"></textarea></label>
+            <div class="full">
+              <span class="f" style="font-weight:600; font-size:.92rem; display:block; margin-bottom:10px;">Fotos</span>
+              <div class="chips">
+                <div class="opt"><input type="radio" name="fotos" id="f1" value="Tengo fotos, las envío por WhatsApp" checked><label for="f1">📸 Tengo fotos, las envío</label></div>
+                <div class="opt"><input type="radio" name="fotos" id="f2" value="No tengo fotos, usar imágenes de ambiente"><label for="f2">✨ No tengo, usa imágenes de ambiente</label></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 5. PRO -->
+        <section class="step" data-name="Extras PRO" data-pro>
+          <h2>Extras de tu paquete PRO</h2>
+          <p>Para tu URL personalizada y tus formularios.</p>
+          <div class="grid">
+            <label class="f full"><span class="lt">¿Qué dirección web te gustaría? <small>La revisamos juntos según disponibilidad.</small></span><input type="text" name="dominio" placeholder="Ej. tunegocio.com"></label>
+            <div class="full">
+              <span style="font-weight:600; font-size:.92rem; display:block; margin-bottom:10px;">¿Qué formularios necesitas?</span>
+              <div class="chips">
+                <div class="opt"><input type="checkbox" name="formularios" id="c1" value="Citas"><label for="c1">📅 Citas</label></div>
+                <div class="opt"><input type="checkbox" name="formularios" id="c2" value="Cotizaciones"><label for="c2">🧾 Cotizaciones</label></div>
+                <div class="opt"><input type="checkbox" name="formularios" id="c3" value="Pedidos"><label for="c3">🛍️ Pedidos</label></div>
+                <div class="opt"><input type="checkbox" name="formularios" id="c4" value="Contacto general"><label for="c4">💬 Contacto general</label></div>
+              </div>
+            </div>
+            <label class="f full"><span class="lt">¿A qué WhatsApp deben llegar esas solicitudes?<small>Si es el mismo del negocio, déjalo vacío.</small></span><input type="tel" name="waFormularios"></label>
+          </div>
+        </section>
+
+        <!-- 6. Autorización -->
+        <section class="step" data-name="Autorización">
+          <h2>Autorización</h2>
+          <p>Para poder publicar tu información en internet necesito que confirmes lo siguiente.</p>
+          <div class="checks">
+            <label class="check"><input type="checkbox" name="a1" required><span>Soy dueño(a) del negocio o tengo permiso, y tengo los derechos del logo, fotos y textos que envío.</span></label>
+            <label class="check"><input type="checkbox" name="a2" required><span>Autorizo que esta información y mis datos de contacto se publiquen en internet como parte de mi página.</span></label>
+            <label class="check"><input type="checkbox" name="a3" required><span>Las opiniones de clientes que envío son reales y cuento con su permiso.</span></label>
+            <label class="check"><input type="checkbox" name="a4" required><span>Revisaré la página antes de publicarla y puedo pedir cambios o que se retire en cualquier momento.</span></label>
+          </div>
+          <p class="note" style="margin-top: 18px;">Al enviar, se abrirá WhatsApp con toda tu información lista. Solo presiona <b>enviar</b> en el chat y después manda ahí mismo tu logo y tus fotos.</p>
+          <details style="margin-top: 16px;"><summary style="cursor:pointer; color: var(--muted); font-size:.9rem;">Ver resumen antes de enviar</summary><div class="summary" id="preview" style="margin-top:10px;"></div></details>
+        </section>
+
+        <!-- Final -->
+        <section class="step done" data-name="Listo" id="doneStep">
+          <div class="big">✓</div>
+          <h2>¡Gracias! Ya casi está</h2>
+          <p>Se abrió WhatsApp con tu información. Para terminar:</p>
+          <ol>
+            <li>Presiona <b>enviar</b> en el chat de WhatsApp.</li>
+            <li>En ese mismo chat, manda tu <b>logo</b> y tus <b>fotos</b>.</li>
+            <li>Te mando tu página para revisarla en <b>1 día</b>.</li>
+          </ol>
+          <p style="color: var(--muted); font-size: .9rem;">¿No se abrió WhatsApp? Usa uno de estos botones:</p>
+          <div class="row">
+            <a class="btn btn-wa" id="waAgain" href="#" target="_blank" rel="noopener">💬 Abrir WhatsApp</a>
+            <button type="button" class="btn btn-ghost" id="copy">📋 Copiar información</button>
+          </div>
+        </section>
+
+        <p class="error-msg" id="err">Revisa los campos marcados en rojo.</p>
+        <div class="nav" id="nav">
+          <button type="button" class="btn btn-ghost" id="back">← Atrás</button>
+          <button type="button" class="btn btn-dark" id="next">Siguiente →</button>
+          <button type="submit" class="btn btn-wa" id="send" hidden>💬 Enviar por WhatsApp</button>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <footer>Alewox · Alejandro Nieblas · Hermosillo, Sonora</footer>
+
+  <script>
+    const WHATSAPP = '526624002958';
+    const form = document.getElementById('form');
+    const allSteps = [...form.querySelectorAll('.step')];
+    const doneStep = document.getElementById('doneStep');
+    const DRAFT = 'alewox-formulario';
+    let current = 0;
+
+    const isPro = () => form.paquete.value.startsWith('PRO');
+    const steps = () => allSteps.filter(s => s !== doneStep && (!s.hasAttribute('data-pro') || isPro()));
+
+    function render() {
+      const list = steps();
+      form.classList.toggle('is-pro', isPro());
+      allSteps.forEach(s => s.classList.remove('active'));
+      list[current].classList.add('active');
+      document.getElementById('progress').innerHTML = list.map((_, i) => `<span class="${i <= current ? 'done' : ''}"></span>`).join('');
+      document.getElementById('stepName').textContent = list[current].dataset.name;
+      document.getElementById('stepCount').textContent = `Paso ${current + 1} de ${list.length}`;
+      document.getElementById('back').style.visibility = current ? 'visible' : 'hidden';
+      const last = current === list.length - 1;
+      document.getElementById('next').hidden = last;
+      document.getElementById('send').hidden = !last;
+      if (last) document.getElementById('preview').textContent = buildMessage();
+      document.getElementById('err').style.display = 'none';
+    }
+
+    function validate(step) {
+      let ok = true;
+      step.querySelectorAll('[required]').forEach(el => {
+        const box = el.type === 'checkbox' ? el.closest('.check') : el;
+        const valid = el.type === 'radio' ? !!form[el.name].value : el.type === 'checkbox' ? el.checked : el.value.trim() !== '';
+        box.classList.toggle('invalid', !valid);
+        if (!valid) ok = false;
+      });
+      document.getElementById('err').style.display = ok ? 'none' : 'block';
+      return ok;
+    }
+
+    const v = name => (form[name]?.value || '').trim();
+    function buildMessage() {
+      const line = (label, val) => val ? `• ${label}: ${val}` : null;
+      const block = (label, val) => val ? `• ${label}:\n${val}` : null;
+      const forms = [...form.querySelectorAll('input[name=formularios]:checked')].map(c => c.value).join(', ');
+      const parts = [
+        '📋 NUEVO PEDIDO ALEWOX',
+        '',
+        '— PAQUETE —',
+        line('Paquete', v('paquete')),
+        line('Cliente', v('cliente')),
+        line('WhatsApp del cliente', v('clienteTel')),
+        '',
+        '— NEGOCIO —',
+        line('Nombre', v('negocio')),
+        line('Giro', v('giro')),
+        line('Zona', v('zona')),
+        line('Qué lo hace especial', v('especial')),
+        line('Colores', v('colores')),
+        line('Logo', v('logo')),
+        '',
+        '— CONTACTO EN LA PÁGINA —',
+        line('WhatsApp', v('wa')),
+        line('Teléfono', v('tel')),
+        line('Correo', v('correo')),
+        line('Horario', v('horario')),
+        line('Dirección', v('direccion')),
+        line('Instagram', v('instagram')),
+        line('Facebook', v('facebook')),
+        line('TikTok', v('tiktok')),
+        '',
+        '— CONTENIDO —',
+        block('Servicios / productos', v('servicios')),
+        block('Opiniones', v('testimonios')),
+        block('Extra', v('extra')),
+        line('Fotos', v('fotos')),
+      ];
+      if (isPro()) parts.push('', '— EXTRAS PRO —',
+        line('Dirección web deseada', v('dominio')),
+        line('Formularios', forms),
+        line('WhatsApp para formularios', v('waFormularios')));
+      const fecha = new Date().toLocaleDateString('es-MX', { day: 'numeric', month: 'long', year: 'numeric' });
+      parts.push('', '— AUTORIZACIÓN —', `✅ ${v('cliente') || 'El cliente'} aceptó las 4 condiciones de uso y publicación el ${fecha}.`);
+      return parts.filter(p => p !== null).join('\n');
+    }
+
+    const waLink = () => `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(buildMessage())}`;
+
+    document.getElementById('next').addEventListener('click', () => {
+      if (!validate(steps()[current])) return;
+      current++; render(); window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    document.getElementById('back').addEventListener('click', () => { current--; render(); });
+    form.addEventListener('change', e => {
+      if (e.target.name === 'paquete') render();
+      e.target.classList?.remove('invalid');
+      e.target.closest('.check')?.classList.remove('invalid');
+      saveDraft();
+    });
+    form.addEventListener('input', saveDraft);
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      // Enter en un paso intermedio avanza en lugar de enviar
+      if (current < steps().length - 1) { document.getElementById('next').click(); return; }
+      if (!validate(steps()[current])) return;
+      const url = waLink();
+      window.open(url, '_blank', 'noopener');
+      document.getElementById('waAgain').href = url;
+      allSteps.forEach(s => s.classList.remove('active'));
+      doneStep.classList.add('active');
+      document.getElementById('nav').style.display = 'none';
+      document.getElementById('progress').innerHTML = steps().map(() => '<span class="done"></span>').join('');
+      document.getElementById('stepName').textContent = 'Enviado';
+      document.getElementById('stepCount').textContent = '';
+      try { localStorage.removeItem(DRAFT); } catch (_) {}
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    document.getElementById('copy').addEventListener('click', async e => {
+      try { await navigator.clipboard.writeText(buildMessage()); e.target.textContent = '✅ Copiado'; }
+      catch (_) { e.target.textContent = 'No se pudo copiar'; }
+    });
+
+    // Borrador: si se cierra la página, lo escrito se recupera
+    function saveDraft() {
+      const data = {};
+      new FormData(form).forEach((val, key) => { data[key] = data[key] ? [].concat(data[key], val) : val; });
+      try { localStorage.setItem(DRAFT, JSON.stringify(data)); } catch (_) {}
+    }
+    function loadDraft() {
+      let data = null;
+      try { data = JSON.parse(localStorage.getItem(DRAFT)); } catch (_) {}
+      const params = new URLSearchParams(location.search);
+      if (params.get('paquete') === 'pro') document.getElementById('pPro').checked = true;
+      if (params.get('paquete') === 'esencial') document.getElementById('pEsencial').checked = true;
+      if (!data) return;
+      Object.entries(data).forEach(([key, val]) => {
+        const vals = [].concat(val);
+        form.querySelectorAll(`[name="${key}"]`).forEach(el => {
+          if (el.type === 'radio' || el.type === 'checkbox') el.checked = vals.includes(el.value === 'on' ? 'on' : el.value);
+          else el.value = vals[0];
+        });
+      });
+    }
+
+    loadDraft();
+    render();
+  </script>
+</body>
+</html>
