@@ -203,7 +203,7 @@
     .feat p { color: var(--muted); }
 
     /* ---------- Paquetes ---------- */
-    .plans { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; align-items: stretch; max-width: 920px; margin-inline: auto; }
+    .plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; align-items: stretch; }
     .plan { border: 1px solid var(--line); border-radius: var(--radius); padding: 38px 32px; display: flex; flex-direction: column; transition: transform .5s var(--ease), box-shadow .5s; }
     .plan:hover { transform: translateY(-8px); box-shadow: 0 30px 60px rgba(0,0,0,.08); }
     .plan .name { font-weight: 600; font-size: 1.1rem; }
@@ -323,6 +323,7 @@
     <div class="container nav-inner">
       <a href="#" class="logo"><span class="logo-mark"></span>Alewox<b>.</b></a>
       <ul class="nav-links" id="navLinks">
+        <li><a href="muestra/">Muestra gratis</a></li>
         <li><a href="#sobre-mi">Sobre mí</a></li>
         <li><a href="#trabajos">Trabajos</a></li>
         <li><a href="#paquetes">Paquetes</a></li>
@@ -347,9 +348,9 @@
         <p class="hero-sub">Diseño páginas web profesionales para negocios locales: hechas a tu medida, perfectas en el celular y conectadas a tu WhatsApp para que tus clientes te escriban al instante.</p>
         <div class="hero-cta">
           <a href="#contacto" class="btn btn-light" data-wa="Hola, me interesa una página web para mi negocio.">Quiero mi página <span class="arr">→</span></a>
-          <a href="#trabajos" class="btn btn-outline">Ver trabajos</a>
+          <a href="muestra/" class="btn btn-outline">✨ Crea tu muestra gratis</a>
         </div>
-        <p class="hero-note">Desde $200 MXN · Lista en 1 día · Hermosillo, Sonora</p>
+        <p class="hero-note">Desde $50 MXN · Lista en 1 día · Hermosillo, Sonora</p>
       </div>
       <div class="devices" aria-hidden="true">
         <div class="browser">
@@ -481,17 +482,24 @@
           <span class="eyebrow reveal">Paquetes</span>
           <h2 class="section-title reveal">Elige el plan para tu <span class="serif">negocio</span></h2>
         </div>
-        <p class="reveal">Precios claros, sin sorpresas. Entrega en 1 día en ambos paquetes.</p>
+        <p class="reveal">Precios claros, sin sorpresas. Entrega en 1 día en todos los paquetes.</p>
       </div>
       <div class="plans">
         <div class="plan reveal">
+          <span class="name">Básico</span>
+          <div class="price">$50 <small>MXN</small></div>
+          <p class="desc">Una plantilla profesional lista, con la información de tu negocio.</p>
+          <ul><li>Plantilla según tu giro, colores y estilo</li><li>Tu nombre, servicios y contacto</li><li>Adaptada a celular</li><li>Botón directo a tu WhatsApp</li><li>Dirección web gratuita</li><li>Sin cambios de diseño</li></ul>
+          <a href="muestra/" class="btn btn-outline">✨ Ver mi muestra gratis</a>
+        </div>
+        <div class="plan reveal d1">
           <span class="name">Esencial</span>
           <div class="price">$200 <small>MXN</small></div>
           <p class="desc">Toda la información de tu negocio en una página profesional.</p>
           <ul><li>Diseño a la medida de tu negocio</li><li>Servicios, precios y fotos</li><li>Adaptada a celular</li><li>Botón directo a tu WhatsApp</li><li>Ubicación, horario y redes sociales</li><li>Dirección web gratuita</li></ul>
           <a href="#contacto" class="btn btn-outline" data-wa="Hola Alejandro, me interesa la página Esencial.">Quiero la Esencial</a>
         </div>
-        <div class="plan best reveal d1">
+        <div class="plan best reveal d2">
           <span class="badge">Más completa</span>
           <span class="name">PRO</span>
           <div class="price">$450 <small>MXN</small></div>
@@ -544,6 +552,7 @@
       </div>
       <div class="reveal">
         <details><summary>¿Cuánto tarda en estar lista mi página?<span class="plus"></span></summary><p class="answer">1 día, a partir de que me envías la información y las fotos de tu negocio.</p></details>
+        <details><summary>¿Qué es el paquete Básico?<span class="plus"></span></summary><p class="answer">Es una plantilla profesional que se arma según tu giro, colores y estilo, con la información de tu negocio. Puedes verla gratis antes de pagar en <a href="muestra/" style="text-decoration:underline">Crea tu muestra</a>. No incluye cambios de diseño; para eso está el Esencial.</p></details>
         <details><summary>¿Qué diferencia hay entre Esencial y PRO?<span class="plus"></span></summary><p class="answer">La Esencial tiene todo lo que tu negocio necesita para estar en internet. La PRO suma animaciones avanzadas, una dirección personalizada como tunegocio.com, actualizaciones al instante y formularios para citas, cotizaciones o pedidos.</p></details>
         <details><summary>¿Necesito saber de computación?<span class="plus"></span></summary><p class="answer">No. Solo llenas un formulario con los datos de tu negocio y me mandas tus fotos. Yo me encargo de todo lo técnico.</p></details>
         <details><summary>¿Puedo cambiar cosas después?<span class="plus"></span></summary><p class="answer">Sí. En la PRO las actualizaciones son al instante: me escribes y cambio precios, fotos o promociones. En la Esencial también puedes pedir cambios cuando los necesites.</p></details>

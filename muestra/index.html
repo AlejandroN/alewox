@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crea tu muestra | Alewox</title>
+  <meta name="description" content="Responde 4 preguntas y mira al instante cómo se vería la página web de tu negocio. Por Alewox.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=Instrument+Serif:ital@1&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Jost:wght@300;400;500&family=Anton&family=Work+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --clay: #7a3b1e;
+      --clay-2: #9a4e28;
+      --sand: #f3ece4;
+      --ink: #111111;
+      --muted: #6b6b6b;
+      --line: #e6e1da;
+      --accent: #ff7a3d;
+      --ease: cubic-bezier(.2, .7, .2, 1);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter Tight', system-ui, sans-serif; color: var(--ink); background: var(--sand); line-height: 1.55; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    a { color: inherit; text-decoration: none; }
+    .serif { font-family: 'Instrument Serif', Georgia, serif; font-style: italic; font-weight: 400; }
+    .wrap { width: min(1080px, 100% - 32px); margin-inline: auto; }
+
+    /* ---------- Encabezado ---------- */
+    header { background: var(--clay); color: #fff; padding: 22px 0 110px; position: relative; overflow: hidden; }
+    header::before { content: ""; position: absolute; width: 700px; height: 700px; border-radius: 50%; background: radial-gradient(circle, rgba(255, 140, 80, .35), transparent 60%); top: -300px; right: -200px; animation: drift 12s ease-in-out infinite alternate; }
+    @keyframes drift { to { transform: translate(-100px, 80px); } }
+    .top { display: flex; justify-content: space-between; align-items: center; position: relative; }
+    .logo { display: inline-flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.3rem; letter-spacing: -.04em; }
+    .logo-mark { width: 30px; height: 30px; border-radius: 9px; background: #fff; display: grid; place-items: center; color: var(--clay); font-size: 1rem; }
+    .logo b { color: var(--accent); }
+    .top a.back { font-size: .92rem; opacity: .85; }
+    header h1 { font-size: clamp(2.4rem, 6.4vw, 4.4rem); letter-spacing: -.045em; line-height: 1.02; margin: 54px 0 14px; font-weight: 700; position: relative; }
+    header h1 .serif { color: #ffd2b8; }
+    header p { color: rgba(255,255,255,.85); max-width: 560px; font-size: 1.1rem; position: relative; }
+
+    main { margin-top: -70px; padding-bottom: 90px; position: relative; }
+    .card { background: #fff; border-radius: 26px; box-shadow: 0 30px 70px rgba(17,17,17,.1); padding: 36px; }
+
+    /* ---------- Preguntas ---------- */
+    .q { padding: 26px 0; border-bottom: 1px solid var(--line); }
+    .q:first-child { padding-top: 0; }
+    .q:last-of-type { border-bottom: 0; }
+    .q h2 { font-size: 1.25rem; letter-spacing: -.02em; margin-bottom: 4px; display: flex; gap: 12px; align-items: center; }
+    .q h2 .n { width: 30px; height: 30px; border-radius: 50%; background: var(--ink); color: #fff; display: grid; place-items: center; font-size: .85rem; flex-shrink: 0; transition: background .3s; }
+    .q.ok h2 .n { background: #1f9d55; }
+    .q > p { color: var(--muted); font-size: .94rem; margin: 0 0 16px 42px; }
+    .q .body { margin-left: 42px; }
+    input[type=text] { width: 100%; max-width: 460px; padding: 15px 17px; border: 1.5px solid var(--line); border-radius: 14px; font: inherit; font-size: 1.05rem; background: #fdfcfa; transition: border-color .2s, box-shadow .2s; }
+    input[type=text]:focus { outline: none; border-color: var(--clay-2); box-shadow: 0 0 0 4px rgba(154, 78, 40, .12); }
+    .invalid { animation: shake .35s; }
+    .invalid input[type=text] { border-color: #c0392b; }
+    @keyframes shake { 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+
+    .giros { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+    .pick { position: relative; }
+    .pick input { position: absolute; opacity: 0; pointer-events: none; }
+    .pick label { display: block; cursor: pointer; border-radius: 16px; overflow: hidden; border: 2px solid transparent; transition: transform .3s var(--ease), border-color .25s, box-shadow .25s; background: #fff; }
+    .pick label:hover { transform: translateY(-3px); }
+    .pick input:checked + label { border-color: var(--clay); box-shadow: 0 0 0 4px rgba(122, 59, 30, .14); }
+    .pick input:focus-visible + label { outline: 2px solid var(--accent); outline-offset: 3px; }
+    .giro img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block; }
+    .giro span { display: block; padding: 10px 12px; font-weight: 600; font-size: .9rem; }
+
+    .colors { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .swatch label { padding: 12px; border: 2px solid var(--line); }
+    .swatch .dots { display: flex; margin-bottom: 8px; }
+    .swatch .dots i { width: 30px; height: 30px; border-radius: 50%; border: 2px solid #fff; margin-right: -8px; box-shadow: 0 2px 6px rgba(0,0,0,.12); }
+    .swatch b { font-weight: 600; font-size: .88rem; }
+
+    .focus { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .enf label { padding: 18px; border: 2px solid var(--line); text-align: center; }
+    .enf .sample { font-size: 2rem; line-height: 1.1; display: block; margin-bottom: 6px; }
+    .enf small { color: var(--muted); }
+
+    .actions { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 10px; padding-top: 26px; border-top: 1px solid var(--line); }
+    .btn { display: inline-flex; align-items: center; gap: 10px; padding: 16px 28px; border-radius: 999px; font: inherit; font-weight: 600; border: none; cursor: pointer; transition: transform .25s var(--ease), background .25s; }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-dark { background: var(--ink); color: #fff; }
+    .btn-dark:hover { background: #333; }
+    .btn-ghost { background: none; border: 1.5px solid var(--line); }
+    .btn-wa { background: #25d366; color: #fff; }
+    .btn-wa:hover { background: #1fb457; }
+    .hint { color: var(--muted); font-size: .9rem; }
+
+    /* ---------- Cargando ---------- */
+    .loading { display: none; text-align: center; padding: 70px 20px; }
+    .loading.on { display: block; }
+    .spinner { width: 64px; height: 64px; margin: 0 auto 22px; border-radius: 50%; border: 5px solid var(--line); border-top-color: var(--clay); animation: spin 0.9s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading p { font-weight: 600; font-size: 1.1rem; }
+    .loading small { color: var(--muted); display: block; margin-top: 6px; min-height: 1.4em; }
+
+    /* ---------- Resultado ---------- */
+    .result { display: none; }
+    .result.on { display: block; animation: rise .8s var(--ease); }
+    @keyframes rise { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: none; } }
+    .result-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; flex-wrap: wrap; margin-bottom: 20px; }
+    .result-head h2 { font-size: clamp(1.7rem, 4vw, 2.4rem); letter-spacing: -.035em; line-height: 1.1; }
+    .result-head h2 .serif { color: var(--clay-2); }
+    .tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+    .tags span { background: var(--sand); padding: 6px 12px; border-radius: 999px; font-size: .82rem; font-weight: 500; }
+
+    .browser { border-radius: 18px; overflow: hidden; box-shadow: 0 30px 70px rgba(17,17,17,.18); background: #fff; border: 1px solid var(--line); }
+    .bar { height: 40px; background: #f1f1f1; display: flex; align-items: center; gap: 7px; padding: 0 14px; }
+    .bar i { width: 11px; height: 11px; border-radius: 50%; background: #d9d9d9; }
+    .bar i:nth-child(1) { background: #ff5f57; } .bar i:nth-child(2) { background: #febc2e; } .bar i:nth-child(3) { background: #28c840; }
+    .bar .url { margin-left: 12px; flex: 1; max-width: 420px; height: 24px; border-radius: 7px; background: #fff; font-size: .78rem; color: #777; display: flex; align-items: center; padding: 0 12px; overflow: hidden; white-space: nowrap; }
+
+    .stage { position: relative; }
+    .locked { position: relative; max-height: 560px; overflow: hidden; }
+    .locked .blurred { filter: blur(7px) saturate(.9); pointer-events: none; user-select: none; }
+    .locked::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,.85) 55%, #fff 85%); pointer-events: none; }
+    .unlock { position: absolute; left: 50%; top: 70%; transform: translate(-50%, -50%); z-index: 3; background: var(--ink); color: #fff; border-radius: 22px; padding: 28px 30px; text-align: center; width: min(440px, 92%); box-shadow: 0 30px 60px rgba(0,0,0,.3); }
+    .unlock .lock { font-size: 2rem; display: block; margin-bottom: 8px; animation: wiggle 2.6s ease-in-out infinite; }
+    @keyframes wiggle { 0%, 80%, 100% { transform: rotate(0); } 85% { transform: rotate(-12deg); } 90% { transform: rotate(12deg); } 95% { transform: rotate(-6deg); } }
+    .unlock h3 { font-size: 1.4rem; letter-spacing: -.02em; margin-bottom: 6px; }
+    .unlock p { color: #bdbdbd; font-size: .92rem; margin-bottom: 18px; }
+    .unlock .btn { width: 100%; justify-content: center; }
+    .unlock .alt { display: block; margin-top: 12px; font-size: .88rem; color: #bdbdbd; }
+    .unlock .alt a { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
+    .disclaimer { text-align: center; color: var(--muted); font-size: .88rem; margin-top: 18px; }
+    .result-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 18px; }
+
+    /* =====================================================
+       PLANTILLA DE LA MUESTRA (todo dentro de #pv)
+       ===================================================== */
+    #pv { container-type: inline-size; background: var(--bg); color: var(--tx); font-family: var(--body-font); line-height: 1.6; text-align: left; }
+    #pv * { box-sizing: border-box; }
+    #pv h1, #pv h2, #pv h3, #pv .pv-logo { font-family: var(--head-font); font-weight: var(--head-weight); letter-spacing: var(--head-ls); line-height: 1.05; text-transform: var(--head-case); }
+    #pv .pv-in { width: min(1000px, 100% - 40px); margin-inline: auto; }
+    #pv .pv-btn { display: inline-flex; align-items: center; gap: 8px; padding: 13px 24px; border-radius: var(--btn-radius); font-weight: 600; background: var(--p); color: var(--on-p); border: var(--btn-border); font-size: .95rem; }
+    #pv .pv-btn.alt { background: transparent; color: var(--tx); border: 1.5px solid currentColor; }
+
+    #pv .pv-nav { display: flex; align-items: center; justify-content: space-between; padding: 18px 0; }
+    #pv .pv-logo { font-size: 1.5rem; color: var(--p); }
+    #pv .pv-links { display: flex; gap: 22px; font-size: .9rem; opacity: .8; }
+
+    #pv .pv-hero { display: grid; grid-template-columns: 1.05fr 1fr; gap: 40px; align-items: center; padding: 30px 0 60px; }
+    #pv .pv-tag { display: inline-block; background: var(--a); color: var(--on-a); padding: 6px 14px; border-radius: var(--btn-radius); font-size: .8rem; font-weight: 600; margin-bottom: 16px; }
+    #pv .pv-hero h1 { font-size: clamp(2.2rem, 6.4cqi, 4rem); margin-bottom: 16px; }
+    #pv .pv-hero h1 em { font-style: var(--em-style); color: var(--p); }
+    #pv .pv-hero p { opacity: .78; font-size: 1.05rem; margin-bottom: 26px; max-width: 440px; }
+    #pv .pv-cta { display: flex; gap: 12px; flex-wrap: wrap; }
+    #pv .pv-photo { position: relative; aspect-ratio: 4 / 4.4; border-radius: var(--photo-radius); overflow: hidden; box-shadow: var(--photo-shadow); border: var(--photo-border); }
+    #pv .pv-photo img { width: 100%; height: 100%; object-fit: cover; display: block; animation: pvzoom 12s ease-in-out infinite alternate; }
+    @keyframes pvzoom { to { transform: scale(1.07); } }
+    #pv .pv-badge { position: absolute; left: 14px; bottom: 14px; background: var(--bg); color: var(--tx); padding: 10px 14px; border-radius: 14px; font-size: .82rem; font-weight: 600; box-shadow: 0 10px 24px rgba(0,0,0,.15); }
+
+    #pv .pv-sec { padding: 60px 0; }
+    #pv .pv-sec.tint { background: var(--soft); }
+    #pv .pv-head { text-align: center; max-width: 560px; margin: 0 auto 36px; }
+    #pv .pv-head h2 { font-size: clamp(1.8rem, 4.4cqi, 2.8rem); margin-bottom: 8px; }
+    #pv .pv-head p { opacity: .7; }
+    #pv .pv-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    #pv .pv-card { background: var(--card); border-radius: var(--card-radius); overflow: hidden; border: var(--card-border); box-shadow: var(--card-shadow); }
+    #pv .pv-card img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block; }
+    #pv .pv-card div { padding: 18px 20px 22px; }
+    #pv .pv-card h3 { font-size: 1.25rem; margin-bottom: 4px; }
+    #pv .pv-card p { opacity: .7; font-size: .92rem; }
+    #pv .pv-card strong { display: block; margin-top: 10px; color: var(--p); font-family: var(--head-font); font-size: 1.15rem; }
+    #pv .pv-gallery { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; }
+    #pv .pv-gallery img { width: 100%; height: 100%; object-fit: cover; border-radius: var(--card-radius); display: block; min-height: 220px; }
+    #pv .pv-quote { background: var(--p); color: var(--on-p); border-radius: var(--card-radius); padding: 30px; display: flex; flex-direction: column; justify-content: center; }
+    #pv .pv-quote p { font-family: var(--head-font); font-size: 1.4rem; line-height: 1.3; margin-bottom: 12px; text-transform: none; }
+    #pv .pv-contact { background: var(--p); color: var(--on-p); border-radius: var(--card-radius); padding: 44px; display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: center; }
+    #pv .pv-contact h2 { font-size: clamp(1.8rem, 4.4cqi, 2.8rem); }
+    #pv .pv-contact ul { list-style: none; display: grid; gap: 10px; }
+    #pv .pv-contact .pv-btn { background: var(--a); color: var(--on-a); margin-top: 16px; }
+    #pv .pv-foot { text-align: center; padding: 30px 0; opacity: .6; font-size: .85rem; }
+
+    @container (max-width: 700px) {
+      #pv .pv-hero, #pv .pv-contact { grid-template-columns: 1fr; }
+      #pv .pv-photo { aspect-ratio: 4 / 3; }
+      #pv .pv-links { display: none; }
+      #pv .pv-cards { grid-template-columns: 1fr; }
+      #pv .pv-gallery { grid-template-columns: 1fr; }
+      #pv .pv-contact { padding: 28px 22px; }
+    }
+
+    /* Enfoques */
+    #pv.e-elegante { --head-font: 'Cormorant Garamond', Georgia, serif; --body-font: 'Jost', sans-serif; --head-weight: 500; --head-ls: 0; --head-case: none; --em-style: italic; --btn-radius: 999px; --btn-border: none; --photo-radius: 999px 999px 24px 24px; --photo-shadow: 0 24px 50px rgba(0,0,0,.12); --photo-border: none; --card-radius: 22px; --card-border: 1px solid rgba(0,0,0,.06); --card-shadow: none; }
+    #pv.e-moderno { --head-font: 'Inter Tight', sans-serif; --body-font: 'Inter Tight', sans-serif; --head-weight: 700; --head-ls: -.04em; --head-case: none; --em-style: normal; --btn-radius: 10px; --btn-border: none; --photo-radius: 18px; --photo-shadow: 0 30px 60px rgba(0,0,0,.18); --photo-border: none; --card-radius: 16px; --card-border: none; --card-shadow: 0 14px 34px rgba(0,0,0,.08); }
+    #pv.e-divertido { --head-font: 'Anton', Impact, sans-serif; --body-font: 'Work Sans', sans-serif; --head-weight: 400; --head-ls: .02em; --head-case: uppercase; --em-style: normal; --btn-radius: 999px; --btn-border: 3px solid var(--tx); --photo-radius: 50%; --photo-shadow: 10px 10px 0 var(--tx); --photo-border: 4px solid var(--tx); --card-radius: 18px; --card-border: 3px solid var(--tx); --card-shadow: 6px 6px 0 var(--tx); }
+    #pv.e-divertido .pv-photo { aspect-ratio: 1; }
+    #pv.e-divertido .pv-tag { border: 2px solid var(--tx); transform: rotate(-3deg); }
+    #pv.e-divertido .pv-badge { border: 2px solid var(--tx); transform: rotate(3deg); }
+
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+    @media (max-width: 860px) {
+      .giros { grid-template-columns: repeat(3, 1fr); }
+      .colors { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .card { padding: 24px 18px; }
+      .q > p, .q .body { margin-left: 0; }
+      .giros { grid-template-columns: repeat(2, 1fr); }
+      .focus { grid-template-columns: 1fr; }
+      .locked { max-height: 640px; }
+      .unlock { top: 68%; padding: 22px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="wrap">
+      <div class="top">
+        <a href="../" class="logo"><span class="logo-mark">A</span>Alewox<b>.</b></a>
+        <a href="../" class="back">← Volver</a>
+      </div>
+      <h1>Mira tu página <span class="serif">antes</span> de pagar</h1>
+      <p>Responde 4 preguntas y en segundos verás cómo se vería la página de tu negocio. Gratis y sin compromiso.</p>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap">
+      <div class="card">
+
+        <!-- Preguntas -->
+        <form id="quiz" novalidate>
+          <div class="q" id="q1">
+            <h2><span class="n">1</span>¿Cómo se llama tu negocio?</h2>
+            <p>Así aparecerá en tu página.</p>
+            <div class="body"><input type="text" id="nombre" maxlength="40" placeholder="Ej. Florería Rosa" autocomplete="organization"></div>
+          </div>
+
+          <div class="q" id="q2">
+            <h2><span class="n">2</span>¿Qué tipo de negocio es?</h2>
+            <p>Elige el que más se parezca.</p>
+            <div class="body giros" id="giros"></div>
+          </div>
+
+          <div class="q" id="q3">
+            <h2><span class="n">3</span>¿Qué colores te gustan?</h2>
+            <p>Puedes cambiarlos después.</p>
+            <div class="body colors" id="colors"></div>
+          </div>
+
+          <div class="q" id="q4">
+            <h2><span class="n">4</span>¿Qué estilo quieres transmitir?</h2>
+            <p>La personalidad de tu página.</p>
+            <div class="body focus" id="focus"></div>
+          </div>
+
+          <div class="actions">
+            <button type="submit" class="btn btn-dark">✨ Crear mi muestra</button>
+            <span class="hint" id="hint">Te faltan algunas respuestas.</span>
+          </div>
+        </form>
+
+        <!-- Cargando -->
+        <div class="loading" id="loading">
+          <div class="spinner"></div>
+          <p>Diseñando tu página…</p>
+          <small id="loadingStep"></small>
+        </div>
+
+        <!-- Resultado -->
+        <div class="result" id="result">
+          <div class="result-head">
+            <div>
+              <h2>Así se vería <span class="serif" id="rName"></span></h2>
+              <div class="tags" id="rTags"></div>
+            </div>
+            <button type="button" class="btn btn-ghost" id="again">↺ Probar otra combinación</button>
+          </div>
+
+          <div class="browser">
+            <div class="bar"><i></i><i></i><i></i><span class="url" id="rUrl"></span></div>
+            <div class="stage">
+              <div id="pv"></div>
+              <div class="unlock">
+                <span class="lock">🔒</span>
+                <h3>Desbloquea tu página completa</h3>
+                <p>Paquete Básico: esta plantilla con tu información real, publicada y lista para compartir. Entrega en 1 día.</p>
+                <a class="btn btn-wa" id="buy" href="#" target="_blank" rel="noopener">💬 La quiero por $50</a>
+                <span class="alt">¿Quieres un diseño a tu medida? <a href="../#paquetes">Mira Esencial y PRO</a></span>
+              </div>
+            </div>
+          </div>
+          <p class="disclaimer">Textos, precios y fotos de ejemplo. En tu página van tus servicios, precios y fotos reales.</p>
+          <div class="result-actions">
+            <button type="button" class="btn btn-ghost" id="share">🔗 Copiar enlace de mi muestra</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const WHATSAPP = '526624002958';
+
+    // ---------- Datos de las plantillas ----------
+    const GIROS = {
+      restaurante: {
+        label: 'Restaurante / comida', tag: 'Hecho al momento',
+        title: { elegante: 'Sabores que se <em>disfrutan</em> sin prisa', moderno: 'Comida rica, <em>hecha al momento</em>', divertido: '¡Antojos que <em>sí cumplen</em>!' },
+        sub: 'Ingredientes frescos, recetas de la casa y el sazón que nos distingue. Ven a comer o pide para llevar.',
+        cta: 'Ver menú', badge: '⭐ 4.9 · Favorito del barrio',
+        secTitle: 'Nuestro menú', secSub: 'Lo más pedido por nuestros clientes.',
+        items: [['Especialidad de la casa', 'Nuestra receta más pedida.', '$120', 1], ['Gringas y quesadillas', 'Con queso fundido y tu carne favorita.', '$65', 2], ['Aguas frescas', 'Horchata, jamaica y tamarindo.', '$35', 3]],
+        quote: '“La mejor comida de la zona, siempre fresca.”', gal: 4,
+      },
+      belleza: {
+        label: 'Belleza / estética', tag: 'Estética & spa',
+        title: { elegante: 'Tu momento para sentirte <em>hermosa</em>', moderno: 'Belleza que <em>se nota</em>', divertido: '¡Luce <em>increíble</em> hoy!' },
+        sub: 'Cortes, color, uñas y tratamientos faciales en un espacio tranquilo, con productos profesionales.',
+        cta: 'Agendar cita', badge: '⭐ 4.9 · 200+ reseñas',
+        secTitle: 'Servicios', secSub: 'Cuidado de pies a cabeza.',
+        items: [['Corte y peinado', 'Cortes de tendencia y peinados para eventos.', 'Desde $250', 1], ['Uñas', 'Manicure, pedicure y gelish.', 'Desde $180', 2], ['Faciales', 'Limpieza profunda e hidratación.', 'Desde $450', 3]],
+        quote: '“Salí feliz, justo el look que quería.”', gal: 4,
+      },
+      taller: {
+        label: 'Taller / servicios técnicos', tag: 'Servicio garantizado',
+        title: { elegante: 'Tu auto en <em>manos expertas</em>', moderno: 'Reparaciones <em>sin sorpresas</em>', divertido: '¡Tu auto <em>como nuevo</em>!' },
+        sub: 'Diagnóstico por computadora, frenos, afinación y más. Te explicamos todo antes de reparar.',
+        cta: 'Cotizar servicio', badge: '🛠️ Garantía de 90 días',
+        secTitle: 'Servicios', secSub: 'Todo lo que tu auto necesita.',
+        items: [['Frenos', 'Balatas, discos y líquido de frenos.', 'Desde $850', 1], ['Diagnóstico', 'Escaneo por computadora.', 'Desde $350', 2], ['Cambio de aceite', 'Aceite y filtro de calidad.', 'Desde $650', 3]],
+        quote: '“Honestos y rápidos. Me explicaron todo.”', gal: 4,
+      },
+      tienda: {
+        label: 'Tienda / boutique', tag: 'Nueva colección',
+        title: { elegante: 'Piezas que <em>te enamoran</em>', moderno: 'Tu estilo, <em>en un solo lugar</em>', divertido: '¡Encuentra <em>tu favorito</em>!' },
+        sub: 'Ropa, accesorios y regalos seleccionados con cariño. Visítanos o pide por WhatsApp.',
+        cta: 'Ver productos', badge: '🛍️ Envíos en tu ciudad',
+        secTitle: 'Lo más buscado', secSub: 'Nuevos productos cada semana.',
+        items: [['Ropa', 'Prendas de temporada para todos los días.', 'Desde $299', 'ropa'], ['Accesorios', 'Bolsas, lentes y joyería.', 'Desde $199', 'accesorios'], ['Regalos', 'Detalles listos para sorprender.', 'Desde $249', 'regalos']],
+        quote: '“Siempre encuentro algo bonito aquí.”', gal: 'bolsas',
+      },
+      consultorio: {
+        label: 'Consultorio / profesional', tag: 'Atención profesional',
+        title: { elegante: 'Cuidamos de ti con <em>calidez</em>', moderno: 'Tu salud, <em>en buenas manos</em>', divertido: '¡Te atendemos <em>con gusto</em>!' },
+        sub: 'Consultas con atención personalizada, instalaciones modernas y horarios flexibles.',
+        cta: 'Agendar consulta', badge: '🩺 Citas el mismo día',
+        secTitle: 'Servicios', secSub: 'Atención completa en un solo lugar.',
+        items: [['Consulta general', 'Valoración completa y seguimiento.', 'Desde $500', 'consulta'], ['Tratamientos', 'Con equipo moderno y seguro.', 'Desde $800', 'equipo'], ['Seguimiento', 'Revisiones y resultados en línea.', 'Desde $350', 'detalle']],
+        quote: '“Excelente trato y muy puntuales.”', gal: 'sala',
+      },
+    };
+
+    const PALETAS = {
+      terracota:  { label: 'Terracota',      p: '#7a3b1e', a: '#ff7a3d', bg: '#fbf6f1', soft: '#f3e8de', tx: '#1c1410', card: '#ffffff' },
+      rosa:       { label: 'Rosa y crema',   p: '#b9706a', a: '#e8c3b8', bg: '#fcf8f5', soft: '#f6e7e2', tx: '#3a2e2b', card: '#ffffff', onA: '#3a2e2b' },
+      dorado:     { label: 'Negro y dorado', p: '#151515', a: '#c9a45c', bg: '#faf8f3', soft: '#f0ebe0', tx: '#151515', card: '#ffffff' },
+      marino:     { label: 'Azul marino',    p: '#1e3a5f', a: '#4fa3d1', bg: '#f5f8fb', soft: '#e6eef6', tx: '#14202e', card: '#ffffff' },
+      bosque:     { label: 'Verde bosque',   p: '#1f5e3b', a: '#a8cf6a', bg: '#f4f8f3', soft: '#e3eee1', tx: '#13261a', card: '#ffffff', onA: '#13261a' },
+      fiesta:     { label: 'Rojo y amarillo',p: '#d7261e', a: '#ffc83d', bg: '#fff6e6', soft: '#fdebc8', tx: '#1b1410', card: '#ffffff', onA: '#1b1410' },
+      morado:     { label: 'Morado y rosa',  p: '#5b2bb5', a: '#ff5fa2', bg: '#f8f5ff', soft: '#ece5fb', tx: '#1d1433', card: '#ffffff' },
+      industrial: { label: 'Gris y naranja', p: '#23272e', a: '#ff8a1f', bg: '#f4f5f7', soft: '#e6e8ec', tx: '#14171b', card: '#ffffff', onA: '#14171b' },
+    };
+
+    const ENFOQUES = {
+      elegante:  { label: 'Elegante',  sample: '<span style="font-family:Cormorant Garamond,serif;font-style:italic">Aa</span>', desc: 'Fino y tranquilo' },
+      moderno:   { label: 'Moderno',   sample: '<span style="font-family:Inter Tight,sans-serif;font-weight:800;letter-spacing:-.04em">Aa</span>', desc: 'Limpio y actual' },
+      divertido: { label: 'Divertido', sample: '<span style="font-family:Anton,sans-serif">AA</span>', desc: 'Llamativo y alegre' },
+    };
+
+    const img = (giro, key) => `img/${giro}-${key}.jpg`;
+    const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    const slug = s => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '').slice(0, 24) || 'tunegocio';
+
+    // ---------- Construir las opciones ----------
+    document.getElementById('giros').innerHTML = Object.entries(GIROS).map(([k, g]) =>
+      `<div class="pick giro"><input type="radio" name="giro" id="g-${k}" value="${k}"><label for="g-${k}"><img src="${img(k, 'hero')}" alt="" loading="lazy"><span>${g.label}</span></label></div>`).join('');
+    document.getElementById('colors').innerHTML = Object.entries(PALETAS).map(([k, c]) =>
+      `<div class="pick swatch"><input type="radio" name="color" id="c-${k}" value="${k}"><label for="c-${k}"><span class="dots"><i style="background:${c.p}"></i><i style="background:${c.a}"></i><i style="background:${c.bg}"></i></span><b>${c.label}</b></label></div>`).join('');
+    document.getElementById('focus').innerHTML = Object.entries(ENFOQUES).map(([k, e]) =>
+      `<div class="pick enf"><input type="radio" name="enfoque" id="e-${k}" value="${k}"><label for="e-${k}"><span class="sample">${e.sample}</span><b>${e.label}</b><br><small>${e.desc}</small></label></div>`).join('');
+
+    // ---------- Render de la muestra ----------
+    function render({ nombre, giro, color, enfoque }) {
+      const g = GIROS[giro], c = PALETAS[color];
+      const pv = document.getElementById('pv');
+      pv.className = `e-${enfoque}`;
+      Object.entries({ '--p': c.p, '--a': c.a, '--bg': c.bg, '--soft': c.soft, '--tx': c.tx, '--card': c.card, '--on-p': '#ffffff', '--on-a': c.onA || '#ffffff' })
+        .forEach(([k, v]) => pv.style.setProperty(k, v));
+      const n = esc(nombre);
+      const cards = g.items.map(([t, d, pr, im]) => `<div class="pv-card"><img src="${img(giro, im)}" alt=""><div><h3>${t}</h3><p>${d}</p><strong>${pr}</strong></div></div>`).join('');
+      pv.innerHTML = `
+        <div class="pv-in">
+          <div class="pv-nav"><span class="pv-logo">${n}</span><span class="pv-links"><span>Inicio</span><span>${g.secTitle}</span><span>Galería</span><span>Contacto</span></span></div>
+          <div class="pv-hero">
+            <div>
+              <span class="pv-tag">${g.tag}</span>
+              <h1>${g.title[enfoque]}</h1>
+              <p>${g.sub}</p>
+              <div class="pv-cta"><span class="pv-btn">${g.cta}</span><span class="pv-btn alt">💬 WhatsApp</span></div>
+            </div>
+            <div class="pv-photo"><img src="${img(giro, 'hero')}" alt=""><span class="pv-badge">${g.badge}</span></div>
+          </div>
+        </div>
+        <div class="locked"><div class="blurred">
+          <div class="pv-sec tint"><div class="pv-in">
+            <div class="pv-head"><h2>${g.secTitle}</h2><p>${g.secSub}</p></div>
+            <div class="pv-cards">${cards}</div>
+          </div></div>
+          <div class="pv-sec"><div class="pv-in pv-gallery">
+            <img src="${img(giro, g.gal)}" alt="">
+            <div class="pv-quote"><p>${g.quote}</p><span>★★★★★</span></div>
+          </div></div>
+          <div class="pv-sec" style="padding-top:0"><div class="pv-in pv-contact">
+            <div><h2>Visítanos</h2><span class="pv-btn">💬 Escríbenos por WhatsApp</span></div>
+            <ul><li>📍 Tu dirección</li><li>🕒 Lun a Sáb · 9:00 – 19:00</li><li>📞 (662) 000 0000</li><li>📸 @${slug(nombre)}</li></ul>
+          </div></div>
+          <div class="pv-foot">© 2026 ${n}</div>
+        </div></div>`;
+
+      document.getElementById('rName').textContent = nombre;
+      document.getElementById('rUrl').textContent = `${slug(nombre)}.com`;
+      document.getElementById('rTags').innerHTML = [g.label, c.label, ENFOQUES[enfoque].label].map(t => `<span>${t}</span>`).join('');
+
+      const link = shareUrl({ nombre, giro, color, enfoque });
+      const msg = [
+        'Hola Alejandro, quiero el paquete Básico ($50) con esta muestra:',
+        `• Negocio: ${nombre}`,
+        `• Giro: ${g.label}`,
+        `• Colores: ${c.label}`,
+        `• Estilo: ${ENFOQUES[enfoque].label}`,
+        `• Mi muestra: ${link}`,
+      ].join('\n');
+      document.getElementById('buy').href = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
+    }
+
+    function shareUrl(sel) {
+      const u = new URL(location.href.split('?')[0]);
+      u.search = new URLSearchParams({ n: sel.nombre, g: sel.giro, c: sel.color, e: sel.enfoque }).toString();
+      return u.toString();
+    }
+
+    // ---------- Flujo ----------
+    const quiz = document.getElementById('quiz');
+    const loading = document.getElementById('loading');
+    const result = document.getElementById('result');
+    const val = name => quiz.querySelector(`input[name=${name}]:checked`)?.value;
+
+    function selection() {
+      return { nombre: document.getElementById('nombre').value.trim(), giro: val('giro'), color: val('color'), enfoque: val('enfoque') };
+    }
+    function markProgress() {
+      const s = selection();
+      [['q1', s.nombre], ['q2', s.giro], ['q3', s.color], ['q4', s.enfoque]].forEach(([id, ok]) => document.getElementById(id).classList.toggle('ok', !!ok));
+      document.getElementById('hint').style.visibility = (s.nombre && s.giro && s.color && s.enfoque) ? 'hidden' : 'visible';
+    }
+    quiz.addEventListener('input', markProgress);
+    quiz.addEventListener('change', markProgress);
+
+    function show(sel, animate) {
+      quiz.style.display = 'none';
+      const done = () => {
+        loading.classList.remove('on');
+        render(sel);
+        result.classList.add('on');
+        history.replaceState(null, '', shareUrl(sel));
+        window.scrollTo({ top: document.querySelector('main').offsetTop - 20, behavior: 'smooth' });
+      };
+      if (!animate) return done();
+      loading.classList.add('on');
+      const steps = ['Eligiendo fotos…', 'Aplicando tus colores…', 'Ajustando el estilo…', 'Colocando tu nombre…'];
+      const label = document.getElementById('loadingStep');
+      steps.forEach((t, i) => setTimeout(() => { label.textContent = t; }, i * 450));
+      setTimeout(done, steps.length * 450 + 200);
+    }
+
+    quiz.addEventListener('submit', e => {
+      e.preventDefault();
+      const s = selection();
+      let first = null;
+      [['q1', s.nombre], ['q2', s.giro], ['q3', s.color], ['q4', s.enfoque]].forEach(([id, ok]) => {
+        const el = document.getElementById(id);
+        if (!ok) { el.classList.remove('invalid'); void el.offsetWidth; el.classList.add('invalid'); first = first || el; }
+      });
+      if (first) { first.scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
+      show(s, true);
+    });
+
+    document.getElementById('again').addEventListener('click', () => {
+      result.classList.remove('on');
+      quiz.style.display = '';
+      history.replaceState(null, '', location.pathname);
+      window.scrollTo({ top: document.querySelector('main').offsetTop - 20, behavior: 'smooth' });
+    });
+
+    document.getElementById('share').addEventListener('click', async e => {
+      try { await navigator.clipboard.writeText(shareUrl(selection())); e.target.textContent = '✅ Enlace copiado'; }
+      catch (_) { e.target.textContent = 'No se pudo copiar'; }
+    });
+
+    // Abrir una muestra compartida (?n=&g=&c=&e=)
+    const q = new URLSearchParams(location.search);
+    if (q.get('n') && GIROS[q.get('g')] && PALETAS[q.get('c')] && ENFOQUES[q.get('e')]) {
+      document.getElementById('nombre').value = q.get('n').slice(0, 40);
+      document.getElementById(`g-${q.get('g')}`).checked = true;
+      document.getElementById(`c-${q.get('c')}`).checked = true;
+      document.getElementById(`e-${q.get('e')}`).checked = true;
+      show(selection(), false);
+    }
+    markProgress();
+  </script>
+</body>
+</html>
