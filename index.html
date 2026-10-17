@@ -271,6 +271,34 @@
     .wa-float { position: fixed; right: 22px; bottom: calc(22px + env(safe-area-inset-bottom, 0px)); z-index: 90; width: 60px; height: 60px; border-radius: 50%; background: #25d366; color: #fff; display: grid; place-items: center; font-size: 1.7rem; box-shadow: 0 14px 30px rgba(37, 211, 102, .45); transition: transform .3s var(--ease); }
     .wa-float:hover { transform: scale(1.1); }
 
+    /* Chat con IA */
+    .chat-launcher { position: fixed; right: 22px; bottom: calc(94px + env(safe-area-inset-bottom, 0px)); z-index: 90; width: 60px; height: 60px; border: 0; border-radius: 50%; background: var(--ink); color: #fff; font-size: 1.5rem; cursor: pointer; display: grid; place-items: center; box-shadow: 0 14px 30px rgba(0, 0, 0, .25); transition: transform .3s var(--ease); }
+    .chat-launcher:hover { transform: scale(1.1); }
+    .chat-launcher[hidden] { display: none; }
+    .chat-launcher .dot { position: absolute; top: 4px; right: 4px; width: 14px; height: 14px; border-radius: 50%; background: var(--accent); border: 2px solid var(--paper); }
+    .chat-panel { position: fixed; right: 22px; bottom: calc(166px + env(safe-area-inset-bottom, 0px)); z-index: 95; width: min(380px, calc(100vw - 32px)); height: min(540px, calc(100dvh - 200px)); background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: 0 30px 60px rgba(0, 0, 0, .18); display: flex; flex-direction: column; overflow: hidden; }
+    .chat-panel[hidden] { display: none; }
+    .chat-head { display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: var(--ink); color: #fff; }
+    .chat-head .avatar { width: 38px; height: 38px; border-radius: 50%; background: var(--accent); display: grid; place-items: center; font-weight: 700; font-size: .85rem; flex-shrink: 0; }
+    .chat-head strong { display: block; font-size: .98rem; }
+    .chat-head small { color: rgba(255, 255, 255, .7); font-size: .8rem; }
+    .chat-close { margin-left: auto; background: none; border: 0; color: #fff; font-size: 1.4rem; cursor: pointer; padding: 4px 8px; line-height: 1; }
+    .chat-msgs { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 10px; background: var(--sand); }
+    .chat-msg { max-width: 85%; padding: 10px 14px; border-radius: 16px; font-size: .95rem; line-height: 1.45; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .chat-msg.bot { align-self: flex-start; background: var(--paper); border: 1px solid var(--line); border-bottom-left-radius: 4px; }
+    .chat-msg.yo { align-self: flex-end; background: var(--ink); color: #fff; border-bottom-right-radius: 4px; }
+    .chat-msg.typing { color: var(--muted); letter-spacing: .2em; }
+    .chat-wa { align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; background: #25d366; color: #fff; font-weight: 600; padding: 11px 16px; border-radius: 999px; font-size: .92rem; }
+    .chat-form { display: flex; gap: 8px; padding: 12px; border-top: 1px solid var(--line); }
+    .chat-form input { flex: 1; min-width: 0; border: 1px solid var(--line); border-radius: 999px; padding: 11px 16px; font: inherit; font-size: 16px; color: var(--ink); background: var(--paper); }
+    .chat-form input:focus { outline: 2px solid var(--accent); outline-offset: 0; border-color: transparent; }
+    .chat-form button { border: 0; border-radius: 999px; background: var(--accent); color: #fff; font: inherit; font-weight: 600; padding: 0 18px; cursor: pointer; }
+    .chat-form button:disabled { opacity: .5; cursor: default; }
+    .chat-note { text-align: center; font-size: .72rem; color: var(--muted); padding: 0 12px 10px; }
+    @media (max-width: 600px) {
+      .chat-panel { right: 16px; left: 16px; width: auto; }
+    }
+
     .btn:focus-visible, a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
     @media (prefers-reduced-motion: reduce) {
@@ -468,7 +496,7 @@
         <div class="feat reveal d1"><div class="ico">📱</div><h3>Perfecta en celular</h3><p>La mayoría de tus clientes te buscarán desde su teléfono.</p></div>
         <div class="feat reveal d2"><div class="ico">💬</div><h3>WhatsApp integrado</h3><p>Botones y formularios que abren un chat contigo con el mensaje listo.</p></div>
         <div class="feat reveal"><div class="ico">📍</div><h3>Ubicación y horario</h3><p>Tus clientes saben dónde encontrarte y cuándo estás abierto.</p></div>
-        <div class="feat reveal d1"><div class="ico">🌐</div><h3>URL personalizada</h3><p>En el paquete PRO: una dirección como tunegocio.com para verte más profesional.</p></div>
+        <div class="feat reveal d1"><div class="ico">🌐</div><h3>URL personalizada</h3><p>Desde el paquete Esencial: una dirección como tunegocio.com para verte más profesional.</p></div>
         <div class="feat reveal d2"><div class="ico">🔄</div><h3>Cambios cuando quieras</h3><p>Actualizo precios, fotos y promociones cuando lo necesites.</p></div>
       </div>
     </div>
@@ -496,7 +524,7 @@
           <span class="name">Esencial</span>
           <div class="price">$200 <small>MXN</small></div>
           <p class="desc">Toda la información de tu negocio en una página profesional.</p>
-          <ul><li>Diseño a la medida de tu negocio</li><li>Servicios, precios y fotos</li><li>Adaptada a celular</li><li>Botón directo a tu WhatsApp</li><li>Ubicación, horario y redes sociales</li><li>Dirección web gratuita</li></ul>
+          <ul><li>Diseño a la medida de tu negocio</li><li>Servicios, precios y fotos</li><li>Adaptada a celular</li><li>Botón directo a tu WhatsApp</li><li>Ubicación, horario y redes sociales</li><li>URL personalizada (tunegocio.com)</li></ul>
           <a href="#contacto" class="btn btn-outline" data-wa="Hola Alejandro, me interesa la página Esencial.">Quiero la Esencial</a>
         </div>
         <div class="plan best reveal d2">
@@ -504,7 +532,7 @@
           <span class="name">PRO</span>
           <div class="price">$450 <small>MXN</small></div>
           <p class="desc">Para negocios que quieren destacar y crecer.</p>
-          <ul><li>Todo lo de la Esencial</li><li>Animaciones avanzadas</li><li>URL personalizada (tunegocio.com)</li><li>Actualizaciones al instante</li><li>Formularios avanzados: citas, cotizaciones y pedidos</li><li>Sección de opiniones de clientes</li><li>Visita presencial a tu negocio (solo negocios locales en Hermosillo)</li></ul>
+          <ul><li>Todo lo de la Esencial</li><li>Asistente de WhatsApp con IA que responde a tus clientes al instante, 24/7</li><li>Animaciones avanzadas</li><li>Actualizaciones al instante</li><li>Formularios avanzados: citas, cotizaciones y pedidos</li><li>Sección de opiniones de clientes</li><li>Visita presencial a tu negocio (solo negocios locales en Hermosillo)</li></ul>
           <a href="#contacto" class="btn btn-light" data-wa="Hola Alejandro, me interesa la página PRO.">Quiero la PRO</a>
         </div>
       </div>
@@ -553,10 +581,11 @@
       <div class="reveal">
         <details><summary>¿Cuánto tarda en estar lista mi página?<span class="plus"></span></summary><p class="answer">1 día, a partir de que me envías la información y las fotos de tu negocio.</p></details>
         <details><summary>¿Qué es el paquete Básico?<span class="plus"></span></summary><p class="answer">Es una plantilla profesional que se arma según tu giro, colores y estilo, con la información de tu negocio. Puedes verla gratis antes de pagar en <a href="muestra/" style="text-decoration:underline">Crea tu muestra</a>. No incluye cambios de diseño; para eso está el Esencial.</p></details>
-        <details><summary>¿Qué diferencia hay entre Esencial y PRO?<span class="plus"></span></summary><p class="answer">La Esencial tiene todo lo que tu negocio necesita para estar en internet. La PRO suma animaciones avanzadas, una dirección personalizada como tunegocio.com, actualizaciones al instante y formularios para citas, cotizaciones o pedidos.</p></details>
+        <details><summary>¿Qué diferencia hay entre Esencial y PRO?<span class="plus"></span></summary><p class="answer">La Esencial tiene todo lo que tu negocio necesita para estar en internet. La PRO suma un asistente de WhatsApp con IA que responde a tus clientes al instante, animaciones avanzadas, actualizaciones al instante y formularios para citas, cotizaciones o pedidos.</p></details>
         <details><summary>¿Necesito saber de computación?<span class="plus"></span></summary><p class="answer">No. Solo llenas un formulario con los datos de tu negocio y me mandas tus fotos. Yo me encargo de todo lo técnico.</p></details>
         <details><summary>¿Puedo cambiar cosas después?<span class="plus"></span></summary><p class="answer">Sí. En la PRO las actualizaciones son al instante: me escribes y cambio precios, fotos o promociones. En la Esencial también puedes pedir cambios cuando los necesites.</p></details>
-        <details><summary>¿Qué es una URL personalizada?<span class="plus"></span></summary><p class="answer">Es la dirección de tu página con el nombre de tu negocio, como tunegocio.com. Viene en el paquete PRO. La Esencial usa una dirección web gratuita.</p></details>
+        <details><summary>¿Qué es una URL personalizada?<span class="plus"></span></summary><p class="answer">Es la dirección de tu página con el nombre de tu negocio, como tunegocio.com. Viene en los paquetes Esencial y PRO. El Básico usa una dirección web gratuita.</p></details>
+        <details><summary>¿Qué hace el asistente de WhatsApp con IA?<span class="plus"></span></summary><p class="answer">Viene en el paquete PRO. Cuando un cliente te escribe por WhatsApp, la IA le contesta al instante con la información de tu negocio, resuelve sus dudas y te avisa cuando alguien está listo para comprar, para que tú cierres la venta.</p></details>
         <details><summary>¿Cómo me contactan mis clientes?<span class="plus"></span></summary><p class="answer">Tu página tiene botones y formularios que abren WhatsApp directo a tu número, con el mensaje ya escrito.</p></details>
       </div>
     </div>
@@ -572,16 +601,31 @@
       </div>
       <div class="footer-bottom">
         <span>© 2026 Alewox · Alejandro Nieblas · Hermosillo, Sonora</span>
-        <div class="socials"><a href="https://wa.me/526624002958" target="_blank" rel="noopener">WhatsApp 662 400 2958</a><a href="https://www.instagram.com/alex.nlzzz/" target="_blank" rel="noopener">Instagram @alex.nlzzz</a></div>
+        <div class="socials"><a href="https://wa.me/526623373730" target="_blank" rel="noopener">WhatsApp 662 337 3730</a><a href="https://www.instagram.com/alex.nlzzz/" target="_blank" rel="noopener">Instagram @alex.nlzzz</a></div>
       </div>
     </div>
   </footer>
 
   <a href="#contacto" class="wa-float" aria-label="Escribir por WhatsApp" data-wa="Hola, me interesa una página web para mi negocio.">💬</a>
 
+  <button class="chat-launcher" id="chatLauncher" aria-label="Abrir chat con el asistente" aria-controls="chatPanel" aria-expanded="false" hidden>✨<span class="dot"></span></button>
+  <div class="chat-panel" id="chatPanel" role="dialog" aria-label="Chat con el asistente de Alewox" hidden>
+    <div class="chat-head">
+      <span class="avatar">AN</span>
+      <div><strong>Asistente de Alewox</strong><small>Te responde al instante</small></div>
+      <button class="chat-close" id="chatClose" aria-label="Cerrar chat">×</button>
+    </div>
+    <div class="chat-msgs" id="chatMsgs" aria-live="polite"></div>
+    <form class="chat-form" id="chatForm">
+      <input id="chatInput" type="text" placeholder="Escribe tu mensaje…" autocomplete="off" maxlength="800" aria-label="Tu mensaje">
+      <button type="submit" id="chatSend">Enviar</button>
+    </form>
+    <p class="chat-note">Asistente con IA · Alejandro te atiende en persona por WhatsApp</p>
+  </div>
+
   <script>
     // Número de WhatsApp: 52 + 10 dígitos, sin espacios. Vacío = modo muestra.
-    const WHATSAPP = '526624002958';
+    const WHATSAPP = '526623373730';
     const waUrl = text => `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(text)}`;
     if (WHATSAPP) {
       document.querySelectorAll('[data-wa]').forEach(a => {
@@ -674,6 +718,87 @@
     document.getElementById('prev').addEventListener('click', () => car.scrollBy({ left: -step(), behavior: 'smooth' }));
     const updateBar = () => { const max = car.scrollWidth - car.clientWidth; bar.style.width = `${max ? 15 + 85 * car.scrollLeft / max : 100}%`; };
     car.addEventListener('scroll', updateBar, { passive: true }); updateBar();
+
+    // Chat con IA. Dirección del servidor del bot (vacío = chat oculto).
+    const CHAT_API = ['localhost', '127.0.0.1'].includes(location.hostname) ? 'http://localhost:3000' : '';
+    if (CHAT_API) {
+      const launcher = document.getElementById('chatLauncher');
+      const panel = document.getElementById('chatPanel');
+      const msgs = document.getElementById('chatMsgs');
+      const form = document.getElementById('chatForm');
+      const input = document.getElementById('chatInput');
+      const send = document.getElementById('chatSend');
+      let sesion;
+      try { sesion = sessionStorage.getItem('alewoxChat'); } catch {}
+      if (!sesion) {
+        sesion = crypto.randomUUID();
+        try { sessionStorage.setItem('alewoxChat', sesion); } catch {}
+      }
+
+      const agregar = (texto, quien) => {
+        const div = document.createElement('div');
+        div.className = `chat-msg ${quien}`;
+        div.textContent = texto;
+        msgs.appendChild(div);
+        msgs.scrollTop = msgs.scrollHeight;
+        return div;
+      };
+      let waBtn = null;
+      const mostrarWhatsApp = texto => {
+        if (!WHATSAPP) return;
+        if (!waBtn) {
+          waBtn = document.createElement('a');
+          waBtn.className = 'chat-wa';
+          waBtn.target = '_blank';
+          waBtn.rel = 'noopener';
+          waBtn.textContent = '💬 Hablar con Alejandro por WhatsApp';
+        }
+        waBtn.href = waUrl(texto);
+        msgs.appendChild(waBtn); // siempre al final de la conversación
+        msgs.scrollTop = msgs.scrollHeight;
+      };
+
+      const abrir = abierto => {
+        panel.hidden = !abierto;
+        launcher.setAttribute('aria-expanded', abierto);
+        launcher.querySelector('.dot')?.remove();
+        if (abierto) {
+          if (!msgs.children.length) agregar('¡Hola! 👋 Soy el asistente de Alewox. ¿Qué tipo de negocio tienes? Te ayudo a elegir la página ideal.', 'bot');
+          input.focus();
+        }
+      };
+      launcher.hidden = false;
+      launcher.addEventListener('click', () => abrir(panel.hidden));
+      document.getElementById('chatClose').addEventListener('click', () => abrir(false));
+
+      form.addEventListener('submit', async e => {
+        e.preventDefault();
+        const mensaje = input.value.trim();
+        if (!mensaje) return;
+        input.value = '';
+        send.disabled = true;
+        agregar(mensaje, 'yo');
+        const escribiendo = agregar('•••', 'bot typing');
+        try {
+          const res = await fetch(`${CHAT_API}/chat`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ sesion, mensaje })
+          });
+          const data = await res.json();
+          escribiendo.remove();
+          agregar(data.respuesta || 'Uy, no pude contestar. Escríbeme por WhatsApp 🙌', 'bot');
+          if (data.caliente) mostrarWhatsApp(data.waTexto);
+          else if (!res.ok) mostrarWhatsApp('Hola Alejandro, vengo del chat de tu página.');
+        } catch {
+          escribiendo.remove();
+          agregar('Uy, no pude conectarme. Escríbeme directo por WhatsApp 🙌', 'bot');
+          mostrarWhatsApp('Hola Alejandro, vengo del chat de tu página.');
+        }
+        send.disabled = false;
+        input.focus();
+      });
+    }
   </script>
 </body>
 </html>
