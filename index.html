@@ -956,8 +956,10 @@
     }, 3500);
 
     // Chat con IA. Dirección del servidor del bot (vacío = chat oculto).
+    // El botón solo aparece si el bot contesta; si está apagado, la página se queda solo con WhatsApp.
     const CHAT_API = ['localhost', '127.0.0.1'].includes(location.hostname) ? 'http://localhost:3000' : '';
-    if (CHAT_API) {
+    if (CHAT_API) fetch(CHAT_API, { signal: AbortSignal.timeout(4000) }).then(r => r.ok && iniciarChat()).catch(() => {});
+    function iniciarChat() {
       const launcher = document.getElementById('chatLauncher');
       const panel = document.getElementById('chatPanel');
       const msgs = document.getElementById('chatMsgs');

@@ -112,18 +112,29 @@
     .bar .url { margin-left: 12px; flex: 1; max-width: 420px; height: 24px; border-radius: 7px; background: #fff; font-size: .78rem; color: #777; display: flex; align-items: center; padding: 0 12px; overflow: hidden; white-space: nowrap; }
 
     .stage { position: relative; }
-    .locked { position: relative; max-height: 560px; overflow: hidden; }
-    .locked .blurred { filter: blur(7px) saturate(.9); pointer-events: none; user-select: none; }
-    .locked::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,.85) 55%, #fff 85%); pointer-events: none; }
-    .unlock { position: absolute; left: 50%; top: 70%; transform: translate(-50%, -50%); z-index: 3; background: var(--ink); color: #fff; border-radius: 22px; padding: 28px 30px; text-align: center; width: min(440px, 92%); box-shadow: 0 30px 60px rgba(0,0,0,.3); }
-    .unlock .lock { font-size: 2rem; display: block; margin-bottom: 8px; animation: wiggle 2.6s ease-in-out infinite; }
-    @keyframes wiggle { 0%, 80%, 100% { transform: rotate(0); } 85% { transform: rotate(-12deg); } 90% { transform: rotate(12deg); } 95% { transform: rotate(-6deg); } }
-    .unlock h3 { font-size: 1.4rem; letter-spacing: -.02em; margin-bottom: 6px; }
-    .unlock p { color: #bdbdbd; font-size: .92rem; margin-bottom: 18px; }
-    .unlock .btn { width: 100%; justify-content: center; }
-    .unlock .alt { display: block; margin-top: 12px; font-size: .88rem; color: #bdbdbd; }
-    .unlock .alt a { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
     .disclaimer { text-align: center; color: var(--muted); font-size: .88rem; margin-top: 18px; }
+
+    /* ---------- Paquetes debajo de la muestra ---------- */
+    .planes { margin-top: 56px; text-align: center; }
+    .planes h2 { font-size: clamp(1.8rem, 4.4vw, 2.6rem); letter-spacing: -.04em; line-height: 1.05; }
+    .planes h2 .serif { color: var(--clay-2); }
+    .planes-sub { color: var(--muted); margin: 8px 0 30px; }
+    .planes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; text-align: left; align-items: stretch; }
+    .plan { border: 1.5px solid var(--line); border-radius: 22px; padding: 28px 24px; display: flex; flex-direction: column; position: relative; background: #fff; }
+    .plan.rec { border-color: var(--clay); box-shadow: 0 24px 50px rgba(122, 59, 30, .14); }
+    .plan .badge { position: absolute; top: -12px; left: 24px; background: var(--clay); color: #fff; font-size: .72rem; font-weight: 700; padding: 5px 12px; border-radius: 999px; text-transform: uppercase; letter-spacing: .06em; }
+    .plan .name { font-weight: 700; text-transform: uppercase; letter-spacing: .1em; font-size: .85rem; color: var(--muted); }
+    .plan .price { font-size: 2.6rem; font-weight: 700; letter-spacing: -.05em; line-height: 1; margin: 10px 0 6px; }
+    .plan .price small { font-size: .9rem; font-weight: 500; color: var(--muted); letter-spacing: 0; }
+    .plan .lead { font-weight: 600; margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+    .plan ul { list-style: none; display: grid; gap: 9px; margin-bottom: 22px; flex: 1; align-content: start; font-size: .93rem; }
+    .plan li { display: flex; gap: 10px; }
+    .plan li::before { content: "✓"; color: var(--clay-2); font-weight: 700; }
+    .plan li.mas::before { content: "+"; }
+    .plan .btn { justify-content: center; width: 100%; }
+    .plan.rec .btn { background: #25d366; color: #fff; }
+    .planes-note { color: var(--muted); font-size: .88rem; margin-top: 22px; }
+    .planes-note a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
     .result-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 18px; }
 
     /* =====================================================
@@ -200,8 +211,10 @@
       .q > p, .q .body { margin-left: 0; }
       .giros { grid-template-columns: repeat(2, 1fr); }
       .focus { grid-template-columns: 1fr; }
-      .locked { max-height: 640px; }
-      .unlock { top: 68%; padding: 22px 20px; }
+    }
+    @media (max-width: 860px) {
+      .planes-grid { grid-template-columns: 1fr; max-width: 460px; margin-inline: auto; }
+      .plan.rec { order: -1; }
     }
   </style>
 </head>
@@ -213,8 +226,8 @@
         <a href="../" class="logo"><span class="logo-mark">A</span>Alewox<b>.</b></a>
         <a href="../" class="back">← Volver</a>
       </div>
-      <h1>Mira tu página <span class="serif">antes</span> de pagar</h1>
-      <p>Responde 4 preguntas y en segundos verás cómo se vería la página de tu negocio. Gratis y sin compromiso.</p>
+      <h1 id="headTitle">Mira tu página <span class="serif">antes</span> de pagar</h1>
+      <p id="headSub">Responde 4 preguntas y en segundos verás cómo se vería la página de tu negocio. Gratis y sin compromiso.</p>
     </div>
   </header>
 
@@ -275,16 +288,16 @@
             <div class="bar"><i></i><i></i><i></i><span class="url" id="rUrl"></span></div>
             <div class="stage">
               <div id="pv"></div>
-              <div class="unlock">
-                <span class="lock">🔒</span>
-                <h3>Desbloquea tu página completa</h3>
-                <p>Paquete Básico: esta plantilla con tu información real, publicada y lista para compartir. Entrega en 1 día.</p>
-                <a class="btn btn-wa" id="buy" href="#" target="_blank" rel="noopener">💬 La quiero por $450</a>
-                <span class="alt">¿Quieres un diseño a tu medida? <a href="../#paquetes">Mira Esencial y PRO</a></span>
-              </div>
             </div>
           </div>
           <p class="disclaimer">Textos, precios y fotos de ejemplo. En tu página van tus servicios, precios y fotos reales.</p>
+
+          <section class="planes">
+            <h2>Elige cómo la <span class="serif">quieres</span></h2>
+            <p class="planes-sub">Pago único · Entrega en 1 día · Te la entregamos lista para compartir</p>
+            <div class="planes-grid" id="planes"></div>
+            <p class="planes-note">Extras mensuales opcionales: asistente de WhatsApp con IA ($350/mes) y mantenimiento ($150/mes). <a href="../#paquetes">Ver todos los detalles</a></p>
+          </section>
           <div class="result-actions">
             <button type="button" class="btn btn-ghost" id="share">🔗 Copiar enlace de mi muestra</button>
           </div>
@@ -374,7 +387,24 @@
 
     const img = (giro, key) => `img/${giro}-${key}.jpg`;
     const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-    const slug = s => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '').slice(0, 24) || 'tunegocio';
+    // Datos reales del negocio que pueden venir en el enlace (&r=4.9&rv=483&dir=...&tel=52...)
+    const REAL = (() => {
+      const p = new URLSearchParams(location.search);
+      const r = p.get('r') || '', rv = p.get('rv') || '', tel = p.get('tel') || '';
+      return {
+        r: /^[1-5](\.\d)?$/.test(r) ? r : '',
+        rv: /^\d{1,5}$/.test(rv) ? rv : '',
+        dir: (p.get('dir') || '').slice(0, 80),
+        tel: /^\d{10,13}$/.test(tel) ? tel : '',
+      };
+    })();
+    // Nombre corto para la dirección de ejemplo: palabras hasta juntar 8 letras ("Dentique by Dra..." -> dentique.com)
+    const slug = s => {
+      const palabras = s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().split(/[^a-z0-9]+/).filter(Boolean);
+      let corto = '';
+      for (const w of palabras) { corto += w; if (corto.length >= 8) break; }
+      return corto.slice(0, 24) || 'tunegocio';
+    };
 
     // ---------- Construir las opciones ----------
     document.getElementById('giros').innerHTML = Object.entries(GIROS).map(([k, g]) =>
@@ -403,11 +433,10 @@
               <p>${g.sub}</p>
               <div class="pv-cta"><span class="pv-btn">${g.cta}</span><span class="pv-btn alt">💬 WhatsApp</span></div>
             </div>
-            <div class="pv-photo"><img src="${img(giro, 'hero')}" alt=""><span class="pv-badge">${g.badge}</span></div>
+            <div class="pv-photo"><img src="${img(giro, 'hero')}" alt=""><span class="pv-badge">${REAL.r && REAL.rv ? `⭐ ${REAL.r} · ${REAL.rv} reseñas en Google` : g.badge}</span></div>
           </div>
         </div>
-        <div class="locked"><div class="blurred">
-          <div class="pv-sec tint"><div class="pv-in">
+        <div class="pv-sec tint"><div class="pv-in">
             <div class="pv-head"><h2>${g.secTitle}</h2><p>${g.secSub}</p></div>
             <div class="pv-cards">${cards}</div>
           </div></div>
@@ -417,30 +446,72 @@
           </div></div>
           <div class="pv-sec" style="padding-top:0"><div class="pv-in pv-contact">
             <div><h2>Visítanos</h2><span class="pv-btn">💬 Escríbenos por WhatsApp</span></div>
-            <ul><li>📍 Tu dirección</li><li>🕒 Lun a Sáb · 9:00 – 19:00</li><li>📞 (662) 000 0000</li><li>📸 @${slug(nombre)}</li></ul>
+            <ul><li>📍 ${REAL.dir ? esc(REAL.dir) : 'Tu dirección'}</li><li>🕒 Lun a Sáb · 9:00 – 19:00</li><li>📞 ${REAL.tel ? REAL.tel.replace(/^52/, '').replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2 $3') : '(662) 000 0000'}</li><li>📸 @${slug(nombre)}</li></ul>
           </div></div>
-          <div class="pv-foot">© 2026 ${n}</div>
-        </div></div>`;
+          <div class="pv-foot">© 2026 ${n}</div>`;
 
       document.getElementById('rName').textContent = nombre;
       document.getElementById('rUrl').textContent = `${slug(nombre)}.com`;
       document.getElementById('rTags').innerHTML = [g.label, c.label, ENFOQUES[enfoque].label].map(t => `<span>${t}</span>`).join('');
 
+      // Paquetes: qué agrega cada uno sobre esta muestra; cada botón abre WhatsApp con el paquete y la muestra
       const link = shareUrl({ nombre, giro, color, enfoque });
-      const msg = [
-        'Hola Alejandro, quiero el paquete Básico ($450) con esta muestra:',
-        `• Negocio: ${nombre}`,
-        `• Giro: ${g.label}`,
-        `• Colores: ${c.label}`,
-        `• Estilo: ${ENFOQUES[enfoque].label}`,
-        `• Mi muestra: ${link}`,
-      ].join('\n');
-      document.getElementById('buy').href = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
+      const dominio = `${slug(nombre)}.com`;
+      const form = FORMULARIO[giro];
+      const planes = [
+        { id: 'Básico', precio: 450, lead: 'Esta misma plantilla, con tu información real', items: [
+          'Tu nombre, logo, colores y hasta 6 servicios',
+          'Botón directo a tu WhatsApp',
+          'Ubicación en Google Maps, horario y redes',
+          'Dirección web gratuita',
+          'Código QR para imprimir en tu negocio',
+          '1 ronda de cambios',
+        ] },
+        { id: 'Esencial', precio: 750, rec: true, lead: 'Diseñada a la medida de tu negocio, no una plantilla', items: [
+          'Diseño único con tu estilo, a partir de esta muestra',
+          `Varias secciones: ${g.secTitle.toLowerCase()}, galería de hasta 12 fotos y contacto`,
+          'Botones de WhatsApp con el mensaje listo para cada servicio',
+          'Alta y optimización de tu perfil en Google Maps',
+          'QR con diseño para tu mostrador',
+          '2 rondas de cambios + 1 mes de cambios gratis',
+        ] },
+        { id: 'PRO', precio: 950, lead: 'Todo lo de la Esencial, más:', mas: true, items: [
+          `Tu propio dominio el primer año: ${dominio}`,
+          `Formulario de ${form} que llega a tu WhatsApp`,
+          'Animaciones y diseño premium',
+          'SEO local para aparecer en Google en Hermosillo',
+          'Visita para tomar fotos de tu negocio',
+          'Instalación gratis del asistente de WhatsApp con IA',
+          '3 rondas de cambios + 3 meses de cambios gratis',
+        ] },
+      ];
+      document.getElementById('planes').innerHTML = planes.map(p => {
+        const msg = [
+          `Hola Alejandro, quiero el paquete ${p.id} ($${p.precio}) para mi negocio:`,
+          `• Negocio: ${nombre}`,
+          `• Giro: ${g.label}`,
+          `• Colores: ${c.label} · Estilo: ${ENFOQUES[enfoque].label}`,
+          `• Mi muestra: ${link}`,
+        ].join('\n');
+        return `<div class="plan${p.rec ? ' rec' : ''}">
+          ${p.rec ? '<span class="badge">Recomendado</span>' : ''}
+          <span class="name">${p.id}</span>
+          <div class="price">$${p.precio} <small>MXN</small></div>
+          <p class="lead">${p.lead}</p>
+          <ul>${p.items.map(t => `<li${p.mas ? ' class="mas"' : ''}>${esc(t)}</li>`).join('')}</ul>
+          <a class="btn ${p.rec ? '' : 'btn-dark'}" href="https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener">💬 Quiero el ${p.id}</a>
+        </div>`;
+      }).join('');
     }
+
+    // Qué formulario le sirve a cada giro en el paquete PRO
+    const FORMULARIO = { restaurante: 'pedidos', belleza: 'citas', barberia: 'citas', taller: 'cotizaciones', tienda: 'pedidos', consultorio: 'citas' };
 
     function shareUrl(sel) {
       const u = new URL(location.href.split('?')[0]);
-      u.search = new URLSearchParams({ n: sel.nombre, g: sel.giro, c: sel.color, e: sel.enfoque }).toString();
+      // Los datos reales del negocio (si vinieron en el enlace) se conservan al compartir
+      const extra = Object.fromEntries(Object.entries(REAL).filter(([, v]) => v));
+      u.search = new URLSearchParams({ n: sel.nombre, g: sel.giro, c: sel.color, e: sel.enfoque, ...extra }).toString();
       return u.toString();
     }
 
@@ -505,6 +576,9 @@
     // Abrir una muestra compartida (?n=&g=&c=&e=)
     const q = new URLSearchParams(location.search);
     if (q.get('n') && GIROS[q.get('g')] && PALETAS[q.get('c')] && ENFOQUES[q.get('e')]) {
+      // Muestra preparada para un negocio: se le saluda por su nombre
+      document.getElementById('headTitle').innerHTML = `Hola, <span class="serif">${esc(q.get('n').slice(0, 40))}</span>`;
+      document.getElementById('headSub').textContent = 'Les preparamos esta muestra de cómo se vería la página de su negocio. Es gratis y sin compromiso: si les gusta, la dejamos lista en 1 día.';
       document.getElementById('nombre').value = q.get('n').slice(0, 40);
       document.getElementById(`g-${q.get('g')}`).checked = true;
       document.getElementById(`c-${q.get('c')}`).checked = true;
