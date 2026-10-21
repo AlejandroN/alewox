@@ -137,6 +137,14 @@
     .planes-note a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
     .result-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 18px; }
 
+    /* ?solo=1: solo la página del negocio, para tomarle foto (imágenes de prospectos) */
+    body.solo { background: #fff; }
+    body.solo header, body.solo .result-head, body.solo .bar, body.solo .disclaimer, body.solo .planes, body.solo .result-actions { display: none; }
+    body.solo main { margin: 0; padding: 0; }
+    body.solo .wrap { width: 100%; }
+    body.solo .card, body.solo .browser { padding: 0; border: 0; border-radius: 0; box-shadow: none; }
+    body.solo .result.on { animation: none; }
+
     /* =====================================================
        PLANTILLA DE LA MUESTRA (todo dentro de #pv)
        ===================================================== */
@@ -290,7 +298,7 @@
               <div id="pv"></div>
             </div>
           </div>
-          <p class="disclaimer">Textos, precios y fotos de ejemplo. En tu página van tus servicios, precios y fotos reales.</p>
+          <p class="disclaimer">Esta muestra es solo un adelanto gratis con textos y fotos de ejemplo. Tu página final lleva tus fotos, servicios y precios reales, y queda lista para recibir clientes.</p>
 
           <section class="planes">
             <h2>Elige cómo la <span class="serif">quieres</span></h2>
@@ -398,11 +406,17 @@
         tel: /^\d{10,13}$/.test(tel) ? tel : '',
       };
     })();
-    // Nombre corto para la dirección de ejemplo: palabras hasta juntar 8 letras ("Dentique by Dra..." -> dentique.com)
+    // Nombre corto para la dirección de ejemplo, sin palabras de relleno:
+    // "Dentique by Dra..." -> dentique.com · "Barbería La Prueba" -> barberiaprueba.com (el giro solo no basta)
+    const RELLENO = ['la', 'el', 'los', 'las', 'de', 'del', 'y', 'by', 'dr', 'dra'];
+    const GENERICAS = ['barberia', 'barber', 'salon', 'estetica', 'taller', 'clinica', 'dental', 'consultorio', 'restaurante', 'taqueria', 'tienda', 'servicio', 'automotriz', 'mecanico'];
     const slug = s => {
-      const palabras = s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().split(/[^a-z0-9]+/).filter(Boolean);
+      const palabras = s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().split(/[^a-z0-9]+/).filter(w => w && !RELLENO.includes(w));
       let corto = '';
-      for (const w of palabras) { corto += w; if (corto.length >= 8) break; }
+      for (const w of palabras) {
+        corto += w;
+        if (corto.length >= 8 && !GENERICAS.includes(corto)) break;
+      }
       return corto.slice(0, 24) || 'tunegocio';
     };
 
@@ -459,21 +473,22 @@
       const dominio = `${slug(nombre)}.com`;
       const form = FORMULARIO[giro];
       const planes = [
-        { id: 'Básico', precio: 450, lead: 'Esta misma plantilla, con tu información real', items: [
-          'Tu nombre, logo, colores y hasta 6 servicios',
+        { id: 'Básico', precio: 450, lead: 'Tu página profesional lista en 1 día, con tu información real', items: [
+          'Tus fotos, logo, colores y hasta 6 servicios con precios',
           'Botón directo a tu WhatsApp',
           'Ubicación en Google Maps, horario y redes',
           'Dirección web gratuita',
           'Código QR para imprimir en tu negocio',
-          '1 ronda de cambios',
+          '1 ronda de ajustes antes de publicar: textos, precios, fotos y colores',
         ] },
-        { id: 'Esencial', precio: 750, rec: true, lead: 'Diseñada a la medida de tu negocio, no una plantilla', items: [
-          'Diseño único con tu estilo, a partir de esta muestra',
+        { id: 'Esencial', precio: 750, rec: true, lead: 'Diseñada a la medida de tu negocio, mucho más completa que esta muestra', items: [
+          'Diseño único hecho para tu negocio',
           `Varias secciones: ${g.secTitle.toLowerCase()}, galería de hasta 12 fotos y contacto`,
           'Botones de WhatsApp con el mensaje listo para cada servicio',
           'Alta y optimización de tu perfil en Google Maps',
           'QR con diseño para tu mostrador',
-          '2 rondas de cambios + 1 mes de cambios gratis',
+          '2 rondas de ajustes antes de publicar: textos, fotos, colores y acomodo de secciones',
+          '1 mes de actualizaciones gratis: precios, promociones, horarios y fotos',
         ] },
         { id: 'PRO', precio: 950, lead: 'Todo lo de la Esencial, más:', mas: true, items: [
           `Tu propio dominio el primer año: ${dominio}`,
@@ -482,7 +497,8 @@
           'SEO local para aparecer en Google en Hermosillo',
           'Visita para tomar fotos de tu negocio',
           'Instalación gratis del asistente de WhatsApp con IA',
-          '3 rondas de cambios + 3 meses de cambios gratis',
+          '3 rondas de ajustes antes de publicar, más secciones nuevas y animaciones',
+          '3 meses de actualizaciones gratis, incluidos servicios nuevos',
         ] },
       ];
       document.getElementById('planes').innerHTML = planes.map(p => {
@@ -583,6 +599,7 @@
       document.getElementById(`g-${q.get('g')}`).checked = true;
       document.getElementById(`c-${q.get('c')}`).checked = true;
       document.getElementById(`e-${q.get('e')}`).checked = true;
+      if (q.get('solo')) document.body.classList.add('solo');
       show(selection(), false);
     }
     markProgress();
