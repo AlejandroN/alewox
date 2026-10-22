@@ -201,7 +201,7 @@
     /* Anillo 3D: las páginas giran alrededor; se arrastra con el dedo o el mouse */
     .carousel { position: relative; height: clamp(300px, 46vw, 470px); perspective: 1700px; cursor: grab; touch-action: pan-y; user-select: none; -webkit-user-select: none; --w: min(440px, 64vw); }
     .carousel.arrastrando { cursor: grabbing; }
-    .ring { position: absolute; left: 50%; top: 46%; width: var(--w); aspect-ratio: 4 / 3; translate: -50% -50%; transform-style: preserve-3d; transform: translateZ(calc(var(--r, 600px) * -1)) rotateY(var(--a, 0deg)); transition: transform 1s var(--ease); }
+    .ring { position: absolute; left: 50%; top: 46%; width: var(--w); aspect-ratio: 4 / 3; translate: -50% -50%; transform-style: preserve-3d; transform: translateZ(calc(var(--r, 600px) * -1)) rotateY(var(--a, 0deg)); transition: transform .75s var(--ease); }
     .carousel.arrastrando .ring { transition: none; }
     .ring .project { position: absolute; inset: 0; transform: rotateY(calc(var(--i) * var(--paso))) translateZ(var(--r, 600px)); backface-visibility: hidden; -webkit-backface-visibility: hidden; transition: opacity .6s, filter .6s; -webkit-user-drag: none; }
     .ring .project img { -webkit-user-drag: none; pointer-events: none; }
@@ -1020,7 +1020,7 @@
     if (!reduce) setInterval(() => {
       if (!carVisible || carPausa || document.hidden) return;
       ir(1);
-    }, 3500);
+    }, 2200);
 
     // HABLEMOS: cada letra sube al aparecer; con el mouse, las letras cercanas se levantan; en celular hacen una ola
     const hab = document.getElementById('hablemos');
