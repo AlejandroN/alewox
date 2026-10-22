@@ -197,10 +197,21 @@
     @keyframes pop { 0%, 100% { transform: scale(1); } 10% { transform: scale(1.06); } 20% { transform: scale(1); } }
 
     /* ---------- Trabajos ---------- */
-    .work { background: var(--bg-2); }
-    .carousel { display: flex; gap: 28px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 26px; scrollbar-width: none; cursor: grab; }
-    .carousel::-webkit-scrollbar { display: none; }
-    .project { flex: 0 0 min(560px, 84vw); scroll-snap-align: start; }
+    .work { background: var(--bg-2); overflow-x: clip; }
+    /* Anillo 3D: las páginas giran alrededor; se arrastra con el dedo o el mouse */
+    .carousel { position: relative; height: clamp(300px, 46vw, 470px); perspective: 1700px; cursor: grab; touch-action: pan-y; user-select: none; -webkit-user-select: none; --w: min(440px, 64vw); }
+    .carousel.arrastrando { cursor: grabbing; }
+    .ring { position: absolute; left: 50%; top: 46%; width: var(--w); aspect-ratio: 4 / 3; translate: -50% -50%; transform-style: preserve-3d; transform: translateZ(calc(var(--r, 600px) * -1)) rotateY(var(--a, 0deg)); transition: transform 1s var(--ease); }
+    .carousel.arrastrando .ring { transition: none; }
+    .ring .project { position: absolute; inset: 0; transform: rotateY(calc(var(--i) * var(--paso))) translateZ(var(--r, 600px)); backface-visibility: hidden; -webkit-backface-visibility: hidden; transition: opacity .6s, filter .6s; -webkit-user-drag: none; }
+    .ring .project img { -webkit-user-drag: none; pointer-events: none; }
+    .ring .project:not(.frente) { opacity: .5; filter: saturate(.5) brightness(.8); }
+    .ring .project .frame { box-shadow: 0 40px 80px rgba(0,0,0,.55); }
+    .ring .project .project-info { display: none; }
+    .ring-info { text-align: center; margin-top: 8px; min-height: 64px; }
+    .ring-info h3 { font-size: clamp(1.5rem, 3vw, 2.1rem); letter-spacing: -.03em; animation: fadeUp .6s var(--ease); }
+    .ring-info span { color: var(--muted); font-size: .95rem; }
+    .project { display: block; }
     .project .frame { border-radius: var(--radius); overflow: hidden; background: #222; aspect-ratio: 4 / 3; position: relative; }
     .project .frame .shot { width: 100%; height: 100%; object-fit: cover; object-position: top; transition: transform .8s var(--ease); }
     .project .frame::after { content: "Ver página ↗"; position: absolute; inset: 0; display: grid; place-items: center; background: rgba(12,11,10,.6); color: #fff; font-weight: 600; font-size: 1.1rem; opacity: 0; transition: opacity .4s; }
@@ -215,7 +226,7 @@
     .carousel-nav button { width: 54px; height: 54px; border-radius: 50%; border: 1px solid var(--line); background: none; color: var(--fg); font-size: 1.2rem; cursor: pointer; transition: background .3s, color .3s, border-color .3s; }
     .carousel-nav button:hover { background: var(--fg); color: var(--bg); border-color: var(--fg); }
     .progress { height: 2px; background: var(--line); border-radius: 2px; margin-top: 12px; overflow: hidden; }
-    .progress div { height: 100%; width: 0; background: var(--accent); transition: width .2s; }
+    .progress div { height: 100%; width: 0; background: var(--accent); transition: width .6s var(--ease); }
 
     /* ---------- Qué incluye (bento) ---------- */
     .bento { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 270px; gap: 16px; }
@@ -328,6 +339,17 @@
     .final > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
     .final::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, var(--bg) 0%, rgba(12,11,10,.55) 30%, rgba(12,11,10,.7) 70%, var(--bg) 100%); }
     .final h2 { font-size: clamp(3.6rem, 11vw, 10.5rem); letter-spacing: -.06em; line-height: .9; margin-bottom: 48px; }
+    /* HABLEMOS: letras gigantes que suben al aparecer y se levantan cerca del cursor */
+    .hablemos { margin-bottom: 40px !important; }
+    .hablemos .letras { display: flex; font-size: clamp(4rem, 16.5vw, 15.5rem); font-weight: 800; letter-spacing: -.06em; line-height: .86; text-transform: uppercase; overflow: hidden; padding-bottom: .04em; }
+    .hablemos .l { display: inline-block; transform: translateY(105%); transition: transform 1.1s var(--ease), color .35s; transition-delay: calc(var(--i) * 60ms); cursor: default; }
+    .hablemos.in .l { transform: translateY(calc(var(--lift, 0) * -1em)); }
+    .hablemos.in.listo .l { transition: transform .45s var(--ease), color .35s; transition-delay: 0s; }
+    .hablemos .l.cerca { color: var(--accent); }
+    .hablemos .sub { display: block; font-size: clamp(2rem, 5.5vw, 4.6rem); color: var(--accent-2); margin-top: 6px; opacity: 0; transform: translateY(20px); transition: opacity 1s var(--ease) .7s, transform 1s var(--ease) .7s; }
+    .hablemos.in .sub { opacity: 1; transform: none; }
+    @keyframes ola { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-.07em); } }
+    .hablemos.in.listo.ola .l { animation: ola 2.8s ease-in-out infinite; animation-delay: calc(var(--i) * 120ms); }
     .final h2 .serif { color: var(--accent-2); }
     .final-row { display: flex; justify-content: space-between; align-items: flex-end; gap: 30px; flex-wrap: wrap; }
     .final-row p { max-width: 440px; color: rgba(244,239,232,.8); font-size: 1.12rem; }
@@ -557,7 +579,7 @@
           <div class="progress"><div id="progress"></div></div>
         </div>
       </div>
-      <div class="carousel reveal" id="carousel">
+      <div class="carousel reveal" id="carousel" aria-roledescription="carrusel"><div class="ring" id="ring">
         <a class="project" href="https://alejandron.github.io/kbar-landing/" target="_blank" rel="noopener">
           <div class="frame"><img class="shot" src="img/trabajos/kbar.jpg" alt="Página de K-BAR" loading="lazy"></div>
           <div class="project-info"><h3>K-BAR <span class="tag real">Cliente real</span></h3><span>Eventos · Snack bar</span></div>
@@ -582,7 +604,8 @@
           <div class="frame"><img class="shot" src="img/trabajos/taller.jpg" alt="Página de Taller Torque" loading="lazy"></div>
           <div class="project-info"><h3>Taller Torque <span class="tag">Muestra</span></h3><span>Automotriz</span></div>
         </a>
-      </div>
+      </div></div>
+      <div class="ring-info" id="ringInfo" aria-live="polite"></div>
     </div>
   </section>
 
@@ -785,7 +808,7 @@
   <footer id="contacto" class="final">
     <img src="img/alewox-desierto.jpg" alt="" loading="lazy">
     <div class="container">
-      <h2 class="reveal">Hagamos tu <span class="serif">página</span>.</h2>
+      <h2 class="hablemos" id="hablemos" aria-label="Hablemos de tu página."><span class="letras" aria-hidden="true">Hablemos</span><span class="sub serif" aria-hidden="true">de tu página.</span></h2>
       <div class="final-row">
         <p class="reveal">Escríbeme por WhatsApp, cuéntame de tu negocio y te mando una propuesta sin compromiso.<br><br><a href="formulario/">¿Ya contrataste? Llena tu formulario →</a></p>
         <a href="#" class="btn btn-accent reveal" data-wa="Hola Alejandro, quiero una página web para mi negocio.">Escribir por WhatsApp <span class="arr">→</span></a>
@@ -936,26 +959,91 @@
     }), { threshold: .15, rootMargin: '0px 0px -40px 0px' });
     document.querySelectorAll('.reveal, #steps').forEach(el => io.observe(el));
 
-    // Carrusel
+    // Trabajos en anillo 3D: gira solo mientras está a la vista; se arrastra con el dedo o el mouse
     const car = document.getElementById('carousel');
+    const ring = document.getElementById('ring');
     const bar = document.getElementById('progress');
-    const step = () => car.querySelector('.project').offsetWidth + 28;
-    document.getElementById('next').addEventListener('click', () => car.scrollBy({ left: step(), behavior: 'smooth' }));
-    document.getElementById('prev').addEventListener('click', () => car.scrollBy({ left: -step(), behavior: 'smooth' }));
-    const updateBar = () => { const max = car.scrollWidth - car.clientWidth; bar.style.width = `${max ? 15 + 85 * car.scrollLeft / max : 100}%`; };
-    car.addEventListener('scroll', updateBar, { passive: true }); updateBar();
+    const info = document.getElementById('ringInfo');
+    const tarjetas = [...ring.querySelectorAll('.project')];
+    const N = tarjetas.length, PASO = 360 / N;
+    let angulo = 0, actual = -1;
+    ring.style.setProperty('--paso', PASO + 'deg');
+    tarjetas.forEach((t, i) => t.style.setProperty('--i', i));
+    const medir = () => {
+      const w = ring.getBoundingClientRect().width;
+      ring.style.setProperty('--r', Math.round(w / 2 / Math.tan(Math.PI / N) + w * .4) + 'px');
+    };
+    const frente = () => ((Math.round(-angulo / PASO) % N) + N) % N;
+    const pintar = () => {
+      ring.style.setProperty('--a', angulo + 'deg');
+      const f = frente();
+      if (f === actual) return;
+      actual = f;
+      tarjetas.forEach((t, i) => { t.classList.toggle('frente', i === f); t.tabIndex = i === f ? 0 : -1; });
+      const h = tarjetas[f].querySelector('h3').innerHTML, sub = tarjetas[f].querySelector('.project-info > span').textContent;
+      info.innerHTML = `<h3>${h}</h3><span>${sub}</span>`;
+      bar.style.width = `${(f + 1) / N * 100}%`;
+    };
+    const ir = (d) => { angulo = Math.round(angulo / PASO) * PASO - d * PASO; pintar(); };
+    document.getElementById('next').addEventListener('click', () => ir(1));
+    document.getElementById('prev').addEventListener('click', () => ir(-1));
+    medir(); pintar();
+    addEventListener('resize', medir);
 
-    // El carrusel avanza solo mientras está a la vista; se detiene si el visitante lo toca o pasa el mouse
-    let carVisible = false, carPausa = false;
+    // Arrastrar: el anillo sigue al dedo y al soltar se acomoda en la página más cercana
+    let x0 = null, a0 = 0, movio = false, carPausa = false;
+    car.addEventListener('pointerdown', (e) => { x0 = e.clientX; a0 = angulo; movio = false; carPausa = true; });
+    addEventListener('pointermove', (e) => {
+      if (x0 === null) return;
+      const dx = e.clientX - x0;
+      if (!movio && Math.abs(dx) < 6) return;
+      if (!movio) { movio = true; car.classList.add('arrastrando'); }
+      angulo = a0 + dx * .35; pintar();
+    });
+    addEventListener('pointerup', () => {
+      if (x0 === null) return;
+      x0 = null; car.classList.remove('arrastrando');
+      if (movio) ir(0);
+      setTimeout(() => carPausa = false, 4000);
+    });
+    // Un clic en una página de lado la trae al frente; en la del frente, la abre
+    tarjetas.forEach((t, i) => t.addEventListener('click', (e) => {
+      if (movio) { e.preventDefault(); return; }
+      if (i !== frente()) { e.preventDefault(); const d = ((i - frente()) % N + N) % N; ir(d > N / 2 ? d - N : d); }
+    }));
+    car.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight') ir(1); if (e.key === 'ArrowLeft') ir(-1); });
+
+    let carVisible = false;
     new IntersectionObserver(([e]) => { carVisible = e.isIntersecting; }, { threshold: .4 }).observe(car);
-    car.addEventListener('pointerenter', () => carPausa = true);
-    car.addEventListener('pointerleave', () => carPausa = false);
-    car.addEventListener('touchstart', () => carPausa = true, { passive: true });
+    car.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') carPausa = true; });
+    car.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse' && x0 === null) carPausa = false; });
     if (!reduce) setInterval(() => {
       if (!carVisible || carPausa || document.hidden) return;
-      const alFinal = car.scrollLeft + car.clientWidth >= car.scrollWidth - 10;
-      car.scrollTo({ left: alFinal ? 0 : car.scrollLeft + step(), behavior: 'smooth' });
+      ir(1);
     }, 3500);
+
+    // HABLEMOS: cada letra sube al aparecer; con el mouse, las letras cercanas se levantan; en celular hacen una ola
+    const hab = document.getElementById('hablemos');
+    const letras = hab.querySelector('.letras');
+    letras.innerHTML = [...letras.textContent].map((c, i) => `<span class="l" style="--i:${i}">${c}</span>`).join('');
+    const ls = [...letras.children];
+    new IntersectionObserver(([e], o) => {
+      if (!e.isIntersecting) return;
+      hab.classList.add('in'); o.disconnect();
+      setTimeout(() => { hab.classList.add('listo'); if (!matchMedia('(hover: hover)').matches && !reduce) hab.classList.add('ola'); }, 1400);
+    }, { threshold: .3 }).observe(hab);
+    if (matchMedia('(hover: hover)').matches && !reduce) {
+      letras.addEventListener('pointermove', (e) => {
+        if (!hab.classList.contains('listo')) return;
+        ls.forEach((l) => {
+          const b = l.getBoundingClientRect(), d = Math.abs(e.clientX - (b.left + b.width / 2)) / b.width;
+          const lift = Math.max(0, 1 - d / 1.6) * .16;
+          l.style.setProperty('--lift', lift.toFixed(3));
+          l.classList.toggle('cerca', lift > .08);
+        });
+      });
+      letras.addEventListener('pointerleave', () => ls.forEach((l) => { l.style.setProperty('--lift', 0); l.classList.remove('cerca'); }));
+    }
 
     // Chat con IA. Dirección del servidor del bot (vacío = chat oculto).
     // El botón solo aparece si el bot contesta; si está apagado, la página se queda solo con WhatsApp.
