@@ -116,7 +116,18 @@
     .disclaimer { text-align: center; color: var(--muted); font-size: .88rem; margin-top: 18px; }
 
     /* ---------- Paquetes debajo de la muestra ---------- */
-    .planes { margin-top: 56px; text-align: center; }
+    .gancho { margin-top: 40px; background: var(--ink); color: #fff; border-radius: 26px; padding: 40px 28px; text-align: center; position: relative; overflow: hidden; }
+    .gancho::before { content: ""; position: absolute; width: 520px; height: 520px; border-radius: 50%; background: radial-gradient(circle, rgba(255, 122, 61, .45), transparent 62%); top: -300px; left: 50%; transform: translateX(-50%); animation: brillo 4s ease-in-out infinite alternate; }
+    @keyframes brillo { from { opacity: .55; } to { opacity: 1; } }
+    .gancho > * { position: relative; }
+    .gancho .etq { display: inline-block; background: var(--accent); color: #fff; font-weight: 700; font-size: .8rem; letter-spacing: .06em; text-transform: uppercase; padding: 7px 14px; border-radius: 99px; }
+    .gancho h2 { font-size: clamp(1.9rem, 5vw, 3rem); letter-spacing: -.045em; line-height: 1.04; margin: 18px auto 14px; max-width: 640px; }
+    .gancho h2 .serif { color: #ffb48a; }
+    .gancho p { color: rgba(255,255,255,.82); max-width: 540px; margin: 0 auto 26px; font-size: 1.05rem; }
+    .gancho p strong { color: #fff; }
+    .gancho a { display: inline-flex; gap: 8px; background: #fff; color: var(--ink); font-weight: 700; padding: 15px 28px; border-radius: 99px; text-decoration: none; transition: transform .2s; }
+    .gancho a:hover { transform: translateY(-2px); }
+    .planes { margin-top: 56px; text-align: center; scroll-margin-top: 20px; }
     .planes h2 { font-size: clamp(1.8rem, 4.4vw, 2.6rem); letter-spacing: -.04em; line-height: 1.05; }
     .planes h2 .serif { color: var(--clay-2); }
     .planes-sub { color: var(--muted); margin: 8px 0 30px; }
@@ -140,7 +151,7 @@
 
     /* ?solo=1: solo la página del negocio, para tomarle foto (imágenes de prospectos) */
     body.solo { background: #fff; }
-    body.solo header, body.solo .result-head, body.solo .bar, body.solo .disclaimer, body.solo .planes, body.solo .result-actions { display: none; }
+    body.solo header, body.solo .result-head, body.solo .bar, body.solo .disclaimer, body.solo .gancho, body.solo .planes, body.solo .result-actions { display: none; }
     body.solo main { margin: 0; padding: 0; }
     body.solo .wrap { width: 100%; }
     body.solo .card, body.solo .browser { padding: 0; border: 0; border-radius: 0; box-shadow: none; }
@@ -301,7 +312,14 @@
           </div>
           <p class="disclaimer">Esta muestra es solo un adelanto gratis con textos y fotos de ejemplo. Tu página final lleva tus fotos, servicios y precios reales, y queda lista para recibir clientes.</p>
 
-          <section class="planes">
+          <div class="gancho">
+            <span class="etq">¿Qué te pareció? 👀</span>
+            <h2>Y esto es solo una plantilla <span class="serif">sin personalizar</span>.</h2>
+            <p>Nuestros planes te dan una página <strong>hecha a tu medida</strong>, con tus fotos, tus precios y tu estilo: <strong>mil veces más profesional</strong>. ¿Qué esperas?</p>
+            <a href="#planesSec">Ver los planes ↓</a>
+          </div>
+
+          <section class="planes" id="planesSec">
             <h2>Elige cómo la <span class="serif">quieres</span></h2>
             <p class="planes-sub">Pago único · Entrega en 1 día · Te la entregamos lista para compartir</p>
             <div class="planes-grid" id="planes"></div>
