@@ -185,6 +185,7 @@
     .screen iframe { position: absolute; top: 0; left: 0; border: 0; transform-origin: 0 0; pointer-events: none; }
     .browser .screen { height: 352px; }
     .browser .screen img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+    .browser .screen iframe { width: 1280px; height: 900px; }
     .phone { position: absolute; left: 0; bottom: 0; width: 210px; border-radius: 32px; background: #111; padding: 9px; box-shadow: 0 40px 80px rgba(0,0,0,.6); animation: floatB 6s ease-in-out infinite; }
     .phone .screen { height: 410px; border-radius: 24px; }
     .phone .screen iframe { width: 390px; height: 836px; transform: scale(.4923); }
@@ -553,7 +554,7 @@
       <div class="devices reveal d1" aria-hidden="true">
         <div class="browser">
           <div class="browser-bar"><i></i><i></i><i></i><span class="url">tunegocio.com</span></div>
-          <div class="screen"><img src="img/trabajos/taqueria.jpg" alt="" loading="lazy"></div>
+          <div class="screen"><img src="img/trabajos/duna.jpg" alt="" loading="lazy"><iframe id="vitrina" scrolling="no" src="https://alejandron.github.io/portafolio/muestra-tenis/?vista=mini" tabindex="-1" title="Muestra Duna Runner"></iframe></div>
         </div>
         <div class="phone">
           <div class="screen"><iframe src="https://alejandron.github.io/portafolio/muestra-hamburguesa/" loading="lazy" tabindex="-1" title="Muestra Brasa Burger"></iframe></div>
@@ -958,6 +959,11 @@
       io.unobserve(e.target);
     }), { threshold: .15, rootMargin: '0px 0px -40px 0px' });
     document.querySelectorAll('.reveal, #steps').forEach(el => io.observe(el));
+
+    // La compu de "Así se ve" muestra Duna Runner en vivo, escalada al ancho de la pantallita
+    const pantalla = document.querySelector('.browser .screen'), vitrina = document.getElementById('vitrina');
+    const ajustarVitrina = () => { const k = pantalla.clientWidth / 1280; vitrina.style.transform = `scale(${k})`; vitrina.style.height = `${Math.ceil(pantalla.clientHeight / k)}px`; };
+    ajustarVitrina(); addEventListener('resize', ajustarVitrina);
 
     // Trabajos en anillo 3D: gira solo mientras está a la vista; se arrastra con el dedo o el mouse
     const car = document.getElementById('carousel');
