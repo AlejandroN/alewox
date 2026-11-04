@@ -213,6 +213,12 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; }
   .logo { transition: opacity .4s; }
   .abierto .logo { opacity: 0; pointer-events: none; }
 }
+/* modo ligero (celulares sencillos): sin desenfoques ni resplandores en vivo, con vidrios más oscuros para que se siga leyendo todo */
+.ligero .borroso { backdrop-filter: none; -webkit-backdrop-filter: none; background: rgba(8, 7, 6, .42); }
+.ligero .bloque, .ligero .aviso, .ligero .bocina { backdrop-filter: none; -webkit-backdrop-filter: none; background: rgba(14, 12, 10, .8); box-shadow: none; }
+.ligero .detalle { backdrop-filter: none; -webkit-backdrop-filter: none; background: rgba(20, 17, 15, .94); }
+.ligero .hilos path, .ligero .hilos circle, .ligero .cursor { filter: none; }
+.ligero .vista { filter: none; }
 @media (prefers-reduced-motion: reduce) {
   .cuadro, .bloque, .detalle { transition: none; }
   .llamando .pantalla-toque { animation: none; }
@@ -268,17 +274,32 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; }
 const WHATS = '526624002958';
 const wa = (texto) => `https://wa.me/${WHATS}?text=${encodeURIComponent(texto)}`;
 const reducir = matchMedia('(prefers-reduced-motion: reduce)').matches;
+// celulares sencillos (poca memoria, pocos núcleos o ahorro de datos): video más ligero y sin desenfoques en vivo
+const ligero = (matchMedia('(pointer: coarse)').matches && ((navigator.deviceMemory || 8) <= 4 || (navigator.hardwareConcurrency || 8) <= 4)) || !!(navigator.connection && navigator.connection.saveData);
+if (ligero) document.documentElement.classList.add('ligero');
+// y si aun así se traba (menos de ~35 cuadros por segundo al cargar), también quita los desenfoques
+(() => {
+  let n = 0, t0 = 0, antes = 0;
+  const contar = (t) => {
+    // si la pestaña se escondió un rato, vuelve a empezar a medir
+    if (!t0 || t - antes > 500) { t0 = t; n = 0; }
+    antes = t; n++;
+    if (t - t0 < 2500) requestAnimationFrame(contar);
+    else if ((n * 1000) / (t - t0) < 35) document.documentElement.classList.add('ligero');
+  };
+  addEventListener('load', () => setTimeout(() => requestAnimationFrame(contar), 1200));
+})();
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
 // ---------- las dos tomas: vertical (cel) y horizontal (compu), con medidas en píxeles de cada video ----------
 const TOMAS = {
   vertical: {
-    video: 'media/escritorio.mp4', foto: 'media/portada.jpg', w: 1080, h: 1920,
+    video: 'media/escritorio.mp4', ligero: 'media/escritorio-ligero.mp4', foto: 'media/portada.jpg', w: 1080, h: 1920,
     pantalla: [[425, 1015], [871, 1059], [845, 1372], [398, 1289]],
     laptop: [[415, 995], [912, 1036], [884, 1390], [806, 1645], [172, 1488], [200, 1452], [388, 1300]],
   },
   horizontal: {
-    video: 'media/escritorio-h.mp4', foto: 'media/portada-h.jpg', w: 1920, h: 1080,
+    video: 'media/escritorio-h.mp4', ligero: 'media/escritorio-h-ligero.mp4', foto: 'media/portada-h.jpg', w: 1920, h: 1080,
     pantalla: [[888, 483], [1275, 523], [1235, 818], [852, 738]],
     laptop: [[885, 462], [1306, 498], [1278, 850], [1266, 862], [1105, 995], [642, 872], [650, 850], [770, 788], [850, 758]],
   },
@@ -304,7 +325,7 @@ function usarToma(nombre) {
   // para que el cel deje arrancar el video solo: tiene que ir sin sonido y dentro de la página
   video.muted = video.defaultMuted = true;
   video.playsInline = true;
-  video.src = T.video;
+  video.src = ligero ? T.ligero : T.video;
   video.play().catch(() => {});
 }
 // si el cel no lo dejó arrancar (por ejemplo, en ahorro de batería), arranca en cuanto lo carga o con el primer toque
