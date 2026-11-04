@@ -723,18 +723,18 @@ const sonido = (() => {
   // la lluvia: un siseo de fondo + el rumor grave del cuarto + gotas que pegan en el vidrio
   function lluvia() {
     const fondo = ctx.createBufferSource(); fondo.buffer = ruido(6); fondo.loop = true;
-    const siseo = ctx.createGain(); siseo.gain.value = 0.05;
-    fondo.connect(filtro('bandpass', 2600, 0.5)).connect(siseo).connect(maestro); fondo.start();
+    const siseo = ctx.createGain(); siseo.gain.value = 0.022;
+    fondo.connect(filtro('bandpass', 1700, 0.45)).connect(siseo).connect(maestro); fondo.start();
     const grave = ctx.createBufferSource(); grave.buffer = ruido(6, 'cafe'); grave.loop = true;
-    const rumor = ctx.createGain(); rumor.gain.value = 0.22;
+    const rumor = ctx.createGain(); rumor.gain.value = 0.05;
     grave.connect(filtro('lowpass', 380)).connect(rumor).connect(maestro); grave.start();
     const gota = () => {
       const t = ctx.currentTime, o = ctx.createOscillator(), g = ctx.createGain(), p = ctx.createStereoPanner();
-      o.type = 'sine'; o.frequency.setValueAtTime(1800 + Math.random() * 2600, t); o.frequency.exponentialRampToValueAtTime(700 + Math.random() * 500, t + 0.05);
-      g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.012 + Math.random() * 0.03, t + 0.004); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.06);
+      o.type = 'sine'; o.frequency.setValueAtTime(1300 + Math.random() * 1500, t); o.frequency.exponentialRampToValueAtTime(600 + Math.random() * 350, t + 0.06);
+      g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.006 + Math.random() * 0.016, t + 0.006); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.08);
       p.pan.value = Math.random() * 1.6 - 0.8;
       o.connect(g).connect(p).connect(maestro); o.start(t); o.stop(t + 0.08);
-      setTimeout(gota, 40 + Math.random() * 170);
+      setTimeout(gota, 110 + Math.random() * 380);
     };
     gota();
   }
@@ -766,7 +766,7 @@ const sonido = (() => {
     maestro.gain.value = 0;
     maestro.connect(ctx.destination);
     lluvia();
-    if (prendido) maestro.gain.setTargetAtTime(0.85, ctx.currentTime, 1.2); // la lluvia entra poco a poco
+    if (prendido) maestro.gain.setTargetAtTime(0.45, ctx.currentTime, 1.6); // la lluvia entra poco a poco
   }
   const boton = document.getElementById('bocina');
   function pintar() {
@@ -779,7 +779,7 @@ const sonido = (() => {
     try { localStorage.setItem('alewox-sonido', prendido ? 'si' : 'no'); } catch (err) {}
     iniciar();
     ctx.resume();
-    maestro.gain.setTargetAtTime(prendido ? 0.85 : 0, ctx.currentTime, 0.25);
+    maestro.gain.setTargetAtTime(prendido ? 0.45 : 0, ctx.currentTime, 0.25);
     pintar();
   });
   pintar();
@@ -795,8 +795,8 @@ const sonido = (() => {
     // el trueno llega un poco después del destello, como en la vida real
     trueno() {
       const r = 0.5 + Math.random() * 1.2;
-      soplo({ dur: 0.35, desde: 900, hasta: 300, vol: 0.12, tipo: 'lowpass', retraso: r });
-      soplo({ dur: 4.2, desde: 260, hasta: 60, vol: 0.55, tipo: 'lowpass', color: 'cafe', retraso: r + 0.1 });
+      soplo({ dur: 0.35, desde: 600, hasta: 250, vol: 0.05, tipo: 'lowpass', retraso: r });
+      soplo({ dur: 4.2, desde: 200, hasta: 50, vol: 0.3, tipo: 'lowpass', color: 'cafe', retraso: r + 0.1 });
     },
   };
 })();
