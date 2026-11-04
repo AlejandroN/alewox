@@ -323,7 +323,7 @@
             <h2>Elige cómo la <span class="serif">quieres</span></h2>
             <p class="planes-sub">Pago único en dólares (USD) · Entrega en 24 horas · Te la entregamos lista para compartir<br>¿Eres de Hermosillo? Pregúntanos por el precio especial local.</p>
             <div class="planes-grid" id="planes"></div>
-            <p class="planes-note">Extras mensuales opcionales: asistente de WhatsApp con IA ($350/mes) y mantenimiento ($150/mes). <a href="../#paquetes">Ver todos los detalles</a></p>
+            <p class="planes-note">Extras opcionales: asistente de WhatsApp con IA ($35 USD/mes), mantenimiento ($15 USD/mes), dominio y su renovación ($25 USD/año) y QR de reseñas de Google ($6 USD). <a href="../">Ver todos los detalles</a></p>
           </section>
           <div class="result-actions">
             <button type="button" class="btn btn-ghost" id="share">Copiar enlace de mi muestra</button>
@@ -500,28 +500,33 @@
           'Dirección web gratuita',
           'Código QR para imprimir en tu negocio',
           '1 ronda de ajustes antes de publicar: textos, precios, fotos y colores',
+          'Garantía y soporte: si algo de tu página falla, lo arreglo gratis, y te ayudo por WhatsApp aunque ya haya pasado el periodo gratis',
         ] },
         { id: 'Esencial', precio: 85, rec: true, lead: 'Diseñada a la medida de tu negocio, mucho más completa que esta muestra', items: [
           'Diseño único hecho para tu negocio',
-          `Tu propio dominio el primer año: ${dominio}`,
+          `Tu propio dominio por 1 año: ${dominio}`,
           `Varias secciones: ${g.secTitle.toLowerCase()}, galería de hasta 12 fotos y contacto`,
           'Botones de WhatsApp con el mensaje listo para cada servicio',
           'Alta y optimización de tu perfil en Google Maps',
           'QR con diseño para tu mostrador',
+          'QR de reseñas de Google para que tus clientes te dejen su opinión',
           'Animaciones: fondo en movimiento y tarjetas que reaccionan al tocarlas',
           'Fotos profesionales hechas con IA si no tienes buenas fotos',
           '2 rondas de ajustes antes de publicar: textos, fotos, colores y acomodo de secciones',
           '1 mes de actualizaciones gratis: precios, promociones, horarios y fotos',
+          'Garantía y soporte: si algo de tu página falla, lo arreglo gratis, y te ayudo por WhatsApp aunque ya haya pasado el periodo gratis',
         ] },
         { id: 'PRO', precio: 115, lead: 'Todo lo de la Esencial, más:', mas: true, items: [
           `Formulario de ${form} que llega a tu WhatsApp`,
           'Animaciones premium: portada en 3D y títulos que entran palabra por palabra',
           'Sección de promociones destacada, que cambiamos cuando quieras',
+          'Sección de opiniones de clientes',
           'SEO local para aparecer en Google en tu ciudad',
           'Visita para tomar fotos de tu negocio (en Hermosillo; fuera, fotos con IA)',
           'Instalación gratis del asistente de WhatsApp con IA',
           '3 rondas de ajustes antes de publicar, más secciones nuevas y animaciones',
           '3 meses de actualizaciones gratis, incluidos servicios nuevos',
+          'Garantía y soporte: si algo de tu página falla, lo arreglo gratis, y te ayudo por WhatsApp aunque ya haya pasado el periodo gratis',
         ] },
       ];
       document.getElementById('planes').innerHTML = planes.map(p => {
