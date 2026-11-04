@@ -180,6 +180,9 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; }
 .colores i { width: 16px; height: 16px; border-radius: 50%; border: 1px solid rgba(255, 255, 255, .2); }
 .estilos button { display: grid; justify-items: center; gap: 2px; padding: 8px 14px; min-width: 84px; }
 .estilos span { font-size: 24px; line-height: 1; }
+@media (min-width: 861px) {
+  .detalle { max-height: calc(100vh - 108px); max-height: calc(100svh - 108px); overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: rgba(255, 150, 90, .4) transparent; }
+}
 @media (max-width: 860px) {
   .vista { grid-template-columns: 1fr; align-content: start; padding-top: calc(env(safe-area-inset-top, 0px) + 70px); gap: 18px; }
   .detalle { width: 100%; padding: 20px; }
@@ -212,6 +215,7 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; }
   .bloque .dato, .bloque span { display: none; }
   .bloque { padding: 8px 10px; }
   .bloque b { font-size: 15px; }
+  .bloque { background: rgba(14, 12, 10, .78); }
   .bloque small { font-size: 11px; margin-top: 4px; }
   .logo { transition: opacity .4s; }
   .abierto .logo { opacity: 0; pointer-events: none; }
@@ -257,7 +261,7 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; }
 
 <a class="logo" href="#" aria-label="Alewox">
   <svg width="26" height="26" viewBox="0 0 100 100" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="1" x2=".6" y2="0"><stop offset="0" stop-color="#ff6a33"/><stop offset="1" stop-color="#ffb06a"/></linearGradient></defs><polygon points="6,98 30,98 64,6 40,6" fill="url(#lg)"/><polygon points="52,38 64,6 98,98 74,98" fill="#f4efe8"/></svg>
-  alewox<b>.</b>
+  <span>alewox<b>.</b></span>
 </a>
 <h1 class="frase">Hacemos que tu negocio <em>venda más</em> en internet.</h1>
 
@@ -501,9 +505,9 @@ const llegada = (i) => (0.5 + i * 0.09 + 0.85) * 1000 + 80;
 function dibujarHilos(S, puntos) {
   const cel = innerWidth < 720;
   hilosRutas = {};
-  hilos.innerHTML = puntos.map(({ id, x, y }, i) => {
+  hilos.innerHTML = puntos.map(({ id, x, y, mw, mh }, i) => {
     // termina en la orilla de la tarjeta, no en su centro
-    const dx = S[0] - x, dy = S[1] - y, rx = cel ? 60 : 118, ry = cel ? 36 : 58;
+    const dx = S[0] - x, dy = S[1] - y, rx = mw || (cel ? 60 : 118), ry = mh || (cel ? 36 : 58);
     const t = 1 / Math.max(Math.abs(dx) / rx, Math.abs(dy) / ry, 1);
     const ex = x + dx * t, ey = y + dy * t;
     const mx = (S[0] + ex) / 2 + (ey - S[1]) * 0.18, my = (S[1] + ey) / 2 - (ex - S[0]) * 0.18;
@@ -569,7 +573,7 @@ function enfocar() {
     Object.assign(b.style, { left: `${x}px`, top: `${y}px` });
     b.style.setProperty('--dx', `${S[0] - x}px`);
     b.style.setProperty('--dy', `${S[1] - y}px`);
-    return { id: b.dataset.id, x, y };
+    return { id: b.dataset.id, x, y, mw: b.offsetWidth / 2 + 2, mh: b.offsetHeight / 2 + 2 };
   });
   dibujarHilos(S, puntos);
 }
