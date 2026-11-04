@@ -321,7 +321,7 @@
 
           <section class="planes" id="planesSec">
             <h2>Elige cómo la <span class="serif">quieres</span></h2>
-            <p class="planes-sub">Pago único · Entrega en 24 horas · Te la entregamos lista para compartir<br>Fuera de México: Básico $35 USD · Esencial $50 USD · PRO $60 USD</p>
+            <p class="planes-sub">Pago único en dólares (USD) · Entrega en 24 horas · Te la entregamos lista para compartir<br>¿Eres de Hermosillo? Pregúntanos por el precio especial local.</p>
             <div class="planes-grid" id="planes"></div>
             <p class="planes-note">Extras mensuales opcionales: asistente de WhatsApp con IA ($350/mes) y mantenimiento ($150/mes). <a href="../#paquetes">Ver todos los detalles</a></p>
           </section>
@@ -492,7 +492,7 @@
       const dominio = `${slug(nombre)}.com`;
       const form = FORMULARIO[giro];
       const planes = [
-        { id: 'Básico', precio: 450, lead: 'Tu página profesional lista en 24 horas, con tu información real', items: [
+        { id: 'Básico', precio: 55, lead: 'Tu página profesional lista en 24 horas, con tu información real', items: [
           'Tus fotos, logo, colores y hasta 6 servicios con precios',
           'Botón directo a tu WhatsApp',
           'Ubicación en Google Maps, horario y redes',
@@ -501,7 +501,7 @@
           'Código QR para imprimir en tu negocio',
           '1 ronda de ajustes antes de publicar: textos, precios, fotos y colores',
         ] },
-        { id: 'Esencial', precio: 750, rec: true, lead: 'Diseñada a la medida de tu negocio, mucho más completa que esta muestra', items: [
+        { id: 'Esencial', precio: 85, rec: true, lead: 'Diseñada a la medida de tu negocio, mucho más completa que esta muestra', items: [
           'Diseño único hecho para tu negocio',
           `Tu propio dominio el primer año: ${dominio}`,
           `Varias secciones: ${g.secTitle.toLowerCase()}, galería de hasta 12 fotos y contacto`,
@@ -513,7 +513,7 @@
           '2 rondas de ajustes antes de publicar: textos, fotos, colores y acomodo de secciones',
           '1 mes de actualizaciones gratis: precios, promociones, horarios y fotos',
         ] },
-        { id: 'PRO', precio: 950, lead: 'Todo lo de la Esencial, más:', mas: true, items: [
+        { id: 'PRO', precio: 115, lead: 'Todo lo de la Esencial, más:', mas: true, items: [
           `Formulario de ${form} que llega a tu WhatsApp`,
           'Animaciones premium: portada en 3D y títulos que entran palabra por palabra',
           'Sección de promociones destacada, que cambiamos cuando quieras',
@@ -526,7 +526,7 @@
       ];
       document.getElementById('planes').innerHTML = planes.map(p => {
         const msg = [
-          `Hola Alejandro, quiero el paquete ${p.id} ($${p.precio}) para mi negocio:`,
+          `Hola Alejandro, quiero el paquete ${p.id} ($${p.precio} USD) para mi negocio:`,
           `• Negocio: ${nombre}`,
           `• Giro: ${g.label}`,
           `• Colores: ${c.label} · Estilo: ${ENFOQUES[enfoque].label}`,
@@ -535,7 +535,7 @@
         return `<div class="plan${p.rec ? ' rec' : ''}">
           ${p.rec ? '<span class="badge">Recomendado</span>' : ''}
           <span class="name">${p.id}</span>
-          <div class="price">$${p.precio} <small>MXN</small></div>
+          <div class="price">$${p.precio} <small>USD</small></div>
           <p class="lead">${p.lead}</p>
           <ul>${p.items.map(t => `<li${p.mas ? ' class="mas"' : ''}>${esc(t)}</li>`).join('')}</ul>
           <a class="btn ${p.rec ? '' : 'btn-dark'}" href="https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener">Quiero el ${p.id}</a>
