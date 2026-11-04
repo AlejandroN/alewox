@@ -1,1144 +1,706 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Alewox | Páginas web que hacen crecer tu negocio</title>
-  <meta name="description" content="Alewox hace crecer negocios con páginas web profesionales que atraen clientes: aparecen en Google y reciben mensajes por WhatsApp en un clic. Desde Hermosillo, Sonora, para negocios de cualquier parte del mundo. Entrega en 24 horas.">
-  <meta name="theme-color" content="#0c0b0a">
-  <meta property="og:title" content="Alewox | Hacemos crecer tu negocio">
-  <meta property="og:description" content="Páginas web que te traen más clientes: perfectas en el celular y conectadas a tu WhatsApp. Desde $450 MXN, listas en 24 horas.">
-  <link rel="icon" href="img/logo-app.svg" type="image/svg+xml">
-  <meta property="og:image" content="img/alewox-taqueria.jpg">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-  <link rel="preload" as="image" href="img/alewox-taqueria.jpg">
-  <style>
-    :root {
-      --bg: #0c0b0a;
-      --bg-2: #161412;
-      --fg: #f4efe8;
-      --muted: #9b938a;
-      --line: rgba(244, 239, 232, .12);
-      --accent: #ff7a3d;
-      --accent-2: #ffb08a;
-      --clay: #7a3b1e;
-      --ink: #0c0b0a;
-      --paper: #f4efe8;
-      --radius: 22px;
-      --ease: cubic-bezier(.2, .7, .2, 1);
-    }
-    .light { --bg: #f4efe8; --bg-2: #ebe4da; --fg: #0c0b0a; --muted: #6b645d; --line: #ddd5ca; }
+<meta charset="utf-8">
+<title>Alewox | Hacemos que tu negocio venda más en internet</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Alewox hace que tu negocio venda más en internet. Páginas web desde $450, listas desde 24 horas.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Cormorant+Garamond:ital,wght@1,600&family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600;700;800&display=swap">
+<meta name="theme-color" content="#0c0b0a">
+<meta property="og:title" content="Alewox | Hacemos que tu negocio venda más en internet">
+<meta property="og:description" content="Páginas web que te traen más clientes, conectadas a tu WhatsApp. Desde $450 MXN, listas desde 24 horas. Muestra gratis.">
+<meta property="og:image" content="https://alewox.com/media/portada-h.jpg">
+<meta property="og:url" content="https://alewox.com/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="img/logo-app.svg" type="image/svg+xml">
+<link rel="preload" as="image" href="media/portada-h.jpg">
+<style>
+/* Portada de Alewox: un escritorio real de noche con lluvia (video). Al tocar la laptop, todo se desenfoca menos ella
+   y los servicios aparecen alrededor. */
+:root {
+  --tinta: #0c0b0a;
+  --vidrio: rgba(16, 13, 11, .66);
+  --linea: rgba(244, 239, 232, .16);
+  --crema: #f4efe8;
+  --gris: #b8afa5;
+  --naranja: #ff7a3d;
+  --naranja-2: #ffb08a;
+  --verde-wa: #25d366;
+  --serif: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+  --sans: 'Inter Tight', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { height: 100%; }
+body { margin: 0; background: var(--tinta); color: var(--crema); font: 16px/1.45 var(--sans); -webkit-font-smoothing: antialiased; overflow: hidden; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--naranja-2); outline-offset: 3px; }
+em { font-family: var(--serif); font-style: italic; font-weight: 400; }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body { font-family: 'Inter Tight', system-ui, sans-serif; color: var(--fg); background: var(--bg); line-height: 1.55; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
-    a { color: inherit; text-decoration: none; }
-    img { display: block; max-width: 100%; }
-    .container { width: min(1240px, 100% - 32px); margin-inline: auto; }
-    .serif { font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-style: italic; letter-spacing: -.01em; }
-    h1, h2, h3 { font-weight: 600; letter-spacing: -.04em; line-height: 1; }
-    section, header, footer { background: var(--bg); color: var(--fg); }
+/* ---------- la escena ---------- */
+.escena { position: fixed; inset: 0; overflow: hidden; background: radial-gradient(120% 90% at 50% 60%, #2a1a10, #0c0b0a 70%); }
+/* sin will-change: así el navegador vuelve a dibujar nítido al acercar (si no, estira la imagen ya dibujada) */
+.cuadro { position: absolute; transform-origin: 0 0; transition: transform 1.2s cubic-bezier(.2, .75, .1, 1); }
+.cuadro > video, .cuadro > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.relampago { position: absolute; inset: 0; background: #cfe0ff; mix-blend-mode: screen; opacity: 0; pointer-events: none; }
+/* todo se desenfoca menos la laptop: la máscara tiene un hueco con la forma de la laptop */
+.borroso { position: absolute; inset: 0; backdrop-filter: blur(5px) brightness(.72); -webkit-backdrop-filter: blur(5px) brightness(.72); opacity: 0; transition: opacity .9s; pointer-events: none; -webkit-mask-size: 100% 100%; mask-size: 100% 100%; }
+.abierto .borroso { opacity: 1; }
+.pie { position: fixed; z-index: 2; left: 0; right: 0; bottom: 0; height: 240px; background: linear-gradient(transparent, rgba(12, 11, 10, .85) 55%, #0c0b0a); opacity: 0; transition: opacity .9s; pointer-events: none; }
+.abierto .pie { opacity: 1; }
+.cuadro > svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.pantalla-toque { fill: transparent; cursor: pointer; }
+.pantalla-toque:focus { outline: none; }
+/* la pantalla "respira": un resplandor cálido que sube y baja, y que se sale un poco de la pantalla como luz real */
+.brillo { opacity: 0; pointer-events: none; mix-blend-mode: screen; transition: opacity .6s; }
+.llamando .brillo { animation: respira 2.6s ease-in-out infinite; }
+.escena:has(.pantalla-toque:hover) .brillo, .escena:has(.pantalla-toque:focus-visible) .brillo { animation: none; opacity: .9; }
+@keyframes respira { 0%, 100% { opacity: .08; } 50% { opacity: .85; } }
+.abierto .brillo { animation: none; opacity: 0; }
 
-    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 17px 30px; border-radius: 999px; font-weight: 600; font-size: .95rem; letter-spacing: .01em; border: 1px solid transparent; transition: transform .3s var(--ease), background .3s, color .3s, border-color .3s; cursor: pointer; font-family: inherit; }
-    .btn .arr { transition: transform .3s var(--ease); }
-    .btn:hover .arr { transform: translateX(5px); }
-    .btn-accent { background: var(--accent); color: var(--ink); }
-    .btn-accent:hover { background: var(--accent-2); }
-    .btn-light { background: var(--fg); color: var(--bg); }
-    .btn-light:hover { background: var(--accent); color: var(--ink); }
-    .btn-outline { border-color: currentColor; }
-    .btn-outline:hover { background: var(--fg); color: var(--bg); border-color: var(--fg); }
-    .btn-glass { background: rgba(244, 239, 232, .08); border-color: rgba(244, 239, 232, .28); color: #f4efe8; backdrop-filter: blur(10px); }
-    .btn-glass:hover { background: #f4efe8; color: var(--ink); }
+/* el cursor de demostración que entra, hace click y abre todo */
+.cursor { position: fixed; z-index: 7; left: 0; top: 0; width: 34px; height: 34px; pointer-events: none; opacity: 0; filter: drop-shadow(0 6px 10px rgba(0, 0, 0, .55)); transform-origin: 4px 3px; }
+.onda { position: fixed; z-index: 6; width: 26px; height: 26px; margin: -13px 0 0 -13px; border-radius: 50%; border: 2px solid rgba(255, 190, 140, .95); box-shadow: 0 0 24px rgba(255, 140, 80, .8); pointer-events: none; opacity: 0; }
 
-    /* ---------- Nav ---------- */
-    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; color: #f4efe8; transition: background .4s, backdrop-filter .4s, border-color .4s; border-bottom: 1px solid transparent; }
-    nav.scrolled { background: rgba(12, 11, 10, .72); backdrop-filter: blur(16px) saturate(1.4); border-color: rgba(244, 239, 232, .08); }
-    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 76px; }
-    .logo { font-weight: 800; font-size: 1.35rem; letter-spacing: -.045em; display: flex; align-items: center; gap: 10px; }
-    .logo-mark { width: 30px; height: 30px; transition: transform .5s var(--ease); }
-    .logo:hover .logo-mark { transform: rotate(-8deg); }
-    .logo b { color: var(--accent); }
-    .nav-links { display: flex; gap: 34px; list-style: none; font-weight: 500; font-size: .93rem; }
-    .nav-links a { position: relative; opacity: .82; transition: opacity .3s; }
-    .nav-links a:hover { opacity: 1; }
-    .nav-links a::after { content: ""; position: absolute; left: 0; bottom: -5px; width: 100%; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: right; transition: transform .35s var(--ease); }
-    .nav-links a:hover::after { transform: scaleX(1); transform-origin: left; }
-    .nav-cta { padding: 11px 22px; font-size: .88rem; }
-    .menu-toggle { display: none; background: none; border: none; color: inherit; cursor: pointer; width: 40px; height: 40px; position: relative; }
-    .menu-toggle span { position: absolute; left: 8px; right: 8px; height: 2px; background: currentColor; transition: transform .3s, top .3s; }
-    .menu-toggle span:nth-child(1) { top: 15px; } .menu-toggle span:nth-child(2) { top: 23px; }
-    .menu-toggle.open span:nth-child(1) { top: 19px; transform: rotate(45deg); }
-    .menu-toggle.open span:nth-child(2) { top: 19px; transform: rotate(-45deg); }
+/* ---------- primera pantalla: lo mínimo ---------- */
+.logo { position: fixed; z-index: 5; top: calc(env(safe-area-inset-top, 0px) + 18px); left: max(20px, env(safe-area-inset-left, 0px)); display: flex; align-items: center; gap: 9px; font-weight: 800; font-size: 19px; letter-spacing: -.02em; text-decoration: none; text-shadow: 0 2px 18px rgba(0, 0, 0, .6); }
+.logo b { color: var(--naranja); }
+.frase { position: fixed; z-index: 4; left: 0; right: 0; top: calc(env(safe-area-inset-top, 0px) + 74px); margin: 0; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); max-width: 15ch; font-weight: 700; font-size: clamp(24px, 3.4vw, 38px); line-height: 1.04; letter-spacing: -.03em; text-wrap: balance; text-shadow: 0 2px 26px rgba(0, 0, 0, .65); pointer-events: none; transition: opacity .5s; }
+.frase em { color: var(--naranja-2); }
+.abierto .frase { opacity: 0; }
+.aviso { position: absolute; z-index: 3; transform: translate(-50%, 0); white-space: nowrap; font: 600 13px var(--sans); background: rgba(12, 11, 10, .6); border: 1px solid var(--linea); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); padding: 7px 13px; border-radius: 999px; opacity: 0; transition: opacity .6s; pointer-events: none; }
+.llamando .aviso { opacity: 1; }
+.abierto .aviso { opacity: 0; }
 
-    /* ---------- Historia (hero que avanza solo) ---------- */
-    .story { position: relative; }
-    .story-sticky { position: relative; height: 100vh; height: 100svh; min-height: 560px; overflow: hidden; background: var(--ink); }
-    .story .bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.04); transition: opacity 1.4s var(--ease); }
-    .story .bg.on { opacity: 1; animation: kenburns 6s linear forwards; }
-    @keyframes kenburns { from { transform: scale(1.04); } to { transform: scale(1.16); } }
-    .story-sticky::after { content: ""; position: absolute; inset: 0; pointer-events: none; background:
-      linear-gradient(90deg, rgba(12,11,10,.88) 0%, rgba(12,11,10,.55) 45%, rgba(12,11,10,.15) 100%),
-      linear-gradient(0deg, rgba(12,11,10,.85) 0%, transparent 35%),
-      linear-gradient(180deg, rgba(12,11,10,.55) 0%, transparent 25%); }
-    .beats { position: absolute; z-index: 2; top: 76px; bottom: 70px; left: 0; right: 0; }
-    .beat { position: absolute; left: 0; right: 0; top: 50%; transform: translateY(-42%); opacity: 0; visibility: hidden; transition: opacity .8s var(--ease), transform .9s var(--ease), visibility 0s .8s; color: #f4efe8; }
-    .beat.on { opacity: 1; visibility: visible; transform: translateY(-50%); transition: opacity .8s var(--ease), transform .9s var(--ease), visibility 0s; }
-    .hello { display: inline-flex; align-items: center; gap: 12px; background: rgba(244,239,232,.08); border: 1px solid rgba(244,239,232,.2); padding: 7px 18px 7px 7px; border-radius: 999px; margin-bottom: 30px; font-size: .93rem; backdrop-filter: blur(8px); opacity: 0; animation: fadeUp .8s var(--ease) forwards; }
-    .hello .avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--accent); color: var(--ink); display: grid; place-items: center; font-weight: 800; font-size: .85rem; }
-    .hello .live { width: 8px; height: 8px; border-radius: 50%; background: #4ade80; box-shadow: 0 0 0 0 rgba(74,222,128,.6); animation: ping 2s infinite; }
-    @keyframes ping { 70% { box-shadow: 0 0 0 10px rgba(74,222,128,0); } 100% { box-shadow: 0 0 0 0 rgba(74,222,128,0); } }
-    .story h1 { font-size: clamp(2.6rem, min(8vw, 11.5vh), 7.4rem); margin-bottom: 28px; max-width: 980px; }
-    .story h1 .line { display: block; overflow: hidden; padding-bottom: .07em; }
-    .story h1 .line > span { display: inline-block; transform: translateY(110%); animation: lineUp 1.1s var(--ease) forwards; }
-    .story h1 .line:nth-child(2) > span { animation-delay: .12s; }
-    .story h1 .line:nth-child(3) > span { animation-delay: .24s; }
-    .story h1 .serif { color: var(--accent-2); }
-    @keyframes lineUp { to { transform: translateY(0); } }
-    .rotator { display: inline-grid; vertical-align: bottom; }
-    .rotator span { grid-area: 1 / 1; opacity: 0; transform: translateY(40%); transition: opacity .5s, transform .6s var(--ease); white-space: nowrap; }
-    .rotator span.on { opacity: 1; transform: none; }
-    .rotator span.off { opacity: 0; transform: translateY(-40%); }
-    .hero-sub { font-size: clamp(1.05rem, 1.5vw, 1.2rem); color: rgba(244,239,232,.8); max-width: 500px; margin-bottom: 36px; opacity: 0; animation: fadeUp .9s .5s var(--ease) forwards; }
-    .hero-cta { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; opacity: 0; animation: fadeUp .9s .65s var(--ease) forwards; }
-    .hero-note { margin-top: 20px; font-size: .85rem; color: rgba(244,239,232,.6); opacity: 0; animation: fadeUp .9s .8s var(--ease) forwards; }
-    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
-    .beat .kicker { font-size: .8rem; text-transform: uppercase; letter-spacing: .2em; color: var(--accent); font-weight: 600; margin-bottom: 22px; display: block; }
-    .beat .big { font-size: clamp(2.6rem, 7.2vw, 6.6rem); font-weight: 600; letter-spacing: -.045em; line-height: .98; max-width: 1050px; }
-    .beat .big .serif { color: var(--accent-2); }
-    .beat .btn { margin-top: 36px; }
-    .story-meta { position: absolute; left: 0; right: 0; bottom: 30px; z-index: 3; color: rgba(244,239,232,.75); font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; }
-    .story-meta .container { display: flex; align-items: center; gap: 22px; }
-    .story-meta .count b { color: #f4efe8; font-weight: 600; }
-    .story-dots { flex: 1; max-width: 320px; display: flex; gap: 8px; }
-    .story-dots button { flex: 1; height: 26px; background: none; border: 0; padding: 0; cursor: pointer; position: relative; }
-    .story-dots button::before, .story-dots i { content: ""; position: absolute; left: 0; top: 12px; height: 2px; border-radius: 2px; }
-    .story-dots button::before { right: 0; background: rgba(244,239,232,.25); }
-    .story-dots i { width: 0; background: var(--accent); }
-    .story-dots button.done i { width: 100%; }
-    .story-dots button.on i { animation: fill var(--d, 6s) linear forwards; }
-    @keyframes fill { to { width: 100%; } }
-    .scroll-hint { display: flex; align-items: center; gap: 10px; }
-    @media (max-height: 760px) {
-      .story .hello { display: none; }
-      .story h1 { font-size: clamp(2.4rem, min(8vw, 10vh), 7.4rem); margin-bottom: 18px; }
-      .hero-sub { margin-bottom: 24px; }
-      .hero-note { display: none; }
-    }
-    .scroll-hint i { width: 1px; height: 34px; background: linear-gradient(rgba(244,239,232,.9), transparent); animation: drip 2s var(--ease) infinite; transform-origin: top; }
-    @keyframes drip { 0% { transform: scaleY(0); } 50% { transform: scaleY(1); } 100% { transform: scaleY(1); opacity: 0; } }
+/* ---------- los servicios alrededor de la laptop ---------- */
+.anillo { position: fixed; inset: 0; z-index: 6; pointer-events: none; }
+/* tarjetas de vidrio: salen volando desde la pantalla de la laptop (--dx, --dy) y llegan con un pequeño rebote */
+.bloque { position: absolute; width: min(250px, 42vw); transform: translate(calc(-50% + var(--dx, 0px)), calc(-50% + var(--dy, 0px))) scale(.2); opacity: 0; transition: opacity .45s, transform .85s cubic-bezier(.2, 1.35, .4, 1), border-color .3s, box-shadow .3s; text-align: left; padding: 14px 16px; border-radius: 18px; color: var(--crema); font: inherit; cursor: pointer; background: rgba(14, 12, 10, .4); border: 1px solid rgba(244, 239, 232, .13); backdrop-filter: blur(12px) saturate(1.2); -webkit-backdrop-filter: blur(12px) saturate(1.2); box-shadow: 0 18px 40px rgba(0, 0, 0, .35); overflow: hidden; }
+.abierto .bloque { opacity: 1; transform: translate(-50%, -50%); pointer-events: auto; }
+/* luz que sigue al mouse dentro de la tarjeta */
+.bloque::before { content: ""; position: absolute; inset: 0; background: radial-gradient(180px circle at var(--mx, 50%) var(--my, 0%), rgba(255, 150, 90, .2), transparent 65%); opacity: 0; transition: opacity .3s; pointer-events: none; }
+.bloque:hover::before, .bloque.activo::before { opacity: 1; }
+.bloque:hover, .bloque.activo { border-color: rgba(255, 150, 90, .55); box-shadow: 0 18px 50px rgba(0, 0, 0, .4), 0 0 30px rgba(255, 122, 61, .18); }
+.bloque .dato { display: block; font: italic 400 30px/1 var(--serif); color: var(--naranja-2); margin-bottom: 6px; letter-spacing: -.01em; }
+.bloque b { display: block; font-size: 18px; line-height: 1.1; letter-spacing: -.02em; }
+.bloque span { display: block; margin-top: 4px; font-size: 13.5px; color: #e6ded4; }
+.bloque small { display: inline-block; margin-top: 8px; font-weight: 700; font-size: 12px; color: var(--naranja-2); letter-spacing: .01em; }
+.bloque.centro { text-align: center; }
+.bloque.destacado { border-color: rgba(255, 122, 61, .6); background: rgba(255, 122, 61, .12); }
 
-    /* ---------- Secciones ---------- */
-    section { padding: 150px 0; position: relative; }
-    .eyebrow { font-size: .78rem; font-weight: 600; text-transform: uppercase; letter-spacing: .2em; color: var(--accent); display: flex; align-items: center; gap: 12px; margin-bottom: 22px; }
-    .eyebrow::before { content: ""; width: 26px; height: 1px; background: currentColor; }
-    .section-title { font-size: clamp(2.5rem, 6vw, 5.2rem); max-width: 950px; }
-    .section-title .serif { color: var(--accent); }
-    .light .section-title .serif { color: var(--clay); }
-    .head-row { display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; margin-bottom: 72px; flex-wrap: wrap; }
-    .head-row p { color: var(--muted); max-width: 400px; font-size: 1.05rem; }
+/* hilos de luz desde la laptop hacia cada servicio */
+.hilos { position: fixed; inset: 0; z-index: 5; width: 100%; height: 100%; pointer-events: none; opacity: 0; transition: opacity .6s; }
+.abierto .hilos { opacity: 1; }
+.viendo .hilos { opacity: .25; }
+.hilos path { fill: none; stroke: rgba(255, 150, 90, .45); stroke-width: 1.2; filter: drop-shadow(0 0 4px rgba(255, 122, 61, .8)); transition: stroke .3s, stroke-width .3s; }
+.hilos path.activo { stroke: rgba(255, 190, 140, .95); stroke-width: 2; }
+.hilos circle { fill: #ffd2a8; filter: drop-shadow(0 0 6px #ff8a45); }
 
-    .reveal { opacity: 0; transform: translateY(40px); transition: opacity 1s var(--ease), transform 1s var(--ease); }
-    .reveal.in { opacity: 1; transform: none; }
-    .reveal.d1 { transition-delay: .1s; } .reveal.d2 { transition-delay: .2s; } .reveal.d3 { transition-delay: .3s; }
+/* la pantalla de la laptop "en vivo": muestra cada servicio */
+.pantalla-viva { position: absolute; left: 0; top: 0; width: 800px; height: 500px; transform-origin: 0 0; overflow: hidden; opacity: 0; transition: opacity .45s; pointer-events: none; background: #0f0d0c; color: #f4efe8; font-family: var(--sans); border-radius: 6px; }
+.pantalla-viva.ver { opacity: 1; }
+.pantalla-viva.nitida { transition: opacity .2s; }
+/* la pantalla nítida (vector) que tapa la del video mientras la cámara se acerca */
+.p-logo { position: absolute; inset: 0; background: radial-gradient(52% 62% at 50% 46%, #5a2610, #2a140b 55%, #0c0b0a 100%); }
+.p-logo .barra { position: absolute; left: 0; right: 0; top: 0; height: 22px; background: #141210; display: flex; align-items: center; justify-content: space-between; padding: 0 12px; font: 600 12px var(--sans); color: #f4efe8; }
+.p-logo .bateria { display: inline-block; width: 26px; height: 11px; border: 1.5px solid #f4efe8; border-radius: 3px; margin-left: 10px; vertical-align: -1px; background: linear-gradient(90deg, #4ade80 0 62%, transparent 62%); }
+.p-logo .centro-logo { position: absolute; inset: 22px 0 0; display: grid; place-content: center; justify-items: center; gap: 10px; }
+.p-logo b { font: 800 54px/1 var(--sans); letter-spacing: -.03em; color: #f4efe8; }
+.p-logo b i { color: #ff7a3d; font-style: normal; }
+.p-logo small { font: 400 19px var(--sans); color: #a39b92; }
+.escena-p { position: absolute; inset: 0; padding: 34px 40px; display: grid; align-content: start; gap: 18px; }
+.escena-p h4 { margin: 0; font-size: 44px; letter-spacing: -.03em; line-height: 1; }
+.escena-p h4 em { color: #ffb08a; }
+.p-barra { display: flex; justify-content: space-between; font-size: 18px; color: #a39b92; }
+.p-web { position: absolute; left: 0; right: 0; top: 0; animation: baja-web 5s ease-in-out infinite alternate; }
+@keyframes baja-web { to { transform: translateY(-330px); } }
+.p-hero { height: 300px; margin: 0 40px; border-radius: 18px; background: linear-gradient(135deg, #7a3b1e, #ff7a3d 55%, #ffd08a); display: grid; align-content: end; padding: 26px; font-weight: 800; font-size: 46px; letter-spacing: -.03em; }
+.p-fila { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 20px 40px; }
+.p-fila div { height: 150px; border-radius: 14px; background: #2a221d; display: grid; align-content: end; padding: 14px; font-size: 18px; font-weight: 700; }
+.p-chat { display: grid; gap: 14px; }
+.p-chat div { max-width: 72%; padding: 14px 18px; border-radius: 16px; font-size: 24px; opacity: 0; animation: aparece .4s forwards; }
+.p-chat .c { justify-self: end; background: #005c4b; }
+.p-chat .b { justify-self: start; background: #1f2c33; }
+@keyframes aparece { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+.p-mapa { position: absolute; inset: 0; background: #1b2128; background-image: linear-gradient(#26303a 2px, transparent 2px), linear-gradient(90deg, #26303a 2px, transparent 2px); background-size: 70px 70px; }
+.p-mapa .calle { position: absolute; background: #39434e; }
+.p-pin { position: absolute; left: 50%; top: 42%; width: 46px; height: 46px; margin: -46px 0 0 -23px; background: #ff5a3d; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); animation: cae .7s cubic-bezier(.3, 1.6, .5, 1) both; box-shadow: 0 0 30px rgba(255, 90, 61, .6); }
+@keyframes cae { from { transform: translateY(-160px) rotate(-45deg); opacity: 0; } }
+.p-ficha { position: absolute; left: 50%; top: 58%; transform: translateX(-50%); background: #f4efe8; color: #1c1410; padding: 14px 22px; border-radius: 14px; font-size: 22px; font-weight: 700; white-space: nowrap; animation: aparece .4s .5s both; }
+.p-precios { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.p-precios div { border: 2px solid #3a302a; border-radius: 16px; padding: 18px; display: grid; gap: 6px; animation: aparece .4s both; }
+.p-precios div:nth-child(2) { border-color: #ff7a3d; background: rgba(255, 122, 61, .1); animation-delay: .12s; }
+.p-precios div:nth-child(3) { animation-delay: .24s; }
+.p-precios b { font-size: 18px; color: #a39b92; text-transform: uppercase; letter-spacing: .08em; }
+.p-precios strong { font-size: 46px; letter-spacing: -.03em; }
+.p-wa { display: grid; place-items: center; text-align: center; gap: 14px; height: 100%; align-content: center; }
+.p-wa i { width: 110px; height: 110px; border-radius: 30px; background: #25d366; display: grid; place-items: center; font-style: normal; font-size: 60px; animation: late 1.6s ease-in-out infinite; }
+@keyframes late { 50% { transform: scale(1.08); box-shadow: 0 0 40px rgba(37, 211, 102, .6); } }
+.p-escribe::after { content: "|"; animation: parpadeo 1s steps(1) infinite; color: #ffb08a; }
+@keyframes parpadeo { 50% { opacity: 0; } }
+@keyframes acerca { from { transform: scale(1.15); } }
+.cerrar { position: fixed; z-index: 8; top: calc(env(safe-area-inset-top, 0px) + 14px); right: max(16px, env(safe-area-inset-right, 0px)); width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--linea); background: rgba(12, 11, 10, .55); color: var(--crema); font-size: 20px; cursor: pointer; opacity: 0; pointer-events: none; transition: opacity .4s; }
+.abierto .cerrar { opacity: 1; pointer-events: auto; }
 
-    /* ---------- Números ---------- */
-    .stats { padding: 130px 0 110px; }
-    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
-    .stat { border-top: 1px solid var(--line); padding-top: 26px; }
-    .stat .num { font-size: clamp(3.2rem, 6.4vw, 5.6rem); font-weight: 600; letter-spacing: -.055em; line-height: 1; display: flex; align-items: flex-start; }
-    .stat .num small { font-size: .42em; margin-top: .22em; letter-spacing: -.02em; color: var(--accent); }
-    .stat .num small.pre { margin-right: 2px; }
-    .stat .num small.post { margin-left: 4px; }
-    .stat p { color: var(--muted); margin-top: 14px; max-width: 230px; }
-    .stats-note { color: var(--muted); font-size: .78rem; margin-top: 40px; opacity: .7; }
-    .odo { display: inline-block; height: 1em; overflow: hidden; }
-    .odo-col { display: inline-flex; flex-direction: column; transition: transform 2.2s var(--ease); }
-    .odo-col span { height: 1em; line-height: 1; }
+/* ---------- detalle de un servicio ---------- */
+/* al elegir un servicio, la cámara entra a la pantalla de la laptop y la pantalla se vuelve la página de ese servicio */
+.entrando .cuadro { transition: transform 1.05s cubic-bezier(.55, 0, .3, 1); }
+.entrando .hilos, .entrando .pie { opacity: 0; }
+.entrando .bloque { opacity: 0 !important; pointer-events: none !important; transition-delay: 0s !important; }
+.entrando .cerrar { opacity: 0; pointer-events: none; }
+.vista { position: fixed; z-index: 9; inset: 0; display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: clamp(24px, 4vw, 56px); align-items: center; padding: calc(env(safe-area-inset-top, 0px) + 76px) max(28px, env(safe-area-inset-right, 0px)) calc(env(safe-area-inset-bottom, 0px) + 32px) max(28px, env(safe-area-inset-left, 0px)); background: radial-gradient(70% 60% at 32% 45%, rgba(255, 122, 61, .2), transparent 70%), radial-gradient(60% 50% at 80% 80%, rgba(255, 176, 138, .08), transparent 70%), #0c0b0a; opacity: 0; pointer-events: none; transform: scale(1.06); filter: blur(10px); transition: opacity .55s, transform .9s cubic-bezier(.2, .8, .2, 1), filter .7s; overflow-y: auto; }
+.viendo .vista { opacity: 1; transform: none; filter: none; pointer-events: auto; }
+.volver-esc { position: absolute; top: calc(env(safe-area-inset-top, 0px) + 20px); left: max(24px, env(safe-area-inset-left, 0px)); border: 1px solid var(--linea); background: rgba(12, 11, 10, .55); color: var(--crema); font: 600 14px var(--sans); padding: 10px 16px; border-radius: 999px; cursor: pointer; }
+.volver-esc:hover { border-color: rgba(255, 150, 90, .55); }
+/* la pantalla en grande: misma escena que en la laptop, con marco y resplandor */
+.vista-visual { position: relative; aspect-ratio: 16 / 10; width: 100%; max-width: 820px; justify-self: center; border-radius: 18px; padding: 10px; background: linear-gradient(160deg, #3a332e, #171412); box-shadow: 0 0 0 1px rgba(244, 239, 232, .08), 0 40px 120px rgba(0, 0, 0, .6), 0 0 90px rgba(255, 122, 61, .22); opacity: 0; transform: translateY(18px) scale(.97); transition: opacity .6s .25s, transform .9s .25s cubic-bezier(.2, .8, .2, 1); }
+.viendo .vista-visual { opacity: 1; transform: none; }
+.grande-marco { position: relative; width: 100%; height: 100%; overflow: hidden; border-radius: 10px; }
+.grande { position: absolute; left: 0; top: 0; width: 800px; height: 500px; transform-origin: 0 0; overflow: hidden; background: #0f0d0c; color: #f4efe8; font-family: var(--sans); }
+.detalle { width: min(480px, 100%); justify-self: center; background: var(--vidrio); border: 1px solid var(--linea); border-radius: 22px; padding: 24px; backdrop-filter: blur(20px) saturate(1.2); -webkit-backdrop-filter: blur(20px) saturate(1.2); box-shadow: 0 30px 90px rgba(0, 0, 0, .5); display: grid; gap: 14px; opacity: 0; transform: translateY(22px); transition: opacity .6s .45s, transform .9s .45s cubic-bezier(.2, .8, .2, 1); }
+.viendo .detalle { opacity: 1; transform: none; }
+.detalle .dato-grande { font: italic 400 42px/1 var(--serif); color: var(--naranja-2); }
+.opciones { display: flex; flex-wrap: wrap; gap: 8px; }
+.opciones button { border: 1px solid var(--linea); background: rgba(244, 239, 232, .05); color: var(--crema); border-radius: 12px; cursor: pointer; font: 600 13px var(--sans); }
+.opciones button[aria-checked="true"] { border-color: var(--naranja); box-shadow: 0 0 0 1px var(--naranja), 0 0 18px rgba(255, 122, 61, .3); }
+.colores button { display: flex; gap: 3px; padding: 7px; }
+.colores i { width: 16px; height: 16px; border-radius: 50%; border: 1px solid rgba(255, 255, 255, .2); }
+.estilos button { display: grid; justify-items: center; gap: 2px; padding: 8px 14px; min-width: 84px; }
+.estilos span { font-size: 24px; line-height: 1; }
+@media (max-width: 860px) {
+  .vista { grid-template-columns: 1fr; align-content: start; padding-top: calc(env(safe-area-inset-top, 0px) + 70px); gap: 18px; }
+  .detalle { width: 100%; padding: 20px; }
+}
+.viendo .bloque { opacity: 0 !important; pointer-events: none !important; }
+.detalle h3 { margin: 0; font-size: 26px; line-height: 1.05; letter-spacing: -.03em; }
+.detalle .lema { margin: 4px 0 0; color: var(--gris); }
+.detalle p { margin: 0; }
+.volver { justify-self: start; border: 0; background: none; color: var(--naranja-2); font: 600 14px var(--sans); cursor: pointer; padding: 0; }
+.puntos { margin: 0; padding: 0; list-style: none; display: grid; gap: 7px; }
+.puntos li { display: flex; gap: 10px; }
+.puntos li::before { content: "✓"; color: var(--naranja); font-weight: 800; }
+.precios { display: grid; gap: 8px; }
+.precio { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; border-bottom: 1px solid var(--linea); padding-bottom: 8px; }
+.precio strong { font-size: 22px; font-variant-numeric: tabular-nums; }
+.precio span { color: var(--gris); font-size: 13.5px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border-radius: 999px; padding: 12px 18px; font: 700 15px var(--sans); text-decoration: none; border: 0; cursor: pointer; }
+.btn-wa { background: var(--verde-wa); color: #06210f; }
+.btn-naranja { background: var(--naranja); color: var(--tinta); }
+.chat { display: grid; gap: 7px; background: #0b141a; border-radius: 14px; padding: 12px; }
+.chat div { max-width: 85%; padding: 7px 10px; border-radius: 10px; font-size: 14px; }
+.chat .c { background: #005c4b; justify-self: end; }
+.chat .b { background: #1f2c33; justify-self: start; }
+.campo { display: grid; gap: 7px; }
+.campo label { font-size: 13px; color: var(--gris); }
+.campo input, .campo select { background: rgba(244, 239, 232, .07); border: 1px solid var(--linea); border-radius: 12px; color: var(--crema); font: 600 16px var(--sans); padding: 11px 13px; }
 
-    /* ---------- Marquee ---------- */
-    .marquee { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 30px 0; overflow: hidden; background: var(--bg); }
-    .marquee + .marquee { border-top: 0; }
-    .track { display: flex; width: max-content; gap: 60px; animation: slide 40s linear infinite; font-size: clamp(2rem, 5vw, 4rem); font-weight: 600; letter-spacing: -.04em; line-height: 1; }
-    .marquee .track span { color: transparent; -webkit-text-stroke: 1px rgba(244,239,232,.35); white-space: nowrap; display: inline-flex; gap: 22px; align-items: center; }
-    .marquee.rev .track { animation-direction: reverse; animation-duration: 46s; }
-    .marquee.rev .track span { color: var(--fg); -webkit-text-stroke: 0; }
-    .track span i { font-style: normal; color: var(--accent); -webkit-text-stroke: 0; font-size: .55em; }
-    @keyframes slide { to { transform: translateX(-50%); } }
-
-    /* ---------- Así se ve ---------- */
-    .showcase { overflow: hidden; }
-    .showcase::before { content: ""; position: absolute; width: 900px; height: 900px; border-radius: 50%; background: radial-gradient(circle, rgba(255,122,61,.22), transparent 62%); top: -220px; right: -300px; pointer-events: none; }
-    .showcase-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: 70px; align-items: center; position: relative; }
-    .checks-list { list-style: none; display: grid; gap: 16px; margin: 36px 0 40px; }
-    .checks-list li { display: flex; gap: 14px; align-items: baseline; font-size: 1.08rem; padding-bottom: 16px; border-bottom: 1px solid var(--line); }
-    .checks-list li span { color: var(--accent); font-size: .8rem; font-weight: 600; letter-spacing: .1em; min-width: 26px; }
-    .devices { position: relative; height: 540px; }
-    .browser { position: absolute; width: 100%; max-width: 600px; right: 0; top: 10px; background: #fff; border-radius: 14px; box-shadow: 0 50px 100px rgba(0,0,0,.55); overflow: hidden; animation: floatA 7s ease-in-out infinite; }
-    .browser-bar { height: 34px; background: #ececec; display: flex; align-items: center; gap: 6px; padding: 0 12px; }
-    .browser-bar i { width: 10px; height: 10px; border-radius: 50%; }
-    .browser-bar i:nth-child(1) { background: #ff5f57; } .browser-bar i:nth-child(2) { background: #febc2e; } .browser-bar i:nth-child(3) { background: #28c840; }
-    .browser-bar .url { margin-left: 12px; flex: 1; height: 20px; border-radius: 6px; background: #fff; font-size: .7rem; color: #888; display: flex; align-items: center; padding: 0 10px; overflow: hidden; white-space: nowrap; }
-    .screen { position: relative; overflow: hidden; background: #1a1a1a; }
-    .screen iframe { position: absolute; top: 0; left: 0; border: 0; transform-origin: 0 0; pointer-events: none; }
-    .browser .screen { height: 352px; }
-    .browser .screen img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
-    .browser .screen iframe { width: 1280px; height: 900px; }
-    .phone { position: absolute; left: 0; bottom: 0; width: 210px; border-radius: 32px; background: #111; padding: 9px; box-shadow: 0 40px 80px rgba(0,0,0,.6); animation: floatB 6s ease-in-out infinite; }
-    .phone .screen { height: 410px; border-radius: 24px; }
-    .phone .screen iframe { width: 390px; height: 836px; transform: scale(.4923); }
-    .phone::before { content: ""; position: absolute; top: 16px; left: 50%; transform: translateX(-50%); width: 56px; height: 14px; background: #111; border-radius: 10px; z-index: 2; }
-    @keyframes floatA { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
-    @keyframes floatB { 0%,100% { transform: translateY(0) rotate(-3deg); } 50% { transform: translateY(-20px) rotate(-1deg); } }
-    .wa-chip { position: absolute; right: 24px; bottom: 34px; background: #f4efe8; color: var(--ink); border-radius: 16px; padding: 12px 16px; display: flex; gap: 10px; align-items: center; box-shadow: 0 20px 40px rgba(0,0,0,.4); font-size: .85rem; font-weight: 500; animation: pop 4s ease-in-out infinite; }
-    .wa-chip b { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: #25d366; color: #fff; }
-    .wa-chip small { display: block; color: #6b645d; font-size: .75rem; }
-    @keyframes pop { 0%, 100% { transform: scale(1); } 10% { transform: scale(1.06); } 20% { transform: scale(1); } }
-
-    /* ---------- Trabajos ---------- */
-    .work { background: var(--bg-2); overflow-x: clip; }
-    /* Anillo 3D: las páginas giran alrededor; se arrastra con el dedo o el mouse */
-    .carousel { position: relative; height: clamp(300px, 46vw, 470px); perspective: 1700px; cursor: grab; touch-action: pan-y; user-select: none; -webkit-user-select: none; --w: min(440px, 64vw); }
-    .carousel.arrastrando { cursor: grabbing; }
-    .ring { position: absolute; left: 50%; top: 46%; width: var(--w); aspect-ratio: 4 / 3; translate: -50% -50%; transform-style: preserve-3d; transform: translateZ(calc(var(--r, 600px) * -1)) rotateY(var(--a, 0deg)); transition: transform .75s var(--ease); }
-    .carousel.arrastrando .ring { transition: none; }
-    .ring .project { position: absolute; inset: 0; transform: rotateY(calc(var(--i) * var(--paso))) translateZ(var(--r, 600px)); backface-visibility: hidden; -webkit-backface-visibility: hidden; transition: opacity .6s, filter .6s; -webkit-user-drag: none; }
-    .ring .project img { -webkit-user-drag: none; pointer-events: none; }
-    .ring .project:not(.frente) { opacity: .5; filter: saturate(.5) brightness(.8); }
-    .ring .project .frame { box-shadow: 0 40px 80px rgba(0,0,0,.55); }
-    .ring .project .project-info { display: none; }
-    .ring-info { text-align: center; margin-top: 8px; min-height: 64px; }
-    .ring-info h3 { font-size: clamp(1.5rem, 3vw, 2.1rem); letter-spacing: -.03em; animation: fadeUp .6s var(--ease); }
-    .ring-info span { color: var(--muted); font-size: .95rem; }
-    .project { display: block; }
-    .project .frame { border-radius: var(--radius); overflow: hidden; background: #222; aspect-ratio: 4 / 3; position: relative; }
-    .project .frame .shot { width: 100%; height: 100%; object-fit: cover; object-position: top; transition: transform .8s var(--ease); }
-    .project .frame::after { content: "Ver página ↗"; position: absolute; inset: 0; display: grid; place-items: center; background: rgba(12,11,10,.6); color: #fff; font-weight: 600; font-size: 1.1rem; opacity: 0; transition: opacity .4s; }
-    .project:hover .frame::after { opacity: 1; }
-    .project:hover .frame .shot { transform: scale(1.04); }
-    .project-info { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; gap: 16px; }
-    .project-info h3 { font-size: 1.55rem; letter-spacing: -.03em; }
-    .project-info span { color: var(--muted); font-size: .9rem; }
-    .tag { display: inline-block; font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; padding: 5px 10px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); margin-left: 10px; vertical-align: middle; }
-    .tag.real { background: var(--accent); border-color: var(--accent); color: var(--ink); }
-    .carousel-nav { display: flex; gap: 10px; }
-    .carousel-nav button { width: 54px; height: 54px; border-radius: 50%; border: 1px solid var(--line); background: none; color: var(--fg); font-size: 1.2rem; cursor: pointer; transition: background .3s, color .3s, border-color .3s; }
-    .carousel-nav button:hover { background: var(--fg); color: var(--bg); border-color: var(--fg); }
-    .progress { height: 2px; background: var(--line); border-radius: 2px; margin-top: 12px; overflow: hidden; }
-    .progress div { height: 100%; width: 0; background: var(--accent); transition: width .6s var(--ease); }
-
-    /* ---------- Qué incluye (bento) ---------- */
-    .bento { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 270px; gap: 16px; }
-    .tile { border-radius: var(--radius); background: var(--bg-2); border: 1px solid var(--line); padding: 30px; display: flex; flex-direction: column; justify-content: flex-end; position: relative; overflow: hidden; }
-    .tile h3 { font-size: 1.45rem; letter-spacing: -.03em; margin-bottom: 8px; position: relative; }
-    .tile p { color: var(--muted); position: relative; font-size: .98rem; }
-    .tile .n { position: absolute; top: 22px; left: 28px; font-size: 3.4rem; line-height: 1; letter-spacing: -.05em; font-weight: 600; color: transparent; -webkit-text-stroke: 1px rgba(244,239,232,.22); }
-    .tile:not(.photo):not(.hot) { transition: border-color .4s, background .4s; }
-    .tile:not(.photo):not(.hot):hover { border-color: rgba(255,122,61,.5); background: #1b1815; }
-    .tile.photo { border: 0; }
-    .tile.photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease); }
-    .tile.photo:hover img { transform: scale(1.06); }
-    .tile.photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(12,11,10,.92) 0%, rgba(12,11,10,.2) 55%, transparent 100%); }
-    .tile.photo > *:not(img) { z-index: 1; }
-    .tile.photo p { color: rgba(244,239,232,.75); }
-    .tile.photo .n { -webkit-text-stroke-color: rgba(244,239,232,.6); }
-    .tile.hot { background: var(--accent); color: var(--ink); border: 0; }
-    .tile.hot p { color: rgba(12,11,10,.7); }
-    .tile.hot .huge { font-size: 4.4rem; font-weight: 700; letter-spacing: -.06em; line-height: 1; margin-bottom: auto; padding-top: 22px; }
-    .tile.wide { grid-column: span 2; grid-row: span 2; }
-    .tile.tall { grid-row: span 2; }
-
-    /* ---------- Proceso ---------- */
-    .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; position: relative; }
-    .steps-line { position: absolute; top: 27px; left: 0; right: 0; height: 1px; background: var(--line); }
-    .steps-line div { height: 100%; width: 0; background: var(--accent); transition: width 1.8s var(--ease); }
-    .steps.in .steps-line div { width: 100%; }
-    .step .dot { width: 56px; height: 56px; border-radius: 50%; background: var(--bg); border: 1px solid var(--line); display: grid; place-items: center; font-weight: 600; font-size: .9rem; margin-bottom: 28px; transition: background .5s, border-color .5s, color .5s; position: relative; z-index: 1; }
-    .steps.in .step .dot { background: var(--accent); border-color: var(--accent); color: var(--ink); }
-    .steps.in .step:nth-child(3) .dot { transition-delay: .45s; }
-    .steps.in .step:nth-child(4) .dot { transition-delay: .9s; }
-    .steps.in .step:nth-child(5) .dot { transition-delay: 1.35s; }
-    .step h3 { font-size: 1.5rem; margin-bottom: 10px; letter-spacing: -.03em; }
-    .step p { color: var(--muted); }
-
-    /* ---------- Sobre mí ---------- */
-    .about-grid { display: grid; grid-template-columns: .85fr 1.15fr; gap: 80px; align-items: center; }
-    .about-photo { border-radius: var(--radius); overflow: hidden; aspect-ratio: 3 / 4; position: relative; }
-    .about-photo img { width: 100%; height: 100%; object-fit: cover; }
-    .about-photo .badge { position: absolute; left: 20px; bottom: 20px; right: 20px; display: flex; align-items: center; gap: 12px; background: rgba(12,11,10,.6); backdrop-filter: blur(12px); border: 1px solid rgba(244,239,232,.15); border-radius: 16px; padding: 12px 14px; font-size: .9rem; color: #f4efe8; }
-    .about-photo .badge .avatar { width: 42px; height: 42px; border-radius: 50%; background: var(--accent); color: var(--ink); display: grid; place-items: center; font-weight: 800; flex-shrink: 0; }
-    .about-photo .badge small { display: block; color: rgba(244,239,232,.65); }
-    .about h2 { font-size: clamp(2.4rem, 5vw, 4.4rem); margin-bottom: 26px; }
-    .about h2 .serif { color: var(--accent); }
-    .mision { margin: 30px 0 26px; padding: 26px 28px; border-left: 3px solid var(--accent); background: rgba(255,122,61,.07); border-radius: 0 var(--radius) var(--radius) 0; }
-    .mision strong { display: block; font-size: clamp(1.25rem, 2.2vw, 1.6rem); letter-spacing: -.02em; line-height: 1.25; margin-bottom: 10px; }
-    .mision p { color: var(--muted); margin: 0; }
-    .about p { color: var(--muted); font-size: 1.15rem; max-width: 600px; }
-    .about p + p { margin-top: 16px; }
-    .about-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 32px; }
-    .about-tags span { border: 1px solid var(--line); border-radius: 999px; padding: 9px 18px; font-size: .9rem; font-weight: 500; }
-
-    /* ---------- Paquetes ---------- */
-    .plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; align-items: stretch; }
-    .plan { border: 1px solid var(--line); background: #fbf8f4; border-radius: var(--radius); padding: 40px 34px; display: flex; flex-direction: column; transition: transform .5s var(--ease), box-shadow .5s; }
-    .plan:hover { transform: translateY(-8px); box-shadow: 0 30px 60px rgba(12,11,10,.08); }
-    .plan .name { font-weight: 600; font-size: 1.05rem; text-transform: uppercase; letter-spacing: .12em; }
-    .plan .price { font-size: 3.6rem; font-weight: 600; letter-spacing: -.06em; margin: 20px 0 4px; line-height: 1; }
-    .plan .price small { font-size: .95rem; font-weight: 500; color: var(--muted); letter-spacing: 0; }
-    .plan .desc { color: var(--muted); margin-bottom: 28px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
-    .plan ul { list-style: none; display: grid; gap: 13px; margin-bottom: 36px; flex: 1; align-content: start; }
-    .plan li { display: flex; gap: 12px; font-size: .97rem; }
-    .plan li::before { content: "✓"; font-weight: 700; color: var(--clay); }
-    .plan.best { background: var(--ink); color: #f4efe8; border-color: var(--ink); position: relative; --line: rgba(244,239,232,.14); --muted: #a39b92; }
-    .plan.best li::before { color: var(--accent); }
-    .plan.best .badge { position: absolute; top: 24px; right: 24px; background: var(--accent); color: var(--ink); font-size: .7rem; font-weight: 700; padding: 6px 12px; border-radius: 999px; text-transform: uppercase; letter-spacing: .08em; }
-    .plan.best .btn-light { background: #f4efe8; color: var(--ink); }
-    .plan.best .btn-light:hover { background: var(--accent); }
-    .extras { margin-top: 20px; border: 1px solid var(--line); border-radius: var(--radius); padding: 36px; }
-    .extras h3 { font-size: 1.4rem; letter-spacing: -.03em; margin-bottom: 24px; }
-    .extras h3 span { font-size: .95rem; font-weight: 500; color: var(--muted); letter-spacing: 0; margin-left: 8px; }
-    .extras-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px 40px; }
-    .extra { padding-left: 18px; border-left: 2px solid var(--accent); }
-    .extra p { color: var(--muted); font-size: .95rem; margin-top: 4px; }
-    .plans-note { text-align: center; color: var(--muted); margin-top: 34px; }
-
-    /* ---------- Opiniones ---------- */
-    .reviews-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 40px; align-items: start; }
-    .review-list { display: grid; gap: 18px; }
-    .review { background: var(--bg-2); border: 1px solid var(--line); border-radius: var(--radius); padding: 30px; }
-    .review .stars { color: var(--accent); letter-spacing: .12em; margin-bottom: 12px; }
-    .review p { font-size: 1.15rem; margin-bottom: 14px; }
-    .review .who { color: var(--muted); font-size: .92rem; }
-    .review-form { background: var(--bg-2); border: 1px solid var(--line); border-radius: var(--radius); padding: 34px; display: grid; gap: 14px; }
-    .review-form h3 { font-size: 1.6rem; letter-spacing: -.03em; }
-    .review-form > p { color: var(--muted); font-size: .95rem; margin-top: -6px; }
-    .review-form input, .review-form textarea { width: 100%; padding: 14px 16px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg); color: var(--fg); font: inherit; }
-    .review-form input:focus, .review-form textarea:focus { outline: none; border-color: var(--accent); }
-    .star-pick { display: flex; gap: 6px; flex-direction: row-reverse; justify-content: flex-end; }
-    .star-pick input { position: absolute; opacity: 0; width: 1px; height: 1px; }
-    .star-pick label { font-size: 2rem; color: #3a3632; cursor: pointer; transition: color .2s, transform .2s; line-height: 1; }
-    .star-pick label:hover, .star-pick label:hover ~ label, .star-pick input:checked ~ label { color: var(--accent); }
-    .star-pick label:hover { transform: scale(1.15); }
-    .star-pick input:focus-visible + label { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
-    .form-msg { display: none; color: #4ade80; font-weight: 600; text-align: center; font-size: .95rem; }
-
-    /* ---------- FAQ ---------- */
-    .faq-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 72px; }
-    details { border-bottom: 1px solid var(--line); padding: 28px 0; }
-    details:first-child { border-top: 1px solid var(--line); }
-    summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; gap: 20px; font-size: 1.22rem; font-weight: 500; letter-spacing: -.02em; transition: color .3s; }
-    summary:hover { color: var(--accent); }
-    summary::-webkit-details-marker { display: none; }
-    summary .plus { width: 28px; height: 28px; flex-shrink: 0; position: relative; }
-    summary .plus::before, summary .plus::after { content: ""; position: absolute; top: 13px; left: 4px; right: 4px; height: 1.5px; background: currentColor; transition: transform .4s var(--ease); }
-    summary .plus::after { transform: rotate(90deg); }
-    details[open] summary .plus::after { transform: rotate(0); }
-    details .answer { color: var(--muted); padding-top: 14px; max-width: 640px; animation: fadeUp .5s var(--ease); }
-    details .answer a { color: var(--fg); text-decoration: underline; text-underline-offset: 3px; }
-
-    /* ---------- Cierre ---------- */
-    .final { position: relative; overflow: hidden; padding: 190px 0 0; isolation: isolate; }
-    .final > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
-    .final::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, var(--bg) 0%, rgba(12,11,10,.55) 30%, rgba(12,11,10,.7) 70%, var(--bg) 100%); }
-    .final h2 { font-size: clamp(3.6rem, 11vw, 10.5rem); letter-spacing: -.06em; line-height: .9; margin-bottom: 48px; }
-    /* HABLEMOS: letras gigantes que suben al aparecer y se levantan cerca del cursor */
-    .hablemos { margin-bottom: 40px !important; }
-    .hablemos .letras { display: flex; font-size: clamp(4rem, 16.5vw, 15.5rem); font-weight: 800; letter-spacing: -.06em; line-height: .86; text-transform: uppercase; overflow: hidden; padding-bottom: .04em; }
-    .hablemos .l { display: inline-block; transform: translateY(105%); transition: transform 1.1s var(--ease), color .35s; transition-delay: calc(var(--i) * 60ms); cursor: default; }
-    .hablemos.in .l { transform: translateY(calc(var(--lift, 0) * -1em)); }
-    .hablemos.in.listo .l { transition: transform .45s var(--ease), color .35s; transition-delay: 0s; }
-    .hablemos .l.cerca { color: var(--accent); }
-    .hablemos .sub { display: block; font-size: clamp(2rem, 5.5vw, 4.6rem); color: var(--accent-2); margin-top: 6px; opacity: 0; transform: translateY(20px); transition: opacity 1s var(--ease) .7s, transform 1s var(--ease) .7s; }
-    .hablemos.in .sub { opacity: 1; transform: none; }
-    @keyframes ola { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-.07em); } }
-    .hablemos.in.listo.ola .l { animation: ola 2.8s ease-in-out infinite; animation-delay: calc(var(--i) * 120ms); }
-    .final h2 .serif { color: var(--accent-2); }
-    .final-row { display: flex; justify-content: space-between; align-items: flex-end; gap: 30px; flex-wrap: wrap; }
-    .final-row p { max-width: 440px; color: rgba(244,239,232,.8); font-size: 1.12rem; }
-    .final-row p a { color: #f4efe8; font-weight: 600; text-decoration: underline; text-underline-offset: 4px; }
-    .wordmark { font-size: 24.5vw; font-weight: 800; letter-spacing: -.07em; line-height: .78; text-align: center; margin-top: 140px; color: transparent; background: linear-gradient(180deg, rgba(244,239,232,.95), rgba(244,239,232,.05)); -webkit-background-clip: text; background-clip: text; user-select: none; white-space: nowrap; }
-    .footer-bottom { padding: 28px 90px 34px 0; border-top: 1px solid var(--line); display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; font-size: .9rem; color: var(--muted); }
-    .footer-bottom a:hover { color: var(--fg); }
-    .socials { display: flex; gap: 22px; flex-wrap: wrap; }
-
-    .wa-float { position: fixed; right: 22px; bottom: calc(22px + env(safe-area-inset-bottom, 0px)); z-index: 90; width: 60px; height: 60px; border-radius: 50%; background: #25d366; color: #fff; display: grid; place-items: center; box-shadow: 0 14px 30px rgba(37, 211, 102, .4); transition: transform .3s var(--ease); }
-    .wa-float svg { width: 30px; height: 30px; fill: currentColor; }
-    .wa-float:hover { transform: scale(1.1); }
-
-    /* Chat con IA */
-    .chat-launcher { position: fixed; right: 22px; bottom: calc(94px + env(safe-area-inset-bottom, 0px)); z-index: 90; width: 60px; height: 60px; border: 1px solid rgba(244,239,232,.15); border-radius: 50%; background: var(--ink); color: #fff; font-size: 1.5rem; cursor: pointer; display: grid; place-items: center; box-shadow: 0 14px 30px rgba(0, 0, 0, .35); transition: transform .3s var(--ease); }
-    .chat-launcher:hover { transform: scale(1.1); }
-    .chat-launcher[hidden] { display: none; }
-    .chat-launcher .dot { position: absolute; top: 4px; right: 4px; width: 14px; height: 14px; border-radius: 50%; background: var(--accent); border: 2px solid var(--ink); }
-    .chat-panel { position: fixed; right: 22px; bottom: calc(166px + env(safe-area-inset-bottom, 0px)); z-index: 95; width: min(380px, calc(100vw - 32px)); height: min(540px, calc(100dvh - 200px)); background: #fbf8f4; color: var(--ink); border: 1px solid #ddd5ca; border-radius: var(--radius); box-shadow: 0 30px 60px rgba(0, 0, 0, .35); display: flex; flex-direction: column; overflow: hidden; }
-    .chat-panel[hidden] { display: none; }
-    .chat-head { display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: var(--ink); color: #fff; }
-    .chat-head .avatar { width: 38px; height: 38px; border-radius: 50%; background: var(--accent); color: var(--ink); display: grid; place-items: center; font-weight: 700; font-size: .85rem; flex-shrink: 0; }
-    .chat-head strong { display: block; font-size: .98rem; }
-    .chat-head small { color: rgba(255, 255, 255, .7); font-size: .8rem; }
-    .chat-close { margin-left: auto; background: none; border: 0; color: #fff; font-size: 1.4rem; cursor: pointer; padding: 4px 8px; line-height: 1; }
-    .chat-msgs { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 10px; background: #f1ebe3; }
-    .chat-msg { max-width: 85%; padding: 10px 14px; border-radius: 16px; font-size: .95rem; line-height: 1.45; white-space: pre-wrap; overflow-wrap: anywhere; }
-    .chat-msg.bot { align-self: flex-start; background: #fff; border: 1px solid #ddd5ca; border-bottom-left-radius: 4px; }
-    .chat-msg.yo { align-self: flex-end; background: var(--ink); color: #fff; border-bottom-right-radius: 4px; }
-    .chat-msg.typing { color: #6b645d; letter-spacing: .2em; }
-    .chat-wa { align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; background: #25d366; color: #fff; font-weight: 600; padding: 11px 16px; border-radius: 999px; font-size: .92rem; }
-    .chat-form { display: flex; gap: 8px; padding: 12px; border-top: 1px solid #ddd5ca; }
-    .chat-form input { flex: 1; min-width: 0; border: 1px solid #ddd5ca; border-radius: 999px; padding: 11px 16px; font: inherit; font-size: 16px; color: var(--ink); background: #fff; }
-    .chat-form input:focus { outline: 2px solid var(--accent); outline-offset: 0; border-color: transparent; }
-    .chat-form button { border: 0; border-radius: 999px; background: var(--accent); color: var(--ink); font: inherit; font-weight: 600; padding: 0 18px; cursor: pointer; }
-    .chat-form button:disabled { opacity: .5; cursor: default; }
-    .chat-note { text-align: center; font-size: .72rem; color: #6b645d; padding: 0 12px 10px; }
-    @media (max-width: 600px) {
-      .chat-panel { right: 16px; left: 16px; width: auto; }
-    }
-
-    .btn:focus-visible, a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
-      .reveal { opacity: 1; transform: none; }
-      html { scroll-behavior: auto; }
-    }
-
-    /* ---------- Responsive ---------- */
-    @media (max-width: 1000px) {
-      .showcase-grid, .about-grid { grid-template-columns: 1fr; gap: 56px; }
-      .devices { height: 480px; max-width: 600px; margin: 0 auto; width: 100%; }
-      .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 52px 32px; }
-      .steps { grid-template-columns: repeat(2, 1fr); gap: 52px 28px; }
-      .steps-line { display: none; }
-      .bento { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 230px; }
-      .tile.wide { grid-column: span 2; }
-      .plans { grid-template-columns: 1fr; max-width: 540px; margin-inline: auto; }
-      .faq-grid, .reviews-grid { grid-template-columns: 1fr; gap: 36px; }
-      .extras-grid { grid-template-columns: 1fr; }
-      .extras h3 span { display: block; margin: 4px 0 0; }
-      .about-photo { max-width: 460px; }
-    }
-    @media (max-width: 760px) {
-      .menu-toggle { display: block; }
-      .nav-links { position: fixed; inset: 76px 0 auto 0; background: rgba(12,11,10,.96); backdrop-filter: blur(16px); flex-direction: column; gap: 0; padding: 10px 16px 26px; border-bottom: 1px solid rgba(244,239,232,.1); transform: translateY(-12px); opacity: 0; pointer-events: none; transition: opacity .3s, transform .3s var(--ease); }
-      .nav-links.open { opacity: 1; transform: none; pointer-events: auto; }
-      .nav-links a { display: block; padding: 14px 0; font-size: 1.15rem; opacity: 1; }
-      .nav-cta { display: none; }
-      section { padding: 100px 0; }
-      .story-sticky::after { background: linear-gradient(0deg, rgba(12,11,10,.95) 0%, rgba(12,11,10,.55) 55%, rgba(12,11,10,.6) 100%); }
-      .beats { bottom: 104px; }
-      .beat { top: auto; bottom: 0; transform: translateY(20px); }
-      .beat.on { transform: none; }
-      .story .hello, .hero-note { display: none; }
-      .hero-cta .btn { flex: 1 1 auto; }
-      .scroll-hint { display: none; }
-      .story-dots { max-width: 210px; }
-      .devices { height: 400px; }
-      .browser .screen { height: 230px; }
-      .phone { width: 150px; border-radius: 24px; padding: 7px; }
-      .phone .screen { height: 290px; border-radius: 18px; }
-      .phone .screen iframe { transform: scale(.3487); }
-      .wa-chip { right: 0; bottom: 6px; font-size: .78rem; }
-      .stats-grid, .steps { grid-template-columns: 1fr; }
-      .bento { grid-template-columns: 1fr; grid-auto-rows: auto; }
-      .tile { min-height: 220px; }
-      .tile.wide, .tile.tall { grid-column: auto; grid-row: auto; min-height: 380px; }
-      .head-row { margin-bottom: 48px; }
-      .plan { padding: 34px 26px; }
-      .extras { padding: 28px 22px; }
-      .final { padding-top: 130px; }
-      .wordmark { margin-top: 100px; }
-      .footer-bottom { padding-bottom: 100px; }
-      .review-form { padding: 26px 22px; }
-    }
-  </style>
+@media (max-width: 720px) {
+  .bloque { width: 44vw; padding: 9px 10px; border-radius: 14px; }
+  .bloque .dato, .bloque span { display: none; }
+  .bloque { padding: 8px 10px; }
+  .bloque b { font-size: 15px; }
+  .bloque small { font-size: 11px; margin-top: 4px; }
+  .logo { transition: opacity .4s; }
+  .abierto .logo { opacity: 0; pointer-events: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cuadro, .bloque, .detalle { transition: none; }
+  .llamando .pantalla-toque { animation: none; }
+}
+</style>
 </head>
 <body>
 
-  <nav id="nav">
-    <div class="container nav-inner">
-      <a href="#" class="logo"><img class="logo-mark" src="img/logo.svg" alt=""><span>alewox<b>.</b></span></a>
-      <ul class="nav-links" id="navLinks">
-        <li><a href="muestra/">Muestra gratis</a></li>
-        <li><a href="#trabajos">Trabajos</a></li>
-        <li><a href="#incluye">Qué incluye</a></li>
-        <li><a href="#paquetes">Paquetes</a></li>
-        <li id="navOpiniones" hidden><a href="#opiniones">Opiniones</a></li>
-        <li><a href="#preguntas">Preguntas</a></li>
-      </ul>
-      <a href="#contacto" class="btn btn-light nav-cta" data-wa="Hola, me interesa una página web para mi negocio.">Cotizar</a>
-      <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú"><span></span><span></span></button>
-    </div>
-  </nav>
-
-  <!-- Historia: las fotos cambian al hacer scroll -->
-  <header class="story" id="story">
-    <div class="story-sticky">
-      <img class="bg on" src="img/alewox-taqueria.jpg" alt="" fetchpriority="high">
-      <img class="bg" src="img/alewox-barberia.jpg" alt="" decoding="async">
-      <img class="bg" src="img/alewox-taller.jpg" alt="" decoding="async">
-      <img class="bg" src="img/alewox-cafe.jpg" alt="" decoding="async">
-
-      <div class="container beats">
-        <div class="beat on">
-          <div class="hello"><span class="avatar">AN</span><span>Hola, soy <strong>Alejandro Nieblas</strong></span><span class="live" aria-hidden="true"></span></div>
-          <h1>
-            <span class="line"><span>Haz crecer</span></span>
-            <span class="line"><span>tu negocio con</span></span>
-            <span class="line"><span>una <span class="serif">página</span> que <span class="rotator" id="rotator"><span class="on">vende.</span><span>atrae.</span><span>destaca.</span><span>trabaja.</span></span></span></span>
-          </h1>
-          <p class="hero-sub">No es solo una página: es más clientes. Te ayudo a aparecer en Google, a que te escriban por WhatsApp en un clic y a vender más, estés en Hermosillo o en cualquier parte del mundo.</p>
-          <div class="hero-cta">
-            <a href="#contacto" class="btn btn-accent" data-wa="Hola, me interesa una página web para mi negocio.">Quiero mi página <span class="arr">→</span></a>
-            <a href="muestra/" class="btn btn-glass">Crea tu muestra gratis</a>
-          </div>
-          <p class="hero-note">Desde $450 MXN · Lista en 24 horas · Hermosillo y todo el mundo</p>
-        </div>
-        <div class="beat" aria-hidden="true">
-          <span class="kicker">Hoy</span>
-          <p class="big">Tus clientes te buscan <span class="serif">en su celular</span> antes de visitarte.</p>
-        </div>
-        <div class="beat" aria-hidden="true">
-          <span class="kicker">El problema</span>
-          <p class="big">Si no te encuentran, <span class="serif">encuentran a tu competencia.</span></p>
-        </div>
-        <div class="beat" aria-hidden="true">
-          <span class="kicker">Con Alewox</span>
-          <p class="big">Te encuentran, te conocen <span class="serif">y te escriben por WhatsApp.</span></p>
-          <a href="#contacto" class="btn btn-accent" data-wa="Hola, me interesa una página web para mi negocio." tabindex="-1">Quiero mi página <span class="arr">→</span></a>
-        </div>
-      </div>
-
-      <div class="story-meta">
-        <div class="container">
-          <span class="count" aria-hidden="true"><b id="storyCount">01</b> / 04</span>
-          <div class="story-dots" id="storyDots">
-            <button type="button" aria-label="Escena 1"><i></i></button>
-            <button type="button" aria-label="Escena 2"><i></i></button>
-            <button type="button" aria-label="Escena 3"><i></i></button>
-            <button type="button" aria-label="Escena 4"><i></i></button>
-          </div>
-          <span class="scroll-hint" aria-hidden="true"><span>Desliza</span><i></i></span>
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <!-- Números -->
-  <section class="stats" aria-label="Datos">
-    <div class="container">
-      <div class="stats-grid">
-        <div class="stat reveal"><div class="num"><span class="odometer" data-value="92"></span><small class="post">%</small></div><p>de las mipymes en México ya venden por WhatsApp.*</p></div>
-        <div class="stat reveal d1"><div class="num"><span class="odometer" data-value="24"></span><small class="post">/7</small></div><p>Tu negocio visible en internet a cualquier hora.</p></div>
-        <div class="stat reveal d2"><div class="num"><span class="odometer" data-value="1"></span><small class="post">día</small></div><p>Tu página lista desde que tengo tu información.</p></div>
-        <div class="stat reveal d3"><div class="num"><small class="pre">$</small><span class="odometer" data-value="450"></span></div><p>Pesos es lo que cuesta empezar. Pago único.</p></div>
-      </div>
-      <p class="stats-note">* Dato de Meta, 2025.</p>
-    </div>
-  </section>
-
-  <div class="marquee" aria-hidden="true"><div class="track" id="track1"></div></div>
-  <div class="marquee rev" aria-hidden="true"><div class="track" id="track2"></div></div>
-
-  <!-- Así se ve -->
-  <section class="showcase">
-    <div class="container showcase-grid">
-      <div>
-        <span class="eyebrow reveal">Así se ve</span>
-        <h2 class="section-title reveal">Una página que se ve <span class="serif">tan bien</span> como tu negocio</h2>
-        <ul class="checks-list reveal d1">
-          <li><span>01</span>Diseño a tu medida, sin plantillas genéricas.</li>
-          <li><span>02</span>Rápida y perfecta en cualquier celular.</li>
-          <li><span>03</span>Botones que abren tu WhatsApp con el mensaje listo.</li>
-          <li><span>04</span>Ubicación, horario y redes en un solo lugar.</li>
-        </ul>
-        <a href="muestra/" class="btn btn-light reveal d2">Ver mi muestra gratis <span class="arr">→</span></a>
-      </div>
-      <div class="devices reveal d1" aria-hidden="true">
-        <div class="browser">
-          <div class="browser-bar"><i></i><i></i><i></i><span class="url">tunegocio.com</span></div>
-          <div class="screen"><img src="img/trabajos/duna.jpg" alt="" loading="lazy"><iframe id="vitrina" scrolling="no" src="https://alejandron.github.io/portafolio/muestra-tenis/?vista=mini" tabindex="-1" title="Muestra Duna Runner"></iframe></div>
-        </div>
-        <div class="phone">
-          <div class="screen"><iframe src="https://alejandron.github.io/portafolio/muestra-hamburguesa/" loading="lazy" tabindex="-1" title="Muestra Brasa Burger"></iframe></div>
-        </div>
-        <div class="wa-chip"><b><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg></b><span>Nuevo mensaje<small>"Hola, ¿tienen lugar hoy?"</small></span></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Trabajos -->
-  <section id="trabajos" class="work">
-    <div class="container">
-      <div class="head-row">
-        <div>
-          <span class="eyebrow reveal">Trabajos</span>
-          <h2 class="section-title reveal">Hechos a la <span class="serif">medida</span> de cada negocio</h2>
-        </div>
-        <div class="reveal">
-          <div class="carousel-nav">
-            <button type="button" id="prev" aria-label="Anterior">←</button>
-            <button type="button" id="next" aria-label="Siguiente">→</button>
-          </div>
-          <div class="progress"><div id="progress"></div></div>
-        </div>
-      </div>
-      <div class="carousel reveal" id="carousel" aria-roledescription="carrusel"><div class="ring" id="ring">
-        <a class="project" href="https://alejandron.github.io/kbar-landing/" target="_blank" rel="noopener">
-          <div class="frame"><img class="shot" src="img/trabajos/kbar.jpg" alt="Página de K-BAR" loading="lazy"></div>
-          <div class="project-info"><h3>K-BAR <span class="tag real">Cliente real</span></h3><span>Eventos · Snack bar</span></div>
-        </a>
-        <a class="project" href="https://alejandron.github.io/portafolio/muestra-hamburguesa/" target="_blank" rel="noopener">
-          <div class="frame"><img class="shot" src="img/trabajos/brasa.jpg" alt="Página de Brasa Burger" loading="lazy"></div>
-          <div class="project-info"><h3>Brasa Burger <span class="tag">Muestra</span></h3><span>Restaurante · Interactiva</span></div>
-        </a>
-        <a class="project" href="https://alejandron.github.io/portafolio/muestra-tenis/" target="_blank" rel="noopener">
-          <div class="frame"><img class="shot" src="img/trabajos/duna.jpg" alt="Página de Duna Runner" loading="lazy"></div>
-          <div class="project-info"><h3>Duna Runner <span class="tag">Muestra</span></h3><span>Tienda · Producto en 3D</span></div>
-        </a>
-        <a class="project" href="https://alejandron.github.io/portafolio/taqueria/" target="_blank" rel="noopener">
-          <div class="frame"><img class="shot" src="img/trabajos/taqueria.jpg" alt="Página de Taquería La Brasa" loading="lazy"></div>
-          <div class="project-info"><h3>Taquería La Brasa <span class="tag">Muestra</span></h3><span>Restaurante</span></div>
-        </a>
-        <a class="project" href="https://alejandron.github.io/portafolio/estetica/" target="_blank" rel="noopener">
-          <div class="frame"><img class="shot" src="img/trabajos/estetica.jpg" alt="Página de Estética Bella Luna" loading="lazy"></div>
-          <div class="project-info"><h3>Estética Bella Luna <span class="tag">Muestra</span></h3><span>Belleza</span></div>
-        </a>
-        <a class="project" href="https://alejandron.github.io/portafolio/taller/" target="_blank" rel="noopener">
-          <div class="frame"><img class="shot" src="img/trabajos/taller.jpg" alt="Página de Taller Torque" loading="lazy"></div>
-          <div class="project-info"><h3>Taller Torque <span class="tag">Muestra</span></h3><span>Automotriz</span></div>
-        </a>
-      </div></div>
-      <div class="ring-info" id="ringInfo" aria-live="polite"></div>
-    </div>
-  </section>
-
-  <!-- Qué incluye -->
-  <section id="incluye">
-    <div class="container">
-      <div class="head-row">
-        <div>
-          <span class="eyebrow reveal">Qué incluye</span>
-          <h2 class="section-title reveal">Todo lo que tu página <span class="serif">necesita</span></h2>
-        </div>
-        <p class="reveal">Sin tecnicismos: tú atiendes tu negocio y yo me encargo de que se vea increíble en internet.</p>
-      </div>
-      <div class="bento">
-        <div class="tile photo wide reveal">
-          <img src="img/alewox-celular.jpg" alt="Cliente viendo una página en su celular dentro de un restaurante" loading="lazy">
-          <span class="n">01</span>
-          <h3>Perfecta en el celular</h3>
-          <p>La mayoría de tus clientes te van a buscar desde su teléfono. Tu página se ve impecable en cualquier pantalla.</p>
-        </div>
-        <div class="tile hot reveal d1">
-          <span class="huge">1 clic</span>
-          <h3>WhatsApp integrado</h3>
-          <p>Botones que abren un chat contigo con el mensaje ya escrito.</p>
-        </div>
-        <div class="tile photo tall reveal d2">
-          <img src="img/alewox-mostrador.jpg" alt="Código QR en el mostrador de un restaurante" loading="lazy">
-          <span class="n">03</span>
-          <h3>QR para tu mostrador</h3>
-          <p>Tus clientes escanean y llegan directo a tu página.</p>
-        </div>
-        <div class="tile reveal d1">
-          <span class="n">04</span>
-          <h3>Google Maps</h3>
-          <p>Ubicación, horario y tu perfil de Google para que te encuentren.</p>
-        </div>
-        <div class="tile reveal">
-          <span class="n">05</span>
-          <h3>Diseño a medida</h3>
-          <p>Tus colores, tus fotos y tu estilo. Nada genérico.</p>
-        </div>
-        <div class="tile reveal d1">
-          <span class="n">06</span>
-          <h3>Tu propio .com</h3>
-          <p>Una dirección como tunegocio.com, incluida en el paquete PRO.</p>
-        </div>
-        <div class="tile reveal d2">
-          <span class="n">07</span>
-          <h3>Asistente con IA</h3>
-          <p>Responde a tus clientes por WhatsApp 24/7 mientras tú trabajas.</p>
-        </div>
-        <div class="tile reveal d3">
-          <span class="n">08</span>
-          <h3>Cambios cuando quieras</h3>
-          <p>Actualizo precios, fotos y promociones cuando lo necesites.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Proceso -->
-  <section id="proceso" class="work">
-    <div class="container">
-      <div class="head-row">
-        <div>
-          <span class="eyebrow reveal">Proceso</span>
-          <h2 class="section-title reveal">De la idea a internet en <span class="serif">cuatro</span> pasos</h2>
-        </div>
-        <p class="reveal">Un proceso simple y claro. Siempre sabes en qué va tu página.</p>
-      </div>
-      <div class="steps" id="steps">
-        <div class="steps-line"><div></div></div>
-        <div class="step reveal"><div class="dot">01</div><h3>Me cuentas</h3><p>Llenas un formulario corto con los datos de tu negocio, fotos y lo que quieres lograr.</p></div>
-        <div class="step reveal d1"><div class="dot">02</div><h3>Diseño</h3><p>Creo una página a tu medida con tus colores, servicios y precios.</p></div>
-        <div class="step reveal d2"><div class="dot">03</div><h3>Revisas</h3><p>Te mando el enlace para que la veas en tu celular y pidas ajustes.</p></div>
-        <div class="step reveal d3"><div class="dot">04</div><h3>Publicamos</h3><p>Tu página queda en línea, lista para compartir con tus clientes.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Sobre mí -->
-  <section id="sobre-mi" class="about">
-    <div class="container about-grid">
-      <div class="about-photo reveal">
-        <img src="img/alewox-estudio.jpg" alt="Escritorio de trabajo con una página web en la pantalla" loading="lazy">
-        <div class="badge"><span class="avatar">AN</span><span><strong>Alejandro Nieblas</strong><small>Fundador de Alewox · Hermosillo</small></span></div>
-      </div>
-      <div>
-        <span class="eyebrow reveal">Sobre mí</span>
-        <h2 class="reveal">Hecho en <span class="serif">Hermosillo</span>, para negocios de todo el mundo.</h2>
-        <p class="reveal d1">Soy Alejandro Nieblas, creador de Alewox. Ayudo a negocios locales a tener una página web profesional, rápida y fácil de compartir.</p>
-        <p class="reveal d1">Tú me cuentas de tu negocio y yo me encargo del diseño, la publicación y de que tus clientes puedan escribirte con un solo clic. Me escribes por WhatsApp y te contesto yo, no un call center.</p>
-        <p class="reveal d1">Trabajo 100% en línea: me mandas tus datos y fotos por WhatsApp y recibes tu página lista en 24 horas, estés donde estés.</p>
-        <div class="mision reveal d2"><strong>Mi misión: hacer crecer a los negocios, empezando por los de Hermosillo.</strong><p>Un negocio pequeño también merece crecer en internet. Por eso hago páginas profesionales pensadas para traerte más clientes, a precios que sí puedes pagar, y te atiendo yo, directo por WhatsApp.</p></div>
-        <div class="about-tags reveal d2"><span>Hermosillo, Sonora</span><span>Clientes en todo el mundo</span><span>Entrega en 24 horas</span><span>Atención por WhatsApp</span></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Paquetes -->
-  <section id="paquetes" class="light">
-    <div class="container">
-      <div class="head-row">
-        <div>
-          <span class="eyebrow reveal">Paquetes</span>
-          <h2 class="section-title reveal">Elige el plan para tu <span class="serif">negocio</span></h2>
-        </div>
-        <p class="reveal">Precios claros, sin sorpresas. Pago único y entrega en 24 horas en todos los paquetes.</p>
-      </div>
-      <div class="plans">
-        <div class="plan reveal">
-          <span class="name">Básico</span>
-          <div class="price">$450 <small>MXN · pago único</small></div>
-          <p class="desc">Tu página profesional lista en 24 horas, para empezar a recibir clientes.</p>
-          <ul><li>Página profesional de una sección, adaptada a tu giro</li><li>Tus fotos, logo, colores y hasta 6 servicios</li><li>Botón directo a tu WhatsApp</li><li>Ubicación en Google Maps, horario y redes sociales</li><li>Botón “Cómo llegar” que abre la ruta en Google Maps</li><li>Secciones que aparecen suavemente al navegar</li><li>Adaptada a celular</li><li>Dirección web gratuita</li><li>Código QR para imprimir en tu negocio</li><li>1 ronda de ajustes antes de publicar: textos, precios, fotos y colores</li></ul>
-          <a href="muestra/" class="btn btn-outline">Ver mi muestra gratis</a>
-        </div>
-        <div class="plan reveal d1">
-          <span class="name">Esencial</span>
-          <div class="price">$750 <small>MXN · pago único</small></div>
-          <p class="desc">Diseño a tu medida para verte profesional y vender más.</p>
-          <ul><li>Todo lo del Básico, con diseño a la medida de tu negocio</li><li>Tu propio dominio .com o .mx el primer año (tunegocio.com)</li><li>Varias secciones: servicios o menú con precios, galería de hasta 12 fotos y contacto</li><li>Botones de WhatsApp con el mensaje listo para cada servicio</li><li>Alta y optimización de tu perfil en Google Maps</li><li>Código QR con diseño para imprimir</li><li>Animaciones: fondo en movimiento y tarjetas que reaccionan al tocarlas</li><li>Fotos profesionales hechas con IA si no tienes buenas fotos</li><li>2 rondas de ajustes antes de publicar: textos, fotos, colores y acomodo de secciones</li><li>1 mes de actualizaciones gratis después de entregar: precios, promociones, horarios y fotos</li></ul>
-          <a href="#contacto" class="btn btn-outline" data-wa="Hola Alejandro, me interesa la página Esencial ($750).">Quiero la Esencial</a>
-        </div>
-        <div class="plan best reveal d2">
-          <span class="badge">Más completa</span>
-          <span class="name">PRO</span>
-          <div class="price">$950 <small>MXN · pago único</small></div>
-          <p class="desc">Para negocios que quieren destacar sobre su competencia.</p>
-          <ul><li>Todo lo de la Esencial</li><li>Formularios de citas, pedidos o cotizaciones que llegan a tu WhatsApp</li><li>Animaciones premium: portada en 3D y títulos que entran palabra por palabra</li><li>Sección de promociones destacada, que cambiamos cuando quieras</li><li>Sección de opiniones de clientes</li><li>SEO local para aparecer en Google en tu ciudad</li><li>Visita presencial para tomar fotos de tu negocio (en Hermosillo; fuera, fotos con IA)</li><li>Instalación gratis del asistente de WhatsApp con IA</li><li>3 rondas de ajustes antes de publicar: todo lo anterior, más secciones nuevas y animaciones</li><li>3 meses de actualizaciones gratis: precios, promociones, horarios, fotos y servicios nuevos</li></ul>
-          <a href="#contacto" class="btn btn-light" data-wa="Hola Alejandro, me interesa la página PRO ($950).">Quiero la PRO <span class="arr">→</span></a>
-        </div>
-      </div>
-      <div class="extras reveal">
-        <h3>Extras mensuales <span>opcionales, para todos los paquetes</span></h3>
-        <div class="extras-grid">
-          <div class="extra"><strong>Asistente de WhatsApp con IA · $350/mes</strong><p>Contesta a tus clientes al instante, 24/7, con la información de tu negocio. Instalación de $250 (gratis en PRO).</p></div>
-          <div class="extra"><strong>Mantenimiento · $150/mes</strong><p>Cambio tus precios, fotos y promociones cada vez que lo necesites.</p></div>
-          <div class="extra"><strong>Dominio propio · $350/año</strong><p>Tu tunegocio.com en cualquier paquete. Incluido el primer año en Esencial y PRO.</p></div>
-          <div class="extra"><strong>Cambios fuera del plan · $100 c/u</strong><p>Si no tienes mantenimiento, pagas solo el cambio que necesitas.</p></div>
-        </div>
-      </div>
-      <p class="plans-note reveal">Precios de lanzamiento · Ve tu muestra gratis antes de pagar.<br>Fuera de México: Básico $35 USD · Esencial $50 USD · PRO $60 USD.</p>
-    </div>
-  </section>
-
-  <!-- Opiniones: se muestra cuando hay al menos una en REVIEWS -->
-  <section id="opiniones" hidden>
-    <div class="container">
-      <div class="head-row">
-        <div>
-          <span class="eyebrow reveal">Opiniones</span>
-          <h2 class="section-title reveal">Lo que dicen mis <span class="serif">clientes</span></h2>
-        </div>
-        <p class="reveal">¿Ya trabajamos juntos? Me encantaría saber cómo te fue.</p>
-      </div>
-      <div class="reviews-grid">
-        <div class="review-list reveal" id="reviewList"></div>
-        <form class="review-form reveal d1" id="reviewForm">
-          <h3>Deja tu opinión</h3>
-          <p>Tu comentario me llega por WhatsApp y lo publico aquí.</p>
-          <div class="star-pick" role="radiogroup" aria-label="Calificación">
-            <input type="radio" name="estrellas" id="s5" value="5" checked><label for="s5" title="5 estrellas">★</label>
-            <input type="radio" name="estrellas" id="s4" value="4"><label for="s4" title="4 estrellas">★</label>
-            <input type="radio" name="estrellas" id="s3" value="3"><label for="s3" title="3 estrellas">★</label>
-            <input type="radio" name="estrellas" id="s2" value="2"><label for="s2" title="2 estrellas">★</label>
-            <input type="radio" name="estrellas" id="s1" value="1"><label for="s1" title="1 estrella">★</label>
-          </div>
-          <input type="text" name="nombre" placeholder="Tu nombre" required>
-          <input type="text" name="negocio" placeholder="Tu negocio (opcional)">
-          <textarea name="comentario" rows="4" placeholder="¿Cómo fue tu experiencia?" required></textarea>
-          <button type="submit" class="btn btn-accent">Enviar opinión <span class="arr">→</span></button>
-          <p class="form-msg" id="reviewMsg">¡Gracias! Termina de enviar tu opinión en WhatsApp.</p>
-        </form>
-      </div>
-    </div>
-  </section>
-
-  <!-- FAQ -->
-  <section id="preguntas">
-    <div class="container faq-grid">
-      <div>
-        <span class="eyebrow reveal">Preguntas</span>
-        <h2 class="section-title reveal">Lo que todos <span class="serif">preguntan</span></h2>
-      </div>
-      <div class="reveal">
-        <details><summary>¿Cuánto tarda en estar lista mi página?<span class="plus"></span></summary><p class="answer">24 horas, a partir de que me envías la información y las fotos de tu negocio.</p></details>
-        <details><summary>¿Qué es el paquete Básico?<span class="plus"></span></summary><p class="answer">Es tu página profesional de una sección, adaptada a tu giro y con tus fotos, servicios, precios y contacto reales, lista en 24 horas. Antes de pagar puedes ver un adelanto gratis en <a href="muestra/">Crea tu muestra</a>; la página que contratas va mucho más allá de esa muestra porque lleva la información real de tu negocio. Si quieres un diseño hecho a tu medida, está el Esencial.</p></details>
-        <details><summary>¿Qué es una ronda de ajustes?<span class="plus"></span></summary><p class="answer">Es una lista de cambios que me mandas en un solo mensaje mientras revisas tu página, antes de publicarla. En el Básico (1 ronda) ajustamos textos, precios, fotos y colores; en la Esencial (2 rondas), también el acomodo de las secciones; y en la PRO (3 rondas), además agregamos secciones nuevas y animaciones.</p></details>
-        <details><summary>¿Qué diferencia hay entre Esencial y PRO?<span class="plus"></span></summary><p class="answer">La Esencial tiene un diseño a tu medida con varias secciones, galería, tu propio dominio (tunegocio.com) el primer año y tu perfil de Google Maps optimizado. La PRO suma formularios de citas, pedidos o cotizaciones, animaciones premium, SEO local, una visita para tomar fotos de tu negocio y la instalación gratis del asistente con IA.</p></details>
-        <details><summary>¿Es un pago único o mensual?<span class="plus"></span></summary><p class="answer">Los paquetes son un pago único. Los extras son opcionales y mensuales: el asistente de WhatsApp con IA ($350/mes) y el mantenimiento ($150/mes). El dominio propio es de $350 al año (el primer año va incluido en Esencial y PRO).</p></details>
-        <details><summary>¿Trabajas con negocios fuera de Hermosillo?<span class="plus"></span></summary><p class="answer">Sí. Todo el proceso es en línea: me mandas tu información y fotos por WhatsApp, revisas tu página desde tu celular y la recibes lista en 24 horas, estés en cualquier ciudad de México o del mundo. Si estás fuera de México, los precios son en dólares (Básico $35 USD, Esencial $50 USD y PRO $60 USD) y te damos una forma de pago internacional. La visita para tomar fotos del PRO es solo en Hermosillo; fuera de aquí usamos tus fotos o fotos profesionales hechas con IA.</p></details>
-        <details><summary>¿Necesito saber de computación?<span class="plus"></span></summary><p class="answer">No. Solo llenas un formulario con los datos de tu negocio y me mandas tus fotos. Yo me encargo de todo lo técnico.</p></details>
-        <details><summary>¿Puedo cambiar cosas después?<span class="plus"></span></summary><p class="answer">Sí. Después de entregarla, la Esencial incluye 1 mes de actualizaciones gratis (precios, promociones, horarios y fotos) y la PRO 3 meses (lo mismo, más servicios nuevos). Pasado ese tiempo, con el mantenimiento ($150/mes) actualizo tu página cuando quieras, o pagas $100 por cada cambio suelto. Un rediseño o secciones nuevas se cotizan aparte.</p></details>
-        <details><summary>¿Qué es una URL personalizada?<span class="plus"></span></summary><p class="answer">Es la dirección de tu página con el nombre de tu negocio, como tunegocio.com. Viene incluida el primer año en Esencial y PRO. El Básico usa una dirección web gratuita, y puedes agregarle tu dominio como extra ($350/año).</p></details>
-        <details><summary>¿Qué hace el asistente de WhatsApp con IA?<span class="plus"></span></summary><p class="answer">Es un extra de $350 al mes, disponible para cualquier paquete (la instalación es gratis en la PRO). Cuando un cliente te escribe por WhatsApp, la IA le contesta al instante con la información de tu negocio, resuelve sus dudas y te avisa cuando alguien está listo para comprar, para que tú cierres la venta.</p></details>
-        <details><summary>¿Cómo me contactan mis clientes?<span class="plus"></span></summary><p class="answer">Tu página tiene botones y formularios que abren WhatsApp directo a tu número, con el mensaje ya escrito.</p></details>
-      </div>
-    </div>
-  </section>
-
-  <!-- Cierre -->
-  <footer id="contacto" class="final">
-    <img src="img/alewox-desierto.jpg" alt="" loading="lazy">
-    <div class="container">
-      <h2 class="hablemos" id="hablemos" aria-label="Hablemos de tu negocio."><span class="letras" aria-hidden="true">Hablemos</span><span class="sub serif" aria-hidden="true">de tu negocio.</span></h2>
-      <div class="final-row">
-        <p class="reveal">Escríbeme por WhatsApp, cuéntame de tu negocio y te digo cómo una página puede ayudarte a crecer, sin compromiso.<br><br><a href="formulario/">¿Ya contrataste? Llena tu formulario →</a></p>
-        <a href="#" class="btn btn-accent reveal" data-wa="Hola Alejandro, quiero una página web para mi negocio.">Escribir por WhatsApp <span class="arr">→</span></a>
-      </div>
-    </div>
-    <div class="wordmark" aria-hidden="true">ALEWOX</div>
-    <div class="container footer-bottom">
-      <span>© 2026 Alewox · Hacemos crecer negocios · Desde Hermosillo para el mundo</span>
-      <div class="socials"><a href="https://wa.me/526624002958" target="_blank" rel="noopener">WhatsApp 662 400 2958</a><a href="https://www.instagram.com/alewox.web/" target="_blank" rel="noopener">Instagram</a></div>
-    </div>
-  </footer>
-
-  <a href="#contacto" class="wa-float" aria-label="Escribir por WhatsApp" data-wa="Hola, me interesa una página web para mi negocio."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91A9.85 9.85 0 0 0 12.04 2Zm5.8 14.16c-.24.68-1.42 1.31-1.96 1.36-.5.05-1.13.07-1.82-.11-.42-.13-.96-.31-1.65-.61-2.9-1.25-4.8-4.17-4.94-4.36-.14-.19-1.18-1.57-1.18-3s.75-2.13 1.02-2.42c.26-.29.57-.36.76-.36h.55c.18 0 .42-.07.65.5.24.58.81 2 .88 2.14.07.14.12.31.02.5-.1.19-.14.31-.29.48-.14.17-.3.37-.43.5-.14.14-.29.3-.13.59.17.29.74 1.22 1.59 1.98 1.09.97 2.01 1.27 2.3 1.42.29.14.45.12.62-.07.17-.19.71-.83.9-1.12.19-.29.38-.24.64-.14.26.1 1.68.79 1.97.94.29.14.48.21.55.33.07.12.07.69-.17 1.37Z"/></svg></a>
-
-  <button class="chat-launcher" id="chatLauncher" aria-label="Abrir chat con el asistente" aria-controls="chatPanel" aria-expanded="false" hidden><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg><span class="dot"></span></button>
-  <div class="chat-panel" id="chatPanel" role="dialog" aria-label="Chat con el asistente de Alewox" hidden>
-    <div class="chat-head">
-      <span class="avatar">AN</span>
-      <div><strong>Asistente de Alewox</strong><small>Te responde al instante</small></div>
-      <button class="chat-close" id="chatClose" aria-label="Cerrar chat">×</button>
-    </div>
-    <div class="chat-msgs" id="chatMsgs" aria-live="polite"></div>
-    <form class="chat-form" id="chatForm">
-      <input id="chatInput" type="text" placeholder="Escribe tu mensaje…" autocomplete="off" maxlength="800" aria-label="Tu mensaje">
-      <button type="submit" id="chatSend">Enviar</button>
-    </form>
-    <p class="chat-note">Asistente con IA · Alejandro te atiende en persona por WhatsApp</p>
+<div class="escena" id="escena">
+  <div class="cuadro" id="cuadro">
+    <img id="foto" alt="" aria-hidden="true">
+    <video id="video" muted loop playsinline autoplay preload="auto" aria-label="Escritorio de noche con lluvia en la ventana y una laptop con el logo de Alewox"></video>
+    <div class="relampago" id="relampago"></div>
+    <div class="borroso" id="borroso"></div>
+    <div class="pantalla-viva" id="viva" aria-hidden="true"></div>
+    <svg id="capa" viewBox="0 0 1080 1920" preserveAspectRatio="none">
+      <defs>
+        <filter id="resplandor" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="22"/></filter>
+        <radialGradient id="luz" cx="50%" cy="45%" r="65%"><stop offset="0" stop-color="#ffd2a8"/><stop offset=".55" stop-color="#ff8a45"/><stop offset="1" stop-color="#ff6a2a" stop-opacity="0"/></radialGradient>
+      </defs>
+      <g class="brillo">
+        <polygon id="halo" fill="#ff7a3d" opacity=".55" filter="url(#resplandor)" points=""></polygon>
+        <polygon id="tinte" fill="url(#luz)" opacity=".35" points=""></polygon>
+      </g>
+      <polygon id="toque" class="pantalla-toque" tabindex="0" role="button" aria-label="Ver todo lo que Alewox puede hacer por tu negocio" points=""></polygon>
+    </svg>
   </div>
+  <div class="aviso" id="aviso">Amplía tu negocio</div>
+  <div class="pie" aria-hidden="true"></div>
+</div>
+<svg class="cursor" id="cursor" viewBox="0 0 34 34" aria-hidden="true"><path d="M4 3 L4 27 L10.5 21 L15 31 L19.5 29 L15 19.2 L24 19.2 Z" fill="#fff" stroke="#111" stroke-width="1.6" stroke-linejoin="round"/></svg>
+<div class="onda" id="onda" aria-hidden="true"></div>
 
-  <script>
-    // Número de WhatsApp: 52 + 10 dígitos, sin espacios. Vacío = modo muestra.
-    const WHATSAPP = '526624002958';
-    const waUrl = text => `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(text)}`;
-    if (WHATSAPP) {
-      document.querySelectorAll('[data-wa]').forEach(a => {
-        a.href = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(a.dataset.wa)}`;
-        a.target = '_blank';
-        a.rel = 'noopener';
-      });
-    }
+<a class="logo" href="#" aria-label="Alewox">
+  <svg width="26" height="26" viewBox="0 0 100 100" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="1" x2=".6" y2="0"><stop offset="0" stop-color="#ff6a33"/><stop offset="1" stop-color="#ffb06a"/></linearGradient></defs><polygon points="6,98 30,98 64,6 40,6" fill="url(#lg)"/><polygon points="52,38 64,6 98,98 74,98" fill="#f4efe8"/></svg>
+  alewox<b>.</b>
+</a>
+<h1 class="frase">Hacemos que tu negocio <em>venda más</em> en internet.</h1>
 
-    // Opiniones publicadas. Para agregar una: { nombre: '', negocio: '', estrellas: 5, comentario: '' }
-    // La sección y su enlace en el menú aparecen solos cuando hay al menos una.
-    const REVIEWS = [];
+<svg class="hilos" id="hilos" aria-hidden="true"></svg>
+<nav class="anillo" id="anillo" aria-label="Servicios de Alewox"></nav>
+<button class="cerrar" id="cerrar" type="button" aria-label="Cerrar">×</button>
+<div class="vista" id="vista" role="dialog" aria-modal="true" aria-label="Detalle del servicio" aria-hidden="true">
+  <button class="volver-esc" id="volver" type="button">← Volver al escritorio</button>
+  <div class="vista-visual"><div class="grande-marco" id="marco"><div class="grande" id="grande"></div></div></div>
+  <section class="detalle" id="detalle"></section>
+</div>
 
-    const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-    if (REVIEWS.length) {
-      document.getElementById('opiniones').hidden = false;
-      document.getElementById('navOpiniones').hidden = false;
-      document.getElementById('reviewList').innerHTML = REVIEWS.map(r => `<div class="review"><div class="stars">${'★'.repeat(r.estrellas)}${'☆'.repeat(5 - r.estrellas)}</div><p>“${esc(r.comentario)}”</p><span class="who">${esc(r.nombre)}${r.negocio ? ' · ' + esc(r.negocio) : ''}</span></div>`).join('');
-    }
+<script>
+const WHATS = '526624002958';
+const wa = (texto) => `https://wa.me/${WHATS}?text=${encodeURIComponent(texto)}`;
+const reducir = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
-    document.getElementById('reviewForm').addEventListener('submit', e => {
-      e.preventDefault();
-      const f = e.target.elements;
-      const n = Number(f.estrellas.value);
-      const text = [
-        'Hola Alejandro, te dejo mi opinión sobre Alewox:',
-        `${'★'.repeat(n)} (${n}/5)`,
-        `“${f.comentario.value}”`,
-        `— ${f.nombre.value}${f.negocio.value ? ', ' + f.negocio.value : ''}`,
-      ].join('\n');
-      window.open(waUrl(text), '_blank', 'noopener');
-      document.getElementById('reviewMsg').style.display = 'block';
-      e.target.reset();
-    });
+// ---------- las dos tomas: vertical (cel) y horizontal (compu), con medidas en píxeles de cada video ----------
+const TOMAS = {
+  vertical: {
+    video: 'media/escritorio.mp4', foto: 'media/portada.jpg', w: 1080, h: 1920,
+    pantalla: [[425, 1015], [871, 1059], [845, 1372], [398, 1289]],
+    laptop: [[415, 995], [912, 1036], [884, 1390], [806, 1645], [172, 1488], [200, 1452], [388, 1300]],
+  },
+  horizontal: {
+    video: 'media/escritorio-h.mp4', foto: 'media/portada-h.jpg', w: 1920, h: 1080,
+    pantalla: [[888, 483], [1275, 523], [1235, 818], [852, 738]],
+    laptop: [[885, 462], [1306, 498], [1278, 850], [1266, 862], [1105, 995], [642, 872], [650, 850], [770, 788], [850, 758]],
+  },
+};
+let T = null, caja, centroLaptop, centroPantalla;
+const toque = document.getElementById('toque');
+const borroso = document.getElementById('borroso');
+const video = document.getElementById('video');
+function usarToma(nombre) {
+  if (T === TOMAS[nombre]) return;
+  T = TOMAS[nombre];
+  caja = T.laptop.reduce((c, [x, y]) => ({ x0: Math.min(c.x0, x), y0: Math.min(c.y0, y), x1: Math.max(c.x1, x), y1: Math.max(c.y1, y) }), { x0: 1e9, y0: 1e9, x1: 0, y1: 0 });
+  centroLaptop = [(caja.x0 + caja.x1) / 2, (caja.y0 + caja.y1) / 2];
+  centroPantalla = T.pantalla.reduce((a, p) => [a[0] + p[0] / 4, a[1] + p[1] / 4], [0, 0]);
+  document.getElementById('capa').setAttribute('viewBox', `0 0 ${T.w} ${T.h}`);
+  const puntos = T.pantalla.map((p) => p.join(',')).join(' ');
+  ['toque', 'halo', 'tinte'].forEach((id) => document.getElementById(id).setAttribute('points', puntos));
+  // máscara del desenfoque: todo el cuadro menos la laptop (con orilla suave)
+  const hueco = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 ${T.w} ${T.h}' preserveAspectRatio='none'><filter id='f'><feGaussianBlur stdDeviation='7'/></filter><path filter='url(#f)' fill-rule='evenodd' fill='white' d='M-40 -40H${T.w + 40}V${T.h + 40}H-40Z M${T.laptop.map((p) => p.join(' ')).join(' L')} Z'/></svg>`;
+  borroso.style.webkitMaskImage = borroso.style.maskImage = `url("data:image/svg+xml,${encodeURIComponent(hueco)}")`;
+  document.getElementById('foto').src = T.foto;
+  video.poster = T.foto;
+  video.src = T.video;
+  video.play().catch(() => {});
+}
 
-    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+// ---------- acomodo: el video llena la pantalla ----------
+const cuadro = document.getElementById('cuadro');
+const aviso = document.getElementById('aviso');
+let escala = 1, izq = 0, arr = 0, abierto = false;
+function acomodar() {
+  const W = innerWidth, H = innerHeight;
+  usarToma(W / H < 1 ? 'vertical' : 'horizontal');
+  escala = Math.max(W / T.w, H / T.h);
+  const w = T.w * escala, h = T.h * escala;
+  // la laptop un poco abajo del centro, sin dejar huecos en las orillas
+  izq = Math.min(0, Math.max(W - w, W * 0.5 - centroLaptop[0] * escala));
+  arr = Math.min(0, Math.max(H - h, H * 0.56 - centroLaptop[1] * escala));
+  Object.assign(cuadro.style, { width: `${w}px`, height: `${h}px`, left: `${izq}px`, top: `${arr}px` });
+  aviso.style.left = `${izq + (T.pantalla[2][0] + T.pantalla[3][0]) / 2 * escala}px`;
+  aviso.style.top = `${arr + caja.y1 * escala + 14}px`;
+  acomodarViva();
+  if (document.body.classList.contains('entrando')) zambullir();
+  else if (abierto) enfocar();
+}
+addEventListener('resize', acomodar);
 
-    // Nav al hacer scroll
-    const nav = document.getElementById('nav');
-    const onScroll = () => nav.classList.toggle('scrolled', scrollY > 40);
-    addEventListener('scroll', onScroll, { passive: true }); onScroll();
+// ---------- al abrir: la cámara centra la laptop y los servicios salen alrededor ----------
+const SERVICIOS = [
+  // lugar: arriba / abajo al centro, izq-0..3 y der-0..2 en columnas (en compu); cel-* en filas arriba y abajo de la laptop (en cel)
+  { id: 'muestra', dato: 'Gratis', titulo: 'Muestra gratis', texto: 'Mira tu página antes de pagar un peso.', precio: 'En 1 minuto', lugar: 'arriba', cel: 'cel-a', destacado: true },
+  { id: 'paginas', dato: '24 horas', titulo: 'Páginas web', texto: 'Tu página profesional, lista desde 24 horas.', precio: 'Desde $450 · pago único', lugar: 'izq-0', cel: 'cel-b1' },
+  { id: 'precios', dato: 'Desde $450', titulo: 'Precios Hermosillo', texto: 'Paquetes y extras para negocios de Hermosillo.', precio: 'Pesos mexicanos · pago único', lugar: 'izq-1', cel: 'cel-c1' },
+  { id: 'google', dato: 'Cerca de ti', titulo: 'Que te encuentren', texto: 'Google Maps, QR para tu mostrador y fotos profesionales.', precio: 'Incluido en tu paquete', lugar: 'izq-2', cel: 'cel-d1' },
+  { id: 'planes', dato: 'Desde $55 USD', titulo: 'Planes', texto: 'Para negocios fuera de Hermosillo, en cualquier parte del mundo.', precio: 'Básico $55 · Esencial $85 · PRO $115', lugar: 'der-2', cel: 'cel-e1' },
+  { id: 'ia', dato: '24/7', titulo: 'Asistente con IA', texto: 'Contesta tu WhatsApp 24/7, aunque estés atendiendo.', precio: '$350 al mes', lugar: 'der-0', cel: 'cel-b2' },
+  { id: 'extras', dato: 'Crece más', titulo: 'Extras para crecer', texto: 'Mantenimiento, dominio propio, citas, pedidos y más.', precio: 'Desde $100', lugar: 'der-1', cel: 'cel-c2' },
+  { id: 'portafolio', dato: 'Trabajos', titulo: 'Portafolio', texto: 'Páginas que ya hicimos para negocios reales.', precio: 'Ver trabajos', lugar: 'abajo-izq', cel: 'cel-d2' },
+  { id: 'hablemos', dato: 'Te contesto yo', titulo: 'Hablemos', texto: 'Escríbeme por WhatsApp y te contesto yo.', precio: '662 400 2958', lugar: 'abajo-der', cel: 'cel-e2' },
+];
+const anillo = document.getElementById('anillo');
+anillo.innerHTML = SERVICIOS.map((s, i) => `<button class="bloque${s.destacado ? ' destacado' : ''}${['arriba', 'abajo-izq', 'abajo-der'].includes(s.lugar) ? ' centro' : ''}" data-id="${s.id}" style="transition-delay:${reducir ? 0 : 0.5 + i * 0.09}s"><i class="dato">${esc(s.dato)}</i><b>${esc(s.titulo)}</b><span>${esc(s.texto)}</span><small>${esc(s.precio)}</small></button>`).join('');
+const bloques = [...anillo.children];
 
-    // Menú móvil
-    const toggle = document.getElementById('menuToggle');
-    const links = document.getElementById('navLinks');
-    toggle.addEventListener('click', () => { links.classList.toggle('open'); toggle.classList.toggle('open'); nav.classList.add('scrolled'); });
-    links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { links.classList.remove('open'); toggle.classList.remove('open'); }));
+// luz de la tarjeta que sigue al mouse
+anillo.addEventListener('pointermove', (e) => {
+  const b = e.target.closest('.bloque');
+  if (!b) return;
+  const r = b.getBoundingClientRect();
+  b.style.setProperty('--mx', `${e.clientX - r.left}px`);
+  b.style.setProperty('--my', `${e.clientY - r.top}px`);
+});
 
-    // Historia: las escenas avanzan solas con zoom lento; los segmentos de abajo también sirven para saltar
-    const story = document.getElementById('story');
-    const bgs = [...story.querySelectorAll('.bg')];
-    const beats = [...story.querySelectorAll('.beat')];
-    const dots = [...document.querySelectorAll('#storyDots button')];
-    const storyCount = document.getElementById('storyCount');
-    const DURACION = [5000, 3500, 3500, 4000]; // la primera dura más: ahí están los botones
-    let scene = 0, storyTimer;
-    const restart = (el, cls) => { el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls); };
-    const goScene = i => {
-      scene = i;
-      bgs.forEach((b, k) => { if (k === i) restart(b, 'on'); else b.classList.remove('on'); });
-      beats.forEach((b, k) => {
-        b.classList.toggle('on', k === i);
-        b.setAttribute('aria-hidden', k !== i);
-        b.querySelectorAll('a').forEach(a => a.tabIndex = k === i ? 0 : -1);
-      });
-      dots.forEach((d, k) => {
-        d.classList.toggle('done', k < i);
-        d.style.setProperty('--d', `${DURACION[k]}ms`);
-        if (k === i && !reduce) restart(d, 'on'); else d.classList.remove('on');
-      });
-      storyCount.textContent = String(i + 1).padStart(2, '0');
-      clearTimeout(storyTimer);
-      if (!reduce) storyTimer = setTimeout(() => goScene((i + 1) % bgs.length), DURACION[i]);
+// ---------- la pantalla de la laptop "en vivo": cada servicio se ve funcionando ----------
+const ESCENAS = {
+  paginas: () => `<div class="p-web"><div class="escena-p" style="padding-bottom:0"><div class="p-barra"><b style="color:#f4efe8">Tacos Don Chuy</b><span>Menú · Ubicación · WhatsApp</span></div></div>
+    <div class="p-hero">Los tacos más vendidos del norte 🌮</div>
+    <div class="p-fila"><div>Asada $35</div><div>Tripa $38</div><div>Cabeza $35</div></div>
+    <div class="p-fila"><div>Gringas $65</div><div>Aguas $30</div><div>Para llevar</div></div></div>`,
+  muestra: () => `<div class="escena-p"><div class="p-barra"><span>alewox.com/muestra</span><span>Gratis</span></div>
+    <h4 class="p-escribe">Tacos Don Chuy</h4><div class="p-barra"><span>tacosdonchuy.com</span></div>
+    <div class="p-fila" style="margin:0"><div style="animation:aparece .4s .3s both;background:linear-gradient(135deg,#7a3b1e,#ff7a3d)">Portada</div><div style="animation:aparece .4s .6s both">Menú</div><div style="animation:aparece .4s .9s both">WhatsApp</div></div></div>`,
+  ia: () => `<div class="escena-p"><div class="p-barra"><b style="color:#f4efe8">WhatsApp · Tacos Don Chuy</b><span>en línea</span></div>
+    <div class="p-chat"><div class="c" style="animation-delay:.1s">¿A qué hora abren? 🌮</div><div class="b" style="animation-delay:.9s">¡Hola! De 7 pm a 1 am. ¿Te aparto unos?</div><div class="c" style="animation-delay:1.8s">Sí, 5 de asada</div><div class="b" style="animation-delay:2.6s">¡Listo! A tu nombre 🔥</div></div></div>`,
+  google: () => `<div class="p-mapa"><div class="calle" style="left:0;right:0;top:46%;height:26px"></div><div class="calle" style="top:0;bottom:0;left:38%;width:22px"></div><div class="calle" style="top:0;bottom:0;left:72%;width:16px"></div>
+    <div class="p-pin"></div><div class="p-ficha">Tacos Don Chuy · ★ 4.9 · Abierto</div></div>`,
+  precios: () => `<div class="escena-p"><h4>Elige tu <em>paquete</em></h4><div class="p-precios"><div><b>Básico</b><strong>$450</strong></div><div><b>Esencial</b><strong>$750</strong></div><div><b>PRO</b><strong>$950</strong></div></div><div class="p-barra"><span>Pago único · lista desde 24 horas</span></div></div>`,
+  hablemos: () => `<div class="escena-p p-wa"><i>💬</i><h4>Escríbeme</h4><div class="p-barra" style="justify-content:center;font-size:26px;color:#f4efe8">662 400 2958</div></div>`,
+  planes: () => `<div class="escena-p"><div class="p-barra"><span>🌎 Para todo el mundo</span><span>USD · pago único</span></div><h4>Tu página, <em>estés donde estés</em></h4><div class="p-precios"><div><b>Básico</b><strong>$55</strong></div><div><b>Esencial</b><strong>$85</strong></div><div><b>PRO</b><strong>$115</strong></div></div></div>`,
+  extras: () => `<div class="escena-p"><h4>Haz <em>crecer</em> tu negocio</h4><div class="p-precios">
+    <div><b>Asistente IA</b><strong style="font-size:32px">24/7</strong></div><div><b>Mantenimiento</b><strong style="font-size:32px">$150</strong></div><div><b>Dominio</b><strong style="font-size:32px">.com</strong></div></div>
+    <div class="p-precios" style="margin-top:4px"><div style="animation-delay:.36s"><b>Citas</b><strong style="font-size:28px">📅</strong></div><div style="animation-delay:.48s"><b>Promos</b><strong style="font-size:28px">🔥</strong></div><div style="animation-delay:.6s"><b>Reseñas</b><strong style="font-size:28px">★ 4.9</strong></div></div></div>`,
+  portafolio: () => `<div style="position:absolute;inset:0;padding:26px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px">${TRABAJOS.map((t, i) => `<div style="border-radius:12px;overflow:hidden;position:relative;background:#2a221d;animation:aparece .5s ${i * 0.1}s both"><img src="media/trabajos/${t.img}" alt="" style="width:100%;height:100%;object-fit:cover;object-position:top"><span style="position:absolute;left:0;right:0;bottom:0;padding:8px 10px;background:linear-gradient(transparent,rgba(0,0,0,.8));font-size:15px;font-weight:700">${t.nombre}</span></div>`).join('')}</div>`,
+};
+const TRABAJOS = [
+  { nombre: 'K-BAR', giro: 'Eventos · Snack bar', url: 'https://alejandron.github.io/kbar-landing/', img: 'kbar.jpg', real: true },
+  { nombre: 'Brasa Burger', giro: 'Restaurante · Interactiva', url: 'https://alejandron.github.io/portafolio/muestra-hamburguesa/', img: 'brasa.jpg' },
+  { nombre: 'Duna Runner', giro: 'Tienda · Producto en 3D', url: 'https://alejandron.github.io/portafolio/muestra-tenis/', img: 'duna.jpg' },
+  { nombre: 'Taquería La Brasa', giro: 'Restaurante', url: 'https://alejandron.github.io/portafolio/taqueria/', img: 'taqueria.jpg' },
+  { nombre: 'Estética Bella Luna', giro: 'Belleza', url: 'https://alejandron.github.io/portafolio/estetica/', img: 'estetica.jpg' },
+  { nombre: 'Taller Torque', giro: 'Automotriz', url: 'https://alejandron.github.io/portafolio/taller/', img: 'taller.jpg' },
+];
+const viva = document.getElementById('viva');
+// la misma pantalla de la laptop (logo, barra, batería) pero hecha con código: se ve nítida por más que se acerque la cámara
+const pantallaNitida = () => `<div class="p-logo"><div class="barra"><span>alewox OS</span><span>${new Date().toLocaleTimeString('es-MX', { hour: 'numeric', minute: '2-digit' })}<i class="bateria"></i></span></div>
+  <div class="centro-logo"><svg width="120" height="112" viewBox="0 0 100 100" aria-hidden="true"><defs><linearGradient id="gN" x1="0" y1="1" x2=".6" y2="0"><stop offset="0" stop-color="#ff6a33"/><stop offset="1" stop-color="#ffb06a"/></linearGradient></defs><polygon points="6,98 30,98 64,6 40,6" fill="url(#gN)"/><polygon points="52,38 64,6 98,98 74,98" fill="#f4efe8"/></svg>
+  <b>alewox<i>.</i></b><small>Toca para encender</small></div></div>`;
+// ajusta la pantalla en vivo encima de la pantalla del video (en perspectiva)
+function acomodarViva() {
+  const q = T.pantalla.map(([x, y]) => [x * escala, y * escala]);
+  const [[x0, y0], [x1, y1], [x2, y2], [x3, y3]] = q;
+  const dx1 = x1 - x2, dx2 = x3 - x2, dx3 = x0 - x1 + x2 - x3, dy1 = y1 - y2, dy2 = y3 - y2, dy3 = y0 - y1 + y2 - y3;
+  const det = dx1 * dy2 - dx2 * dy1;
+  const g = (dx3 * dy2 - dx2 * dy3) / det, h = (dx1 * dy3 - dx3 * dy1) / det;
+  const a = x1 - x0 + g * x1, b = y1 - y0 + g * y1, c = x3 - x0 + h * x3, d = y3 - y0 + h * y3;
+  const w = 800, alto = 500;
+  viva.style.transform = `matrix3d(${a / w},${b / w},0,${g / w},${c / alto},${d / alto},0,${h / alto},0,0,1,0,${x0},${y0},0,1)`;
+}
+let activo = null, ciclo = null, hilosRutas = {};
+function activar(id) {
+  if (activo === id) return;
+  activo = id;
+  bloques.forEach((b) => b.classList.toggle('activo', b.dataset.id === id));
+  Object.entries(hilosRutas).forEach(([k, p]) => p.classList.toggle('activo', k === id));
+  // la pantalla de la laptop se queda con el logo de Alewox; los servicios en grande se ven al entrar a cada uno
+}
+// mientras nadie elige, la laptop va mostrando cada servicio
+function ciclar() {
+  clearInterval(ciclo);
+  let i = SERVICIOS.findIndex((s) => s.id === activo);
+  ciclo = setInterval(() => { i = (i + 1) % SERVICIOS.length; activar(SERVICIOS[i].id); }, 3400);
+}
+anillo.addEventListener('pointerover', (e) => { const b = e.target.closest('.bloque'); if (b) { clearInterval(ciclo); activar(b.dataset.id); } });
+anillo.addEventListener('pointerleave', () => { if (abierto && !document.body.classList.contains('viendo')) ciclar(); });
+
+// ---------- hilos de luz ----------
+const hilos = document.getElementById('hilos');
+// milisegundos en que la tarjeta i termina de llegar a su lugar (mismo retraso y duración que su transición de CSS)
+const llegada = (i) => (0.5 + i * 0.09 + 0.85) * 1000 + 80;
+function dibujarHilos(S, puntos) {
+  const cel = innerWidth < 720;
+  hilosRutas = {};
+  hilos.innerHTML = puntos.map(({ id, x, y }, i) => {
+    // termina en la orilla de la tarjeta, no en su centro
+    const dx = S[0] - x, dy = S[1] - y, rx = cel ? 60 : 118, ry = cel ? 36 : 58;
+    const t = 1 / Math.max(Math.abs(dx) / rx, Math.abs(dy) / ry, 1);
+    const ex = x + dx * t, ey = y + dy * t;
+    const mx = (S[0] + ex) / 2 + (ey - S[1]) * 0.18, my = (S[1] + ey) / 2 - (ex - S[0]) * 0.18;
+    const d = `M${S[0].toFixed(1)} ${S[1].toFixed(1)} Q${mx.toFixed(1)} ${my.toFixed(1)} ${ex.toFixed(1)} ${ey.toFixed(1)}`;
+    return `<path id="hilo-${id}" d="${d}" pathLength="1" style="stroke-dasharray:1;stroke-dashoffset:1"/>
+      <circle r="2.6" opacity="0"><animateMotion dur="${2.4 + i * 0.25}s" repeatCount="indefinite" begin="${(llegada(i) + 1000) / 1000}s"><mpath href="#hilo-${id}"/></animateMotion><set attributeName="opacity" to="1" begin="${(llegada(i) + 1000) / 1000}s"/></circle>`;
+  }).join('');
+  puntos.forEach(({ id }, i) => {
+    const p = document.getElementById(`hilo-${id}`);
+    hilosRutas[id] = p;
+    // cada hilo nace en la laptop y crece poco a poco hasta su tarjeta, justo después de que la tarjeta llegó
+    p.animate([{ strokeDashoffset: 1, opacity: 0 }, { strokeDashoffset: 0.85, opacity: 1, offset: 0.15 }, { strokeDashoffset: 0, opacity: 1 }], { duration: reducir ? 0 : 1000, delay: reducir ? 0 : llegada(i), easing: 'cubic-bezier(.35, .1, .25, 1)', fill: 'both' });
+  });
+}
+
+let zoom = 1, tx = 0, ty = 0;
+function enfocar() {
+  const W = innerWidth, H = innerHeight, cel = W < 720;
+  const anchoLaptop = (caja.x1 - caja.x0) * escala, altoLaptop = (caja.y1 - caja.y0) * escala;
+  // la cámara se acerca un poco a la laptop (sin dejar huecos en las orillas del video)
+  zoom = cel ? 1.12 : 1.08;
+  const w = T.w * escala * zoom, h = T.h * escala * zoom;
+  const cx = W / 2, cy = H * (cel ? 0.5 : 0.48);
+  tx = Math.min(-izq, Math.max(W - w - izq, cx - izq - centroLaptop[0] * escala * zoom));
+  // en celular la laptop puede subir un poco más; la orilla de abajo la tapa un degradado oscuro (.pie)
+  ty = Math.min(-arr, Math.max(H - h - arr - (cel ? 170 : 0), cy - arr - centroLaptop[1] * escala * zoom));
+  cuadro.style.transform = `translate(${tx}px, ${ty}px) scale(${zoom})`;
+  // dónde queda la laptop en pantalla, para acomodar los servicios a su alrededor
+  const k = escala * zoom;
+  const L = { x0: izq + tx + caja.x0 * k, x1: izq + tx + caja.x1 * k, y0: arr + ty + caja.y0 * k, y1: arr + ty + caja.y1 * k };
+  const lx = (L.x0 + L.x1) / 2, sep = 12;
+  const dentro = (x, y) => [Math.min(W - 140, Math.max(140, x)), Math.min(H - 60, Math.max(70, y))];
+    const col = (n, i, y0, y1) => y0 + ((y1 - y0) * (i + 0.5)) / n;
+  const izqX = Math.max(150, L.x0 - 210), derX = Math.min(W - 150, L.x1 + 210);
+  const lugares = cel
+    // cel: filas de dos arriba y abajo de la laptop
+    ? { 'cel-a': [W / 2, L.y0 - 172], 'cel-b1': [W * 0.27, L.y0 - 106], 'cel-b2': [W * 0.73, L.y0 - 106], 'cel-c1': [W * 0.27, L.y0 - 40], 'cel-c2': [W * 0.73, L.y0 - 40], 'cel-d1': [W * 0.27, L.y1 + 34], 'cel-d2': [W * 0.73, L.y1 + 34], 'cel-e1': [W * 0.27, L.y1 + 100], 'cel-e2': [W * 0.73, L.y1 + 100] }
+    // compu: en óvalo alrededor de la laptop, una arriba al centro y las demás en pares simétricos
+    : (() => {
+      // el óvalo se centra en la pantalla (a lo alto) para usar toda la altura
+      const ly = H / 2, sen70 = Math.sin((70 * Math.PI) / 180);
+      const rx = Math.min(lx - 145, W - 145 - lx), ry = Math.min(ly - 84, (H - 84 - ly) / sen70);
+      const en = (grados) => { const a = (grados * Math.PI) / 180; return [lx + rx * Math.cos(a), ly + ry * Math.sin(a)]; };
+      return { 'arriba': en(-90), 'der-0': en(-50), 'der-1': en(-10), 'der-2': en(30), 'abajo-der': en(70), 'abajo-izq': en(110), 'izq-2': en(150), 'izq-1': en(190), 'izq-0': en(230) };
+    })();
+  // centro de la pantalla de la laptop: de ahí salen las tarjetas y los hilos de luz
+  const S = [izq + tx + centroPantalla[0] * k, arr + ty + centroPantalla[1] * k];
+  const puntos = bloques.map((b) => {
+    const s = SERVICIOS.find((x) => x.id === b.dataset.id);
+    let [x, y] = lugares[cel ? s.cel : s.lugar];
+    // que ninguna tarjeta se salga de la pantalla
+    const mh = b.offsetHeight / 2 + 10, mw = b.offsetWidth / 2 + 8;
+    x = Math.min(W - mw, Math.max(mw, x));
+    y = Math.min(H - mh, Math.max(mh, y));
+    Object.assign(b.style, { left: `${x}px`, top: `${y}px` });
+    b.style.setProperty('--dx', `${S[0] - x}px`);
+    b.style.setProperty('--dy', `${S[1] - y}px`);
+    return { id: b.dataset.id, x, y };
+  });
+  dibujarHilos(S, puntos);
+}
+
+// ---------- la muestra gratis: mismas opciones que alewox.com/muestra (giro, colores y estilo de letra) ----------
+const GIROS_M = {
+  restaurante: { label: 'Comida', icono: '🌮', tag: 'Hecho al momento', cta: 'Ver menú', title: { elegante: 'Sabores que se <em>disfrutan</em>', moderno: 'Comida rica, <em>hecha al momento</em>', divertido: '¡Antojos que <em>sí cumplen</em>!' }, items: [['Especialidad', '$120'], ['Gringas', '$65'], ['Aguas frescas', '$35']] },
+  barberia: { label: 'Barbería', icono: '💈', tag: 'Barbería & grooming', cta: 'Agendar cita', title: { elegante: 'El corte clásico, <em>bien hecho</em>', moderno: 'Tu mejor corte, <em>sin esperar</em>', divertido: '¡Sal con el <em>fade perfecto</em>!' }, items: [['Corte', '$180'], ['Barba', '$120'], ['Corte + barba', '$280']] },
+  belleza: { label: 'Estética', icono: '💅', tag: 'Estética & spa', cta: 'Agendar cita', title: { elegante: 'Tu momento para sentirte <em>hermosa</em>', moderno: 'Belleza que <em>se nota</em>', divertido: '¡Luce <em>increíble</em> hoy!' }, items: [['Corte y peinado', '$250'], ['Uñas', '$180'], ['Faciales', '$450']] },
+  taller: { label: 'Taller', icono: '🔧', tag: 'Servicio garantizado', cta: 'Cotizar', title: { elegante: 'Tu auto en <em>manos expertas</em>', moderno: 'Reparaciones <em>sin sorpresas</em>', divertido: '¡Tu auto <em>como nuevo</em>!' }, items: [['Frenos', '$850'], ['Diagnóstico', '$350'], ['Aceite', '$650']] },
+  tienda: { label: 'Tienda', icono: '🛍️', tag: 'Nueva colección', cta: 'Ver productos', title: { elegante: 'Piezas que <em>te enamoran</em>', moderno: 'Tu estilo, <em>en un solo lugar</em>', divertido: '¡Encuentra <em>tu favorito</em>!' }, items: [['Ropa', '$299'], ['Accesorios', '$199'], ['Regalos', '$249']] },
+  consultorio: { label: 'Consultorio', icono: '🩺', tag: 'Atención profesional', cta: 'Agendar consulta', title: { elegante: 'Cuidamos de ti con <em>calidez</em>', moderno: 'Tu salud, <em>en buenas manos</em>', divertido: '¡Te atendemos <em>con gusto</em>!' }, items: [['Consulta', '$500'], ['Tratamientos', '$800'], ['Seguimiento', '$350']] },
+};
+const PALETAS = {
+  terracota: { label: 'Terracota', p: '#7a3b1e', a: '#ff7a3d', bg: '#fbf6f1', tx: '#1c1410', on: '#ffffff' },
+  rosa: { label: 'Rosa y crema', p: '#b9706a', a: '#e8c3b8', bg: '#fcf8f5', tx: '#3a2e2b', on: '#3a2e2b' },
+  dorado: { label: 'Negro y dorado', p: '#151515', a: '#c9a45c', bg: '#faf8f3', tx: '#151515', on: '#ffffff' },
+  marino: { label: 'Azul marino', p: '#1e3a5f', a: '#4fa3d1', bg: '#f5f8fb', tx: '#14202e', on: '#ffffff' },
+  bosque: { label: 'Verde bosque', p: '#1f5e3b', a: '#a8cf6a', bg: '#f4f8f3', tx: '#13261a', on: '#13261a' },
+  fiesta: { label: 'Rojo y amarillo', p: '#d7261e', a: '#ffc83d', bg: '#fff6e6', tx: '#1b1410', on: '#1b1410' },
+  morado: { label: 'Morado y rosa', p: '#5b2bb5', a: '#ff5fa2', bg: '#f8f5ff', tx: '#1d1433', on: '#ffffff' },
+  industrial: { label: 'Gris y naranja', p: '#23272e', a: '#ff8a1f', bg: '#f4f5f7', tx: '#14171b', on: '#14171b' },
+};
+const ENFOQUES = {
+  elegante: { label: 'Elegante', fuente: "'Cormorant Garamond', Georgia, serif", extra: 'font-style:italic;font-weight:600' },
+  moderno: { label: 'Moderno', fuente: "'Inter Tight', system-ui, sans-serif", extra: 'font-weight:800;letter-spacing:-.04em' },
+  divertido: { label: 'Divertido', fuente: "Anton, Impact, sans-serif", extra: 'text-transform:uppercase;letter-spacing:.01em' },
+};
+const MUESTRA = { n: 'Tacos Don Chuy', g: 'restaurante', c: 'terracota', e: 'moderno' };
+const dominio = (s) => (s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '').slice(0, 22) || 'tunegocio') + '.com';
+// la página de muestra en la pantalla grande (800x500), con el nombre, giro, colores y letra elegidos
+function paginaMuestra() {
+  const g = GIROS_M[MUESTRA.g], c = PALETAS[MUESTRA.c], e = ENFOQUES[MUESTRA.e];
+  const titulo = `font-family:${e.fuente};${e.extra}`;
+  return `<div style="position:absolute;inset:0;background:${c.bg};color:${c.tx};font-family:'Inter Tight',sans-serif;animation:aparece .35s both">
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:20px 32px;font-size:15px"><b style="${titulo};font-size:26px;color:${c.p}">${esc(MUESTRA.n)}</b><span style="opacity:.6">Inicio · Servicios · Contacto</span></div>
+    <div style="display:grid;grid-template-columns:1.1fr .9fr;gap:24px;padding:6px 32px 0;align-items:center">
+      <div><span style="display:inline-block;background:${c.a};color:${c.on};font-size:13px;font-weight:700;padding:5px 12px;border-radius:99px">${g.tag}</span>
+        <div style="${titulo};font-size:44px;line-height:1.02;margin:14px 0 18px">${g.title[MUESTRA.e].replace(/<em>/g, `<em style="color:${c.p};font-style:inherit">`)}</div>
+        <div style="display:flex;gap:10px"><span style="background:${c.p};color:#fff;padding:11px 18px;border-radius:99px;font-weight:700;font-size:15px">${g.cta}</span><span style="background:#25d366;color:#06210f;padding:11px 18px;border-radius:99px;font-weight:700;font-size:15px">WhatsApp</span></div></div>
+      <div style="height:220px;border-radius:20px;background:linear-gradient(135deg,${c.p},${c.a});display:grid;place-items:center;font-size:96px;box-shadow:0 20px 40px rgba(0,0,0,.18)">${g.icono}</div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;padding:22px 32px 0">${g.items.map(([t, p]) => `<div style="background:#fff;border-radius:14px;padding:12px 14px;display:flex;justify-content:space-between;font-weight:700;box-shadow:0 6px 16px rgba(0,0,0,.06)"><span>${t}</span><span style="color:${c.p}">${p}</span></div>`).join('')}</div>
+    <div style="position:absolute;bottom:12px;left:0;right:0;text-align:center;font-size:13px;opacity:.5">${dominio(MUESTRA.n)}</div></div>`;
+}
+
+// ---------- el detalle de cada servicio ----------
+const DETALLE = {
+  paginas: () => `<h3>Páginas web</h3><p class="lema">Tu página profesional, lista desde 24 horas.</p>
+    <p>Hecha a la medida de tu negocio, perfecta en el celular y conectada a tu WhatsApp para que tus clientes te escriban al instante. Pago único, sin mensualidades.</p>
+    <ul class="puntos"><li>Tus fotos, servicios y precios</li><li>Botón directo a tu WhatsApp y "Cómo llegar"</li><li>QR para imprimir en tu negocio</li><li>Tu propio .com en Esencial y PRO</li></ul>
+    <a class="btn btn-wa" href="${wa('Hola, quiero una página web para mi negocio')}" target="_blank" rel="noopener">Quiero mi página</a>`,
+  muestra: () => `<h3>Muestra gratis</h3><p class="lema">Arma tu página aquí mismo y mírala al lado.</p>
+    <div class="campo"><label for="mNombre">Nombre de tu negocio</label><input id="mNombre" maxlength="40" value="${esc(MUESTRA.n)}">
+    <label for="mGiro">Giro</label><select id="mGiro">${Object.entries(GIROS_M).map(([k, g]) => `<option value="${k}"${k === MUESTRA.g ? ' selected' : ''}>${g.label}</option>`).join('')}</select>
+    <label>Colores</label><div class="opciones colores" role="radiogroup" aria-label="Colores">${Object.entries(PALETAS).map(([k, c]) => `<button type="button" role="radio" aria-checked="${k === MUESTRA.c}" data-c="${k}" title="${c.label}"><i style="background:${c.p}"></i><i style="background:${c.a}"></i><i style="background:${c.bg}"></i></button>`).join('')}</div>
+    <label>Estilo de letra</label><div class="opciones estilos" role="radiogroup" aria-label="Estilo de letra">${Object.entries(ENFOQUES).map(([k, e]) => `<button type="button" role="radio" aria-checked="${k === MUESTRA.e}" data-e="${k}"><span style="font-family:${e.fuente};${e.extra}">Aa</span>${e.label}</button>`).join('')}</div></div>
+    <a class="btn btn-naranja" id="mIr" href="https://alewox.com/muestra/" target="_blank" rel="noopener">Ver mi muestra completa →</a>`,
+  ia: () => `<h3>Asistente con IA</h3><p class="lema">Contesta tu WhatsApp 24/7.</p>
+    <div class="chat"><div class="c">¿A qué hora abren? 🌮</div><div class="b">¡Hola! De 7 pm a 1 am. ¿Te aparto unos tacos para llevar?</div><div class="c">Sí, 5 de asada</div><div class="b">¡Listo! 5 de asada a tu nombre 🔥</div></div>
+    <ul class="puntos"><li>$350 al mes, instalación $250 (gratis en PRO)</li><li>Conoce tu menú, precios y horarios</li><li>Te avisa de los clientes listos para comprar</li></ul>
+    <a class="btn btn-wa" href="${wa('Hola, me interesa el asistente con IA')}" target="_blank" rel="noopener">Lo quiero</a>`,
+  google: () => `<h3>Que te encuentren</h3><p class="lema">Para que te elijan a ti y no a la competencia.</p>
+    <ul class="puntos"><li>Alta y optimización de tu perfil en Google Maps</li><li>QR con diseño para tu mostrador (en todos los paquetes)</li><li>Fotos profesionales con IA si no tienes buenas</li><li>SEO local para salir más arriba (PRO)</li></ul>`,
+  precios: () => `<h3>Precios Hermosillo</h3><p class="lema">Para negocios de Hermosillo, en pesos mexicanos. Pago único, listos desde 24 horas.</p>
+    <div class="precios"><div class="precio"><div><b>Básico</b><br><span>Una sección, WhatsApp, Maps y QR</span></div><strong>$450</strong></div>
+    <div class="precio"><div><b>Esencial</b><br><span>Diseño a tu medida, .com, galería, Google Maps</span></div><strong>$750</strong></div>
+    <div class="precio"><div><b>PRO</b><br><span>Citas o pedidos, 3D, SEO local, asistente IA</span></div><strong>$950</strong></div></div>
+    <p class="lema" style="margin-top:4px">Extras opcionales</p>
+    <div class="precios"><div class="precio"><span>Asistente de WhatsApp con IA</span><strong style="font-size:17px">$350/mes</strong></div>
+    <div class="precio"><span>Mantenimiento (cambios cuando quieras)</span><strong style="font-size:17px">$150/mes</strong></div>
+    <div class="precio"><span>Dominio propio (tunegocio.com)</span><strong style="font-size:17px">$350/año</strong></div>
+    <div class="precio"><span>Cambio suelto</span><strong style="font-size:17px">$100</strong></div></div>
+    <a class="btn btn-wa" href="${wa('Hola, quiero saber qué paquete me conviene')}" target="_blank" rel="noopener">¿Cuál me conviene?</a>`,
+  planes: () => `<h3>Planes</h3><p class="lema">Para negocios fuera de Hermosillo, en cualquier parte del mundo. Precios en dólares (USD), pago único.</p>
+    <div class="precios"><div class="precio"><div><b>Básico</b><br><span>Página de una sección, WhatsApp, Maps y QR</span></div><strong>$55</strong></div>
+    <div class="precio"><div><b>Esencial</b><br><span>Diseño a tu medida, tu .com, galería, Google Maps</span></div><strong>$85</strong></div>
+    <div class="precio"><div><b>PRO</b><br><span>Citas o pedidos, 3D, SEO local, fotos con IA, asistente IA</span></div><strong>$115</strong></div></div>
+    <ul class="puntos"><li>100% en línea: me mandas tus datos y fotos por WhatsApp o correo</li><li>Lista desde 24 horas</li><li>En lugar de visita presencial, fotos profesionales con IA</li></ul>
+    <a class="btn btn-wa" href="${wa('Hola, mi negocio está fuera de Hermosillo y quiero un plan')}" target="_blank" rel="noopener">Quiero mi plan</a>`,
+  extras: () => `<h3>Extras para crecer</h3><p class="lema">Cuando tu página ya está, esto te ayuda a vender más.</p>
+    <ul class="puntos"><li>Asistente de WhatsApp con IA que contesta 24/7 · $350/mes</li><li>Mantenimiento: cambio precios, fotos y promos · $150/mes</li><li>Tu propio dominio .com o .mx · $350/año</li><li>Formularios de citas, pedidos o cotizaciones a tu WhatsApp (PRO)</li><li>Sección de promociones y de opiniones de clientes (PRO)</li><li>Fotos profesionales con IA (Esencial y PRO)</li><li>SEO local para salir en Google en tu ciudad (PRO)</li></ul>
+    <a class="btn btn-wa" href="${wa('Hola, quiero hacer crecer mi negocio con los extras')}" target="_blank" rel="noopener">Quiero crecer</a>`,
+  portafolio: () => `<h3>Portafolio</h3><p class="lema">Páginas que ya hicimos.</p>
+    <div class="precios">${TRABAJOS.map((t) => `<a class="precio" style="text-decoration:none" href="${t.url}" target="_blank" rel="noopener"><div><b>${t.nombre}</b><br><span>${t.giro}</span></div><span style="color:var(--naranja-2);font-weight:700">${t.real ? 'Cliente real' : 'Ver →'}</span></a>`).join('')}</div>`,
+  hablemos: () => `<h3>Hablemos</h3><p class="lema">Te contesto yo, no un call center.</p>
+    <p>Trabajo 100% en línea desde Hermosillo, para negocios de aquí y de cualquier parte.</p>
+    <ul class="puntos"><li>WhatsApp 662 400 2958</li><li>hola@alewox.com</li><li>Instagram @alewox.web</li></ul>
+    <a class="btn btn-wa" href="${wa('Hola Alejandro, quiero impulsar mi negocio')}" target="_blank" rel="noopener">Escribirme por WhatsApp</a>`,
+};
+const detalle = document.getElementById('detalle');
+const vista = document.getElementById('vista');
+const marco = document.getElementById('marco');
+const grande = document.getElementById('grande');
+const escalarGrande = () => { grande.style.transform = `scale(${marco.clientWidth / 800})`; };
+// la cámara se clava en la pantalla de la laptop hasta que la pantalla llena todo
+function zambullir() {
+  const W = innerWidth, H = innerHeight;
+  const q = T.pantalla.map(([x, y]) => [x * escala, y * escala]);
+  const bw = Math.max(...q.map((p) => p[0])) - Math.min(...q.map((p) => p[0]));
+  const bh = Math.max(...q.map((p) => p[1])) - Math.min(...q.map((p) => p[1]));
+  const z = Math.max(W / bw, H / bh) * 1.25;
+  const c = [centroPantalla[0] * escala, centroPantalla[1] * escala];
+  cuadro.style.transform = `translate(${W / 2 - izq - c[0] * z}px, ${H / 2 - arr - c[1] * z}px) scale(${z})`;
+}
+let viendoTimer;
+function verDetalle(id) {
+  const s = SERVICIOS.find((x) => x.id === id);
+  clearInterval(ciclo);
+  activar(id);
+  detalle.innerHTML = `<i class="dato-grande">${esc(s.dato)}</i>${DETALLE[id]()}`;
+  grande.innerHTML = id === 'muestra' ? paginaMuestra() : ESCENAS[id]();
+  // antes de acercar, la pantalla del video se cambia por la versión nítida
+  viva.innerHTML = pantallaNitida();
+  viva.classList.add('nitida', 'ver');
+  document.body.classList.add('entrando');
+  zambullir();
+  clearTimeout(viendoTimer);
+  viendoTimer = setTimeout(() => {
+    document.body.classList.add('viendo');
+    vista.setAttribute('aria-hidden', 'false');
+    escalarGrande();
+    document.getElementById('volver').focus({ preventScroll: true });
+  }, reducir ? 0 : 620);
+  if (id === 'muestra') {
+    // cada cambio se ve al instante en la pantalla grande
+    const actualizar = () => {
+      MUESTRA.n = document.getElementById('mNombre').value.trim() || 'Tu negocio';
+      MUESTRA.g = document.getElementById('mGiro').value;
+      grande.innerHTML = paginaMuestra();
+      const q = new URLSearchParams(MUESTRA);
+      document.getElementById('mIr').href = `https://alewox.com/muestra/?${q}`;
     };
-    dots.forEach((d, k) => d.addEventListener('click', () => goScene(k)));
-    // Con la pestaña oculta se pausa, y al volver retoma la misma escena
-    document.addEventListener('visibilitychange', () => document.hidden ? clearTimeout(storyTimer) : goScene(scene));
-    goScene(0);
-
-    // Palabra que rota
-    const words = [...document.querySelectorAll('#rotator span')];
-    let w = 0;
-    if (!reduce) setInterval(() => {
-      words[w].classList.replace('on', 'off');
-      const prev = words[w];
-      setTimeout(() => prev.classList.remove('off'), 600);
-      w = (w + 1) % words.length;
-      words[w].classList.add('on');
-    }, 2200);
-
-    // Marquee
-    const giros = ['Restaurantes', 'Estéticas', 'Talleres', 'Consultorios', 'Cafeterías', 'Gimnasios', 'Barberías', 'Florerías', 'Eventos', 'Tiendas'];
-    const fill = (el, list) => { const html = list.map(t => `<span>${t} <i>✦</i></span>`).join(''); el.innerHTML = html + html; };
-    fill(document.getElementById('track1'), giros);
-    fill(document.getElementById('track2'), [...giros].reverse());
-
-    // Contadores tipo odómetro
-    document.querySelectorAll('.odometer').forEach(el => {
-      el.innerHTML = String(el.dataset.value).split('').map(() =>
-        `<span class="odo"><span class="odo-col">${'0123456789'.split('').map(d => `<span>${d}</span>`).join('')}</span></span>`).join('');
-    });
-    const runOdo = el => {
-      const digits = String(el.dataset.value).split('');
-      el.querySelectorAll('.odo-col').forEach((col, i) => {
-        col.style.transitionDelay = `${i * .15}s`;
-        col.style.transform = `translateY(-${digits[i]}em)`;
-      });
-    };
-
-    // Reveal al hacer scroll
-    const io = new IntersectionObserver(entries => entries.forEach(e => {
-      if (!e.isIntersecting) return;
-      e.target.classList.add('in');
-      e.target.querySelectorAll('.odometer').forEach(runOdo);
-      io.unobserve(e.target);
-    }), { threshold: .15, rootMargin: '0px 0px -40px 0px' });
-    document.querySelectorAll('.reveal, #steps').forEach(el => io.observe(el));
-
-    // La compu de "Así se ve" muestra Duna Runner en vivo, escalada al ancho de la pantallita
-    const pantalla = document.querySelector('.browser .screen'), vitrina = document.getElementById('vitrina');
-    const ajustarVitrina = () => { const k = pantalla.clientWidth / 1280; vitrina.style.transform = `scale(${k})`; vitrina.style.height = `${Math.ceil(pantalla.clientHeight / k)}px`; };
-    ajustarVitrina(); addEventListener('resize', ajustarVitrina);
-
-    // Trabajos en anillo 3D: gira solo mientras está a la vista; se arrastra con el dedo o el mouse
-    const car = document.getElementById('carousel');
-    const ring = document.getElementById('ring');
-    const bar = document.getElementById('progress');
-    const info = document.getElementById('ringInfo');
-    const tarjetas = [...ring.querySelectorAll('.project')];
-    const N = tarjetas.length, PASO = 360 / N;
-    let angulo = 0, actual = -1;
-    ring.style.setProperty('--paso', PASO + 'deg');
-    tarjetas.forEach((t, i) => t.style.setProperty('--i', i));
-    const medir = () => {
-      const w = ring.getBoundingClientRect().width;
-      ring.style.setProperty('--r', Math.round(w / 2 / Math.tan(Math.PI / N) + w * .4) + 'px');
-    };
-    const frente = () => ((Math.round(-angulo / PASO) % N) + N) % N;
-    const pintar = () => {
-      ring.style.setProperty('--a', angulo + 'deg');
-      const f = frente();
-      if (f === actual) return;
-      actual = f;
-      tarjetas.forEach((t, i) => { t.classList.toggle('frente', i === f); t.tabIndex = i === f ? 0 : -1; });
-      const h = tarjetas[f].querySelector('h3').innerHTML, sub = tarjetas[f].querySelector('.project-info > span').textContent;
-      info.innerHTML = `<h3>${h}</h3><span>${sub}</span>`;
-      bar.style.width = `${(f + 1) / N * 100}%`;
-    };
-    const ir = (d) => { angulo = Math.round(angulo / PASO) * PASO - d * PASO; pintar(); };
-    document.getElementById('next').addEventListener('click', () => ir(1));
-    document.getElementById('prev').addEventListener('click', () => ir(-1));
-    medir(); pintar();
-    addEventListener('resize', medir);
-
-    // Arrastrar: el anillo sigue al dedo y al soltar se acomoda en la página más cercana
-    let x0 = null, a0 = 0, movio = false, carPausa = false;
-    car.addEventListener('pointerdown', (e) => { x0 = e.clientX; a0 = angulo; movio = false; carPausa = true; });
-    addEventListener('pointermove', (e) => {
-      if (x0 === null) return;
-      const dx = e.clientX - x0;
-      if (!movio && Math.abs(dx) < 6) return;
-      if (!movio) { movio = true; car.classList.add('arrastrando'); }
-      angulo = a0 + dx * .35; pintar();
-    });
-    addEventListener('pointerup', () => {
-      if (x0 === null) return;
-      x0 = null; car.classList.remove('arrastrando');
-      if (movio) ir(0);
-      setTimeout(() => carPausa = false, 4000);
-    });
-    // Un clic en una página de lado la trae al frente; en la del frente, la abre
-    tarjetas.forEach((t, i) => t.addEventListener('click', (e) => {
-      if (movio) { e.preventDefault(); return; }
-      if (i !== frente()) { e.preventDefault(); const d = ((i - frente()) % N + N) % N; ir(d > N / 2 ? d - N : d); }
+    detalle.querySelectorAll('input, select').forEach((el) => el.addEventListener('input', actualizar));
+    detalle.querySelectorAll('.opciones').forEach((grupo) => grupo.addEventListener('click', (e) => {
+      const b = e.target.closest('button');
+      if (!b) return;
+      grupo.querySelectorAll('button').forEach((x) => x.setAttribute('aria-checked', x === b));
+      if (b.dataset.c) MUESTRA.c = b.dataset.c;
+      if (b.dataset.e) MUESTRA.e = b.dataset.e;
+      actualizar();
     }));
-    car.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight') ir(1); if (e.key === 'ArrowLeft') ir(-1); });
+    actualizar();
+  }
+}
+// de regreso: la página se desvanece y la cámara sale de la pantalla hasta ver otra vez el escritorio
+function volver() {
+  clearTimeout(viendoTimer);
+  document.body.classList.remove('viendo');
+  vista.setAttribute('aria-hidden', 'true');
+  setTimeout(() => {
+    enfocar();
+    // ya lejos, se regresa a la pantalla del video
+    setTimeout(() => { document.body.classList.remove('entrando'); viva.classList.remove('ver'); }, 1100);
+    ciclar();
+  }, reducir ? 0 : 250);
+}
+anillo.addEventListener('click', (e) => { const b = e.target.closest('.bloque'); if (b) verDetalle(b.dataset.id); });
+document.getElementById('volver').addEventListener('click', volver);
+addEventListener('resize', () => { if (document.body.classList.contains('viendo')) escalarGrande(); });
 
-    let carVisible = false;
-    new IntersectionObserver(([e]) => { carVisible = e.isIntersecting; }, { threshold: .4 }).observe(car);
-    car.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') carPausa = true; });
-    car.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse' && x0 === null) carPausa = false; });
-    if (!reduce) setInterval(() => {
-      if (!carVisible || carPausa || document.hidden) return;
-      ir(1);
-    }, 2200);
+// ---------- abrir y cerrar ----------
+const escena = document.getElementById('escena');
+// 1) a los 2 s la pantalla empieza a "respirar"; 2) a los 6.5 s, si nadie tocó, un cursor entra, hace click y abre
+let llamar = setTimeout(() => escena.classList.add('llamando'), 2000);
+let demo = reducir ? null : setTimeout(demostrar, 6500);
+const cursor = document.getElementById('cursor');
+const onda = document.getElementById('onda');
+function demostrar() {
+  if (abierto) return;
+  const W = innerWidth, H = innerHeight;
+  const x = izq + centroPantalla[0] * escala, y = arr + centroPantalla[1] * escala;
+  const desde = [W + 40, H * 0.82], medio = [x + (W - x) * 0.45, y + (H * 0.82 - y) * 0.2];
+  const viaje = cursor.animate([
+    { transform: `translate(${desde[0]}px, ${desde[1]}px)`, opacity: 0 },
+    { transform: `translate(${desde[0] - 60}px, ${desde[1] - 20}px)`, opacity: 1, offset: 0.12 },
+    { transform: `translate(${medio[0]}px, ${medio[1]}px)`, opacity: 1, offset: 0.6 },
+    { transform: `translate(${x}px, ${y}px)`, opacity: 1 },
+  ], { duration: 1500, easing: 'cubic-bezier(.45, 0, .2, 1)', fill: 'forwards' });
+  viaje.onfinish = () => {
+    if (abierto) return cursor.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 250, fill: 'forwards' });
+    // el click: el cursor se encoge, sale una onda de luz y se abre todo
+    cursor.animate([{ transform: `translate(${x}px, ${y}px) scale(1)` }, { transform: `translate(${x}px, ${y}px) scale(.8)` }, { transform: `translate(${x}px, ${y}px) scale(1)` }], { duration: 260, delay: 250, fill: 'forwards' });
+    Object.assign(onda.style, { left: `${x + 4}px`, top: `${y + 3}px` });
+    onda.animate([{ opacity: 1, transform: 'scale(.4)' }, { opacity: 0, transform: 'scale(3.2)' }], { duration: 650, delay: 330, easing: 'ease-out' });
+    setTimeout(() => {
+      abrir();
+      cursor.animate([{ opacity: 1, transform: `translate(${x}px, ${y}px)` }, { opacity: 0, transform: `translate(${x + 30}px, ${y + 40}px)` }], { duration: 500, fill: 'forwards' });
+    }, 480);
+  };
+}
+function abrir() {
+  if (abierto) return;
+  abierto = true;
+  clearTimeout(llamar);
+  clearTimeout(demo);
+  escena.classList.remove('llamando');
+  // primero se acomoda todo (las tarjetas quedan "dentro" de la pantalla) y luego salen volando
+  enfocar();
+  void anillo.offsetWidth;
+  document.body.classList.add('abierto');
+  activo = null;
+  setTimeout(() => { if (abierto) { activar(SERVICIOS[1].id); ciclar(); } }, reducir ? 0 : 1200);
+}
+function cerrar() {
+  if (document.body.classList.contains('entrando')) { volver(); return; }
+  abierto = false;
+  clearInterval(ciclo);
+  activo = null;
+  viva.classList.remove('ver');
+  bloques.forEach((b) => b.classList.remove('activo'));
+  document.body.classList.remove('abierto');
+  cuadro.style.transform = '';
+}
+toque.addEventListener('click', () => (abierto ? cerrar() : abrir()));
+toque.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); abierto ? cerrar() : abrir(); } });
+document.getElementById('cerrar').addEventListener('click', cerrar);
+addEventListener('keydown', (e) => { if (e.key === 'Escape' && abierto) cerrar(); });
 
-    // HABLEMOS: cada letra sube al aparecer; con el mouse, las letras cercanas se levantan; en celular hacen una ola
-    const hab = document.getElementById('hablemos');
-    const letras = hab.querySelector('.letras');
-    letras.innerHTML = [...letras.textContent].map((c, i) => `<span class="l" style="--i:${i}">${c}</span>`).join('');
-    const ls = [...letras.children];
-    new IntersectionObserver(([e], o) => {
-      if (!e.isIntersecting) return;
-      hab.classList.add('in'); o.disconnect();
-      setTimeout(() => { hab.classList.add('listo'); if (!matchMedia('(hover: hover)').matches && !reduce) hab.classList.add('ola'); }, 1400);
-    }, { threshold: .3 }).observe(hab);
-    if (matchMedia('(hover: hover)').matches && !reduce) {
-      letras.addEventListener('pointermove', (e) => {
-        if (!hab.classList.contains('listo')) return;
-        ls.forEach((l) => {
-          const b = l.getBoundingClientRect(), d = Math.abs(e.clientX - (b.left + b.width / 2)) / b.width;
-          const lift = Math.max(0, 1 - d / 1.6) * .16;
-          l.style.setProperty('--lift', lift.toFixed(3));
-          l.classList.toggle('cerca', lift > .08);
-        });
-      });
-      letras.addEventListener('pointerleave', () => ls.forEach((l) => { l.style.setProperty('--lift', 0); l.classList.remove('cerca'); }));
-    }
+// ---------- relámpagos de vez en cuando ----------
+const flash = document.getElementById('relampago');
+function relampago() {
+  if (!abierto && !reducir) flash.animate([{ opacity: 0 }, { opacity: .3, offset: .06 }, { opacity: .04, offset: .18 }, { opacity: .2, offset: .28 }, { opacity: 0 }], { duration: 900, easing: 'ease-out' });
+  setTimeout(relampago, 14000 + Math.random() * 14000);
+}
+setTimeout(relampago, 6000);
 
-    // Chat con IA. Dirección del servidor del bot (vacío = chat oculto).
-    // El botón solo aparece si el bot contesta; si está apagado, la página se queda solo con WhatsApp.
-    const CHAT_API = ['localhost', '127.0.0.1'].includes(location.hostname) ? 'http://localhost:3000' : '';
-    if (CHAT_API) fetch(CHAT_API, { signal: AbortSignal.timeout(4000) }).then(r => r.ok && iniciarChat()).catch(() => {});
-    function iniciarChat() {
-      const launcher = document.getElementById('chatLauncher');
-      const panel = document.getElementById('chatPanel');
-      const msgs = document.getElementById('chatMsgs');
-      const form = document.getElementById('chatForm');
-      const input = document.getElementById('chatInput');
-      const send = document.getElementById('chatSend');
-      let sesion;
-      try { sesion = sessionStorage.getItem('alewoxChat'); } catch {}
-      if (!sesion) {
-        sesion = crypto.randomUUID();
-        try { sessionStorage.setItem('alewoxChat', sesion); } catch {}
-      }
-
-      const agregar = (texto, quien) => {
-        const div = document.createElement('div');
-        div.className = `chat-msg ${quien}`;
-        div.textContent = texto;
-        msgs.appendChild(div);
-        msgs.scrollTop = msgs.scrollHeight;
-        return div;
-      };
-      let waBtn = null;
-      const mostrarWhatsApp = texto => {
-        if (!WHATSAPP) return;
-        if (!waBtn) {
-          waBtn = document.createElement('a');
-          waBtn.className = 'chat-wa';
-          waBtn.target = '_blank';
-          waBtn.rel = 'noopener';
-          waBtn.textContent = 'Hablar con Alejandro por WhatsApp';
-        }
-        waBtn.href = waUrl(texto);
-        msgs.appendChild(waBtn); // siempre al final de la conversación
-        msgs.scrollTop = msgs.scrollHeight;
-      };
-
-      const abrir = abierto => {
-        panel.hidden = !abierto;
-        launcher.setAttribute('aria-expanded', abierto);
-        launcher.querySelector('.dot')?.remove();
-        if (abierto) {
-          if (!msgs.children.length) agregar('¡Hola! Soy el asistente de Alewox. ¿Qué tipo de negocio tienes? Te ayudo a elegir la página ideal.', 'bot');
-          input.focus();
-        }
-      };
-      launcher.hidden = false;
-      launcher.addEventListener('click', () => abrir(panel.hidden));
-      document.getElementById('chatClose').addEventListener('click', () => abrir(false));
-
-      form.addEventListener('submit', async e => {
-        e.preventDefault();
-        const mensaje = input.value.trim();
-        if (!mensaje) return;
-        input.value = '';
-        send.disabled = true;
-        agregar(mensaje, 'yo');
-        const escribiendo = agregar('•••', 'bot typing');
-        try {
-          const res = await fetch(`${CHAT_API}/chat`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ sesion, mensaje })
-          });
-          const data = await res.json();
-          escribiendo.remove();
-          agregar(data.respuesta || 'Uy, no pude contestar. Escríbeme por WhatsApp.', 'bot');
-          if (data.caliente) mostrarWhatsApp(data.waTexto);
-          else if (!res.ok) mostrarWhatsApp('Hola Alejandro, vengo del chat de tu página.');
-        } catch {
-          escribiendo.remove();
-          agregar('Uy, no pude conectarme. Escríbeme directo por WhatsApp.', 'bot');
-          mostrarWhatsApp('Hola Alejandro, vengo del chat de tu página.');
-        }
-        send.disabled = false;
-        input.focus();
-      });
-    }
-  </script>
+acomodar();
+document.getElementById('video').play().catch(() => {});
+</script>
 </body>
 </html>
