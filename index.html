@@ -728,7 +728,22 @@ const sonido = (() => {
   // empieza en silencio; con un toque a la bocina se prende (y la página recuerda si lo dejaron prendido)
   let ctx = null, maestro = null, prendido = false;
   try { prendido = localStorage.getItem('alewox-sonido') === 'si'; } catch (e) {}
-  const VOLUMEN = matchMedia('(max-width: 720px)').matches ? 0.16 : 0.24; // en el cel, todavía más bajito
+  const VOLUMEN = matchMedia('(max-width: 720px)').matches ? 0.3 : 0.36; // en el cel, un poco más bajito
+  // en iPhone, el sonido de las páginas se silencia con el switch de silencio; así se trata como el de un video
+  try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch (e) {}
+  // truco para iPhones más viejos: un audio en silencio que se reproduce al primer toque
+  const silencio = new Audio(URL.createObjectURL(new Blob([(() => {
+    // medio segundo de silencio en WAV (8 kHz, 8 bits)
+    const n = 4000, v = new DataView(new ArrayBuffer(44 + n));
+    [...'RIFF'].forEach((c, i) => v.setUint8(i, c.charCodeAt(0))); v.setUint32(4, 36 + n, true);
+    [...'WAVEfmt '].forEach((c, i) => v.setUint8(8 + i, c.charCodeAt(0)));
+    v.setUint32(16, 16, true); v.setUint16(20, 1, true); v.setUint16(22, 1, true); v.setUint32(24, 8000, true); v.setUint32(28, 8000, true); v.setUint16(32, 1, true); v.setUint16(34, 8, true);
+    [...'data'].forEach((c, i) => v.setUint8(36 + i, c.charCodeAt(0))); v.setUint32(40, n, true);
+    for (let i = 0; i < n; i++) v.setUint8(44 + i, 128);
+    return v.buffer;
+  })()], { type: 'audio/wav' })));
+  silencio.loop = true;
+  silencio.setAttribute('playsinline', '');
   const ruido = (seg, color = 'blanco') => {
     const b = ctx.createBuffer(1, Math.floor(ctx.sampleRate * seg), ctx.sampleRate), d = b.getChannelData(0);
     let ult = 0;
@@ -746,7 +761,7 @@ const sonido = (() => {
       const t = ctx.currentTime, o = ctx.createOscillator(), g = ctx.createGain(), p = ctx.createStereoPanner();
       const base = 650 + Math.random() * 700;
       o.type = 'sine'; o.frequency.setValueAtTime(base, t); o.frequency.exponentialRampToValueAtTime(base * (1.6 + Math.random() * 0.5), t + 0.045);
-      g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.01 + Math.random() * 0.02, t + 0.008); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.12);
+      g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.09 + Math.random() * 0.09, t + 0.008); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.12);
       p.pan.value = Math.random() * 1.4 - 0.7;
       o.connect(g).connect(p).connect(maestro); o.start(t); o.stop(t + 0.14);
       // a veces caen dos seguidas; casi siempre, con calma
@@ -794,12 +809,15 @@ const sonido = (() => {
     prendido = !prendido;
     try { localStorage.setItem('alewox-sonido', prendido ? 'si' : 'no'); } catch (err) {}
     iniciar();
+    if (!ctx) return;
     ctx.resume();
+    if (prendido) silencio.play().catch(() => {}); else silencio.pause();
     maestro.gain.setTargetAtTime(prendido ? VOLUMEN : 0, ctx.currentTime, 0.25);
     pintar();
   });
   pintar();
-  ['pointerdown', 'keydown'].forEach((ev) => addEventListener(ev, () => { iniciar(); if (ctx) ctx.resume(); }, { once: false, passive: true }));
+  // Safari solo deja arrancar el sonido en toques "completos" (touchend/click), no al apenas tocar
+  ['pointerdown', 'touchend', 'click', 'keydown'].forEach((ev) => addEventListener(ev, () => { iniciar(); if (ctx && ctx.state !== 'running') ctx.resume(); if (prendido) silencio.play().catch(() => {}); }, { passive: true }));
   return {
     // click suave al tocar la laptop y un soplido cálido mientras salen las tarjetas
     abrir() { soplo({ dur: 0.08, desde: 3000, hasta: 1500, vol: 0.18, q: 2 }); soplo({ dur: 1.1, desde: 300, hasta: 2200, vol: 0.09, retraso: 0.15 }); },
