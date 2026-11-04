@@ -205,7 +205,7 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; }
 .campo input, .campo select { background: rgba(244, 239, 232, .07); border: 1px solid var(--linea); border-radius: 12px; color: var(--crema); font: 600 16px var(--sans); padding: 11px 13px; }
 
 @media (max-width: 720px) {
-  .bloque { width: 44vw; padding: 9px 10px; border-radius: 14px; }
+  .bloque { width: 37vw; padding: 9px 10px; border-radius: 14px; }
   .bloque .dato, .bloque span { display: none; }
   .bloque { padding: 8px 10px; }
   .bloque b { font-size: 15px; }
@@ -470,7 +470,14 @@ function enfocar() {
   const izqX = Math.max(150, L.x0 - 210), derX = Math.min(W - 150, L.x1 + 210);
   const lugares = cel
     // cel: filas de dos arriba y abajo de la laptop
-    ? { 'cel-a': [W / 2, L.y0 - 172], 'cel-b1': [W * 0.27, L.y0 - 106], 'cel-b2': [W * 0.73, L.y0 - 106], 'cel-c1': [W * 0.27, L.y0 - 40], 'cel-c2': [W * 0.73, L.y0 - 40], 'cel-d1': [W * 0.27, L.y1 + 34], 'cel-d2': [W * 0.73, L.y1 + 34], 'cel-e1': [W * 0.27, L.y1 + 100], 'cel-e2': [W * 0.73, L.y1 + 100] }
+    // cel: anillo por toda la pantalla (aunque quede encima de la laptop), "Muestra gratis" arriba y
+    // cuatro filas en dos columnas pegadas a las orillas, que se abren en medio para dejar libre la pantalla de la laptop
+    ? (() => {
+      // la última fila queda arriba de la bocinita de sonido
+      const cw = W * 0.37, arriba = 70, filas = [0, 1, 2, 3].map((i) => arriba + 96 + ((H - 104 - arriba - 96) * i) / 3);
+      const x = (i, lado) => { const hacia = i === 1 || i === 2 ? 0 : 10; return lado < 0 ? 8 + cw / 2 + hacia : W - 8 - cw / 2 - hacia; };
+      return { 'cel-a': [W / 2, arriba], 'cel-b1': [x(0, -1), filas[0]], 'cel-b2': [x(0, 1), filas[0]], 'cel-c1': [x(1, -1), filas[1]], 'cel-c2': [x(1, 1), filas[1]], 'cel-d1': [x(2, -1), filas[2]], 'cel-d2': [x(2, 1), filas[2]], 'cel-e1': [x(3, -1), filas[3]], 'cel-e2': [x(3, 1), filas[3]] };
+    })()
     // compu: en óvalo alrededor de la laptop, una arriba al centro y las demás en pares simétricos
     : (() => {
       // el óvalo se centra en la pantalla (a lo alto) para usar toda la altura
