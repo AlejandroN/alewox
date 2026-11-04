@@ -255,7 +255,7 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; }
 <svg class="hilos" id="hilos" aria-hidden="true"></svg>
 <nav class="anillo" id="anillo" aria-label="Servicios de Alewox"></nav>
 <button class="cerrar" id="cerrar" type="button" aria-label="Cerrar">×</button>
-<button class="bocina" id="bocina" type="button" aria-pressed="true" aria-label="Sonido encendido: tocar para silenciar">
+<button class="bocina" id="bocina" type="button" aria-pressed="false" aria-label="Sonido apagado: tocar para encender">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9h3l5-4v14l-5-4H4z" fill="currentColor" stroke="none"/><path class="ondas" d="M16 9.5a3.5 3.5 0 0 1 0 5M18.5 7a7 7 0 0 1 0 10"/><path class="tache" d="M16 9l5 6M21 9l-5 6"/></svg>
 </button>
 <div class="vista" id="vista" role="dialog" aria-modal="true" aria-label="Detalle del servicio" aria-hidden="true">
@@ -301,8 +301,18 @@ function usarToma(nombre) {
   borroso.style.webkitMaskImage = borroso.style.maskImage = `url("data:image/svg+xml,${encodeURIComponent(hueco)}")`;
   document.getElementById('foto').src = T.foto;
   video.poster = T.foto;
+  // para que el cel deje arrancar el video solo: tiene que ir sin sonido y dentro de la página
+  video.muted = video.defaultMuted = true;
+  video.playsInline = true;
   video.src = T.video;
   video.play().catch(() => {});
+}
+// si el cel no lo dejó arrancar (por ejemplo, en ahorro de batería), arranca en cuanto lo carga o con el primer toque
+const arrancarVideo = () => { if (video.paused) video.play().catch(() => {}); };
+video.addEventListener('canplay', arrancarVideo);
+['touchstart', 'pointerdown', 'scroll'].forEach((ev) => addEventListener(ev, arrancarVideo, { passive: true }));
+document.addEventListener('visibilitychange', () => { if (!document.hidden) arrancarVideo(); });
+{
 }
 
 // ---------- acomodo: el video llena la pantalla ----------
@@ -708,8 +718,10 @@ addEventListener('keydown', (e) => { if (e.key === 'Escape' && abierto) cerrar()
 // ---------- sonido: todo se genera aquí mismo, sin archivos ----------
 // Los navegadores no dejan sonar nada hasta que la persona toca algo: arranca con el primer toque o tecla.
 const sonido = (() => {
-  let ctx = null, maestro = null, prendido = true;
-  try { prendido = localStorage.getItem('alewox-sonido') !== 'no'; } catch (e) {}
+  // empieza en silencio; con un toque a la bocina se prende (y la página recuerda si lo dejaron prendido)
+  let ctx = null, maestro = null, prendido = false;
+  try { prendido = localStorage.getItem('alewox-sonido') === 'si'; } catch (e) {}
+  const VOLUMEN = matchMedia('(max-width: 720px)').matches ? 0.16 : 0.24; // en el cel, todavía más bajito
   const ruido = (seg, color = 'blanco') => {
     const b = ctx.createBuffer(1, Math.floor(ctx.sampleRate * seg), ctx.sampleRate), d = b.getChannelData(0);
     let ult = 0;
@@ -721,20 +733,17 @@ const sonido = (() => {
   };
   const filtro = (tipo, f, q = 0.7) => { const x = ctx.createBiquadFilter(); x.type = tipo; x.frequency.value = f; x.Q.value = q; return x; };
   // la lluvia: un siseo de fondo + el rumor grave del cuarto + gotas que pegan en el vidrio
+  // puras gotitas: cada una es un "plip" corto que sube de tono, como una gota cayendo en agua o en el vidrio
   function lluvia() {
-    const fondo = ctx.createBufferSource(); fondo.buffer = ruido(6); fondo.loop = true;
-    const siseo = ctx.createGain(); siseo.gain.value = 0.022;
-    fondo.connect(filtro('bandpass', 1700, 0.45)).connect(siseo).connect(maestro); fondo.start();
-    const grave = ctx.createBufferSource(); grave.buffer = ruido(6, 'cafe'); grave.loop = true;
-    const rumor = ctx.createGain(); rumor.gain.value = 0.05;
-    grave.connect(filtro('lowpass', 380)).connect(rumor).connect(maestro); grave.start();
     const gota = () => {
       const t = ctx.currentTime, o = ctx.createOscillator(), g = ctx.createGain(), p = ctx.createStereoPanner();
-      o.type = 'sine'; o.frequency.setValueAtTime(1300 + Math.random() * 1500, t); o.frequency.exponentialRampToValueAtTime(600 + Math.random() * 350, t + 0.06);
-      g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.006 + Math.random() * 0.016, t + 0.006); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.08);
-      p.pan.value = Math.random() * 1.6 - 0.8;
-      o.connect(g).connect(p).connect(maestro); o.start(t); o.stop(t + 0.08);
-      setTimeout(gota, 110 + Math.random() * 380);
+      const base = 650 + Math.random() * 700;
+      o.type = 'sine'; o.frequency.setValueAtTime(base, t); o.frequency.exponentialRampToValueAtTime(base * (1.6 + Math.random() * 0.5), t + 0.045);
+      g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.01 + Math.random() * 0.02, t + 0.008); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.12);
+      p.pan.value = Math.random() * 1.4 - 0.7;
+      o.connect(g).connect(p).connect(maestro); o.start(t); o.stop(t + 0.14);
+      // a veces caen dos seguidas; casi siempre, con calma
+      setTimeout(gota, Math.random() < 0.18 ? 70 + Math.random() * 90 : 260 + Math.random() * 700);
     };
     gota();
   }
@@ -766,7 +775,7 @@ const sonido = (() => {
     maestro.gain.value = 0;
     maestro.connect(ctx.destination);
     lluvia();
-    if (prendido) maestro.gain.setTargetAtTime(0.45, ctx.currentTime, 1.6); // la lluvia entra poco a poco
+    if (prendido) maestro.gain.setTargetAtTime(VOLUMEN, ctx.currentTime, 1.6); // las gotas entran poco a poco
   }
   const boton = document.getElementById('bocina');
   function pintar() {
@@ -779,7 +788,7 @@ const sonido = (() => {
     try { localStorage.setItem('alewox-sonido', prendido ? 'si' : 'no'); } catch (err) {}
     iniciar();
     ctx.resume();
-    maestro.gain.setTargetAtTime(prendido ? 0.45 : 0, ctx.currentTime, 0.25);
+    maestro.gain.setTargetAtTime(prendido ? VOLUMEN : 0, ctx.currentTime, 0.25);
     pintar();
   });
   pintar();
@@ -792,12 +801,8 @@ const sonido = (() => {
     tic() { soplo({ dur: 0.04, desde: 5000, hasta: 3500, vol: 0.05, q: 3 }); },
     entrar() { soplo({ dur: 0.9, desde: 200, hasta: 2600, vol: 0.14, q: 0.6 }); campana(392, 0.03, 0.55, 1.2); },
     salir() { soplo({ dur: 0.9, desde: 2600, hasta: 200, vol: 0.12, q: 0.6 }); },
-    // el trueno llega un poco después del destello, como en la vida real
-    trueno() {
-      const r = 0.5 + Math.random() * 1.2;
-      soplo({ dur: 0.35, desde: 600, hasta: 250, vol: 0.05, tipo: 'lowpass', retraso: r });
-      soplo({ dur: 4.2, desde: 200, hasta: 50, vol: 0.3, tipo: 'lowpass', color: 'cafe', retraso: r + 0.1 });
-    },
+    // sin trueno: el sonido es solo de gotitas (el relámpago se queda nada más como luz)
+    trueno() {},
   };
 })();
 
