@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <title>Alewox | Hacemos que tu negocio venda más en internet</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Alewox hace que tu negocio venda más en internet. Páginas web desde $450, listas desde 24 horas.">
+<meta name="description" content="Alewox hace que tu negocio venda más en internet. Páginas web listas desde 24 horas, con muestra gratis.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Cormorant+Garamond:ital,wght@1,600&family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600;700;800&display=swap">
 <meta name="theme-color" content="#0c0b0a">
 <meta property="og:title" content="Alewox | Hacemos que tu negocio venda más en internet">
-<meta property="og:description" content="Páginas web que te traen más clientes, conectadas a tu WhatsApp. Desde $450 MXN, listas desde 24 horas. Muestra gratis.">
+<meta property="og:description" content="Páginas web que te traen más clientes, conectadas a tu WhatsApp. Listas desde 24 horas. Muestra gratis.">
 <meta property="og:image" content="https://alewox.com/media/portada-h.jpg">
 <meta property="og:url" content="https://alewox.com/">
 <meta name="twitter:card" content="summary_large_image">
@@ -338,16 +338,12 @@ addEventListener('resize', acomodar);
 
 // ---------- al abrir: la cámara centra la laptop y los servicios salen alrededor ----------
 const SERVICIOS = [
-  // lugar: arriba / abajo al centro, izq-0..3 y der-0..2 en columnas (en compu); cel-* en filas arriba y abajo de la laptop (en cel)
+  // lugar: arriba al centro y pares simétricos (en compu); cel-a arriba y dos filas de dos (en cel)
   { id: 'muestra', dato: 'Gratis', titulo: 'Muestra gratis', texto: 'Mira tu página antes de pagar un peso.', precio: 'En 1 minuto', lugar: 'arriba', cel: 'cel-a', destacado: true },
-  { id: 'paginas', dato: '24 horas', titulo: 'Páginas web', texto: 'Tu página profesional, lista desde 24 horas.', precio: 'Desde $450 · pago único', lugar: 'izq-0', cel: 'cel-b1' },
-  { id: 'precios', dato: 'Desde $450', titulo: 'Precios Hermosillo', texto: 'Paquetes y extras para negocios de Hermosillo.', precio: 'Pesos mexicanos · pago único', lugar: 'izq-1', cel: 'cel-c1' },
-  { id: 'google', dato: 'Cerca de ti', titulo: 'Que te encuentren', texto: 'Google Maps, QR para tu mostrador y fotos profesionales.', precio: 'Incluido en tu paquete', lugar: 'izq-2', cel: 'cel-d1' },
-  { id: 'planes', dato: 'Desde $55 USD', titulo: 'Planes', texto: 'Para negocios fuera de Hermosillo, en cualquier parte del mundo.', precio: 'Básico $55 · Esencial $85 · PRO $115', lugar: 'der-2', cel: 'cel-e1' },
-  { id: 'ia', dato: '24/7', titulo: 'Asistente con IA', texto: 'Contesta tu WhatsApp 24/7, aunque estés atendiendo.', precio: '$350 al mes', lugar: 'der-0', cel: 'cel-b2' },
-  { id: 'extras', dato: 'Crece más', titulo: 'Extras para crecer', texto: 'Mantenimiento, dominio propio, citas, pedidos y más.', precio: 'Desde $100', lugar: 'der-1', cel: 'cel-c2' },
-  { id: 'portafolio', dato: 'Trabajos', titulo: 'Portafolio', texto: 'Páginas que ya hicimos para negocios reales.', precio: 'Ver trabajos', lugar: 'abajo-izq', cel: 'cel-d2' },
-  { id: 'hablemos', dato: 'Te contesto yo', titulo: 'Hablemos', texto: 'Escríbeme por WhatsApp y te contesto yo.', precio: '662 400 2958', lugar: 'abajo-der', cel: 'cel-e2' },
+  { id: 'portafolio', dato: 'Trabajos', titulo: 'Portafolio', texto: 'Páginas que ya hicimos para negocios reales.', precio: 'Ver trabajos', lugar: 'izq-0', cel: 'cel-b1' },
+  { id: 'planes', dato: 'Desde $55 USD', titulo: 'Planes y extras', texto: 'Tu página y todo lo que la hace crecer.', precio: 'Básico $55 · Esencial $85 · PRO $115', lugar: 'der-0', cel: 'cel-b2' },
+  { id: 'nosotros', dato: 'Alewox', titulo: 'Todo sobre nosotros', texto: 'Quiénes somos, qué hacemos y cómo trabajamos.', precio: 'Desde Hermosillo para el mundo', lugar: 'abajo-izq', cel: 'cel-c1' },
+  { id: 'hablemos', dato: 'Te contesto yo', titulo: 'Hablemos', texto: 'Escríbeme por WhatsApp y te contesto yo.', precio: '662 400 2958', lugar: 'abajo-der', cel: 'cel-c2' },
 ];
 const anillo = document.getElementById('anillo');
 anillo.innerHTML = SERVICIOS.map((s, i) => `<button class="bloque${s.destacado ? ' destacado' : ''}${['arriba', 'abajo-izq', 'abajo-der'].includes(s.lugar) ? ' centro' : ''}" data-id="${s.id}" style="transition-delay:${reducir ? 0 : 0.5 + i * 0.09}s"><i class="dato">${esc(s.dato)}</i><b>${esc(s.titulo)}</b><span>${esc(s.texto)}</span><small>${esc(s.precio)}</small></button>`).join('');
@@ -364,23 +360,15 @@ anillo.addEventListener('pointermove', (e) => {
 
 // ---------- la pantalla de la laptop "en vivo": cada servicio se ve funcionando ----------
 const ESCENAS = {
-  paginas: () => `<div class="p-web"><div class="escena-p" style="padding-bottom:0"><div class="p-barra"><b style="color:#f4efe8">Tacos Don Chuy</b><span>Menú · Ubicación · WhatsApp</span></div></div>
-    <div class="p-hero">Los tacos más vendidos del norte 🌮</div>
-    <div class="p-fila"><div>Asada $35</div><div>Tripa $38</div><div>Cabeza $35</div></div>
-    <div class="p-fila"><div>Gringas $65</div><div>Aguas $30</div><div>Para llevar</div></div></div>`,
   muestra: () => `<div class="escena-p"><div class="p-barra"><span>alewox.com/muestra</span><span>Gratis</span></div>
     <h4 class="p-escribe">Tacos Don Chuy</h4><div class="p-barra"><span>tacosdonchuy.com</span></div>
     <div class="p-fila" style="margin:0"><div style="animation:aparece .4s .3s both;background:linear-gradient(135deg,#7a3b1e,#ff7a3d)">Portada</div><div style="animation:aparece .4s .6s both">Menú</div><div style="animation:aparece .4s .9s both">WhatsApp</div></div></div>`,
-  ia: () => `<div class="escena-p"><div class="p-barra"><b style="color:#f4efe8">WhatsApp · Tacos Don Chuy</b><span>en línea</span></div>
-    <div class="p-chat"><div class="c" style="animation-delay:.1s">¿A qué hora abren? 🌮</div><div class="b" style="animation-delay:.9s">¡Hola! De 7 pm a 1 am. ¿Te aparto unos?</div><div class="c" style="animation-delay:1.8s">Sí, 5 de asada</div><div class="b" style="animation-delay:2.6s">¡Listo! A tu nombre 🔥</div></div></div>`,
-  google: () => `<div class="p-mapa"><div class="calle" style="left:0;right:0;top:46%;height:26px"></div><div class="calle" style="top:0;bottom:0;left:38%;width:22px"></div><div class="calle" style="top:0;bottom:0;left:72%;width:16px"></div>
-    <div class="p-pin"></div><div class="p-ficha">Tacos Don Chuy · ★ 4.9 · Abierto</div></div>`,
-  precios: () => `<div class="escena-p"><h4>Elige tu <em>paquete</em></h4><div class="p-precios"><div><b>Básico</b><strong>$450</strong></div><div><b>Esencial</b><strong>$750</strong></div><div><b>PRO</b><strong>$950</strong></div></div><div class="p-barra"><span>Pago único · lista desde 24 horas</span></div></div>`,
+  nosotros: () => `<div class="escena-p"><div class="p-barra"><span>alewox.</span><span>Hermosillo · 100% en línea</span></div><h4>Hacemos que tu negocio <em>venda más</em></h4><div class="p-precios">
+    <div><b>Páginas web</b><strong style="font-size:34px">24 h</strong></div><div><b>Asistente IA</b><strong style="font-size:34px">24/7</strong></div><div><b>Google Maps</b><strong style="font-size:34px">★ 4.9</strong></div></div>
+    <div class="p-barra" style="margin-top:6px"><span>Te contesto yo, no un call center</span></div></div>`,
   hablemos: () => `<div class="escena-p p-wa"><i>💬</i><h4>Escríbeme</h4><div class="p-barra" style="justify-content:center;font-size:26px;color:#f4efe8">662 400 2958</div></div>`,
-  planes: () => `<div class="escena-p"><div class="p-barra"><span>🌎 Para todo el mundo</span><span>USD · pago único</span></div><h4>Tu página, <em>estés donde estés</em></h4><div class="p-precios"><div><b>Básico</b><strong>$55</strong></div><div><b>Esencial</b><strong>$85</strong></div><div><b>PRO</b><strong>$115</strong></div></div></div>`,
-  extras: () => `<div class="escena-p"><h4>Haz <em>crecer</em> tu negocio</h4><div class="p-precios">
-    <div><b>Asistente IA</b><strong style="font-size:32px">24/7</strong></div><div><b>Mantenimiento</b><strong style="font-size:32px">$150</strong></div><div><b>Dominio</b><strong style="font-size:32px">.com</strong></div></div>
-    <div class="p-precios" style="margin-top:4px"><div style="animation-delay:.36s"><b>Citas</b><strong style="font-size:28px">📅</strong></div><div style="animation-delay:.48s"><b>Promos</b><strong style="font-size:28px">🔥</strong></div><div style="animation-delay:.6s"><b>Reseñas</b><strong style="font-size:28px">★ 4.9</strong></div></div></div>`,
+  planes: () => `<div class="escena-p"><div class="p-barra"><span>🌎 Para todo el mundo</span><span>USD · pago único</span></div><h4>Tu página, y todo para <em>crecer</em></h4><div class="p-precios"><div><b>Básico</b><strong>$55</strong></div><div><b>Esencial</b><strong>$85</strong></div><div><b>PRO</b><strong>$115</strong></div></div>
+    <div class="p-precios" style="margin-top:4px"><div style="animation-delay:.36s"><b>Asistente IA</b><strong style="font-size:28px">24/7</strong></div><div style="animation-delay:.48s"><b>Dominio</b><strong style="font-size:28px">.com</strong></div><div style="animation-delay:.6s"><b>Citas</b><strong style="font-size:28px">📅</strong></div></div></div>`,
   portafolio: () => `<div style="position:absolute;inset:0;padding:26px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px">${TRABAJOS.map((t, i) => `<div style="border-radius:12px;overflow:hidden;position:relative;background:#2a221d;animation:aparece .5s ${i * 0.1}s both"><img src="media/trabajos/${t.img}" alt="" style="width:100%;height:100%;object-fit:cover;object-position:top"><span style="position:absolute;left:0;right:0;bottom:0;padding:8px 10px;background:linear-gradient(transparent,rgba(0,0,0,.8));font-size:15px;font-weight:700">${t.nombre}</span></div>`).join('')}</div>`,
 };
 const TRABAJOS = [
@@ -474,17 +462,18 @@ function enfocar() {
     // cuatro filas en dos columnas pegadas a las orillas, que se abren en medio para dejar libre la pantalla de la laptop
     ? (() => {
       // la última fila queda arriba de la bocinita de sonido
-      const cw = W * 0.37, arriba = 70, filas = [0, 1, 2, 3].map((i) => arriba + 96 + ((H - 104 - arriba - 96) * i) / 3);
-      const x = (i, lado) => { const hacia = i === 1 || i === 2 ? 0 : 10; return lado < 0 ? 8 + cw / 2 + hacia : W - 8 - cw / 2 - hacia; };
-      return { 'cel-a': [W / 2, arriba], 'cel-b1': [x(0, -1), filas[0]], 'cel-b2': [x(0, 1), filas[0]], 'cel-c1': [x(1, -1), filas[1]], 'cel-c2': [x(1, 1), filas[1]], 'cel-d1': [x(2, -1), filas[2]], 'cel-d2': [x(2, 1), filas[2]], 'cel-e1': [x(3, -1), filas[3]], 'cel-e2': [x(3, 1), filas[3]] };
+      const cw = W * 0.37, arriba = 70, filas = [arriba + 110, H - 104];
+      const x = (lado) => (lado < 0 ? 18 + cw / 2 : W - 18 - cw / 2);
+      return { 'cel-a': [W / 2, arriba], 'cel-b1': [x(-1), filas[0]], 'cel-b2': [x(1), filas[0]], 'cel-c1': [x(-1), filas[1]], 'cel-c2': [x(1), filas[1]] };
     })()
     // compu: en óvalo alrededor de la laptop, una arriba al centro y las demás en pares simétricos
     : (() => {
       // el óvalo se centra en la pantalla (a lo alto) para usar toda la altura
-      const ly = H / 2, sen70 = Math.sin((70 * Math.PI) / 180);
-      const rx = Math.min(lx - 145, W - 145 - lx), ry = Math.min(ly - 84, (H - 84 - ly) / sen70);
+      // cinco puntas, como un pentágono: una arriba, dos a los lados y dos abajo
+      const ly = H / 2, sen54 = Math.sin((54 * Math.PI) / 180);
+      const rx = Math.min(lx - 145, W - 145 - lx), ry = Math.min(ly - 84, (H - 84 - ly) / sen54);
       const en = (grados) => { const a = (grados * Math.PI) / 180; return [lx + rx * Math.cos(a), ly + ry * Math.sin(a)]; };
-      return { 'arriba': en(-90), 'der-0': en(-50), 'der-1': en(-10), 'der-2': en(30), 'abajo-der': en(70), 'abajo-izq': en(110), 'izq-2': en(150), 'izq-1': en(190), 'izq-0': en(230) };
+      return { 'arriba': en(-90), 'der-0': en(-18), 'abajo-der': en(54), 'abajo-izq': en(126), 'izq-0': en(198) };
     })();
   // centro de la pantalla de la laptop: de ahí salen las tarjetas y los hilos de luz
   const S = [izq + tx + centroPantalla[0] * k, arr + ty + centroPantalla[1] * k];
@@ -547,41 +536,27 @@ function paginaMuestra() {
 
 // ---------- el detalle de cada servicio ----------
 const DETALLE = {
-  paginas: () => `<h3>Páginas web</h3><p class="lema">Tu página profesional, lista desde 24 horas.</p>
-    <p>Hecha a la medida de tu negocio, perfecta en el celular y conectada a tu WhatsApp para que tus clientes te escriban al instante. Pago único, sin mensualidades.</p>
-    <ul class="puntos"><li>Tus fotos, servicios y precios</li><li>Botón directo a tu WhatsApp y "Cómo llegar"</li><li>QR para imprimir en tu negocio</li><li>Tu propio .com en Esencial y PRO</li></ul>
-    <a class="btn btn-wa" href="${wa('Hola, quiero una página web para mi negocio')}" target="_blank" rel="noopener">Quiero mi página</a>`,
   muestra: () => `<h3>Muestra gratis</h3><p class="lema">Arma tu página aquí mismo y mírala al lado.</p>
     <div class="campo"><label for="mNombre">Nombre de tu negocio</label><input id="mNombre" maxlength="40" value="${esc(MUESTRA.n)}">
     <label for="mGiro">Giro</label><select id="mGiro">${Object.entries(GIROS_M).map(([k, g]) => `<option value="${k}"${k === MUESTRA.g ? ' selected' : ''}>${g.label}</option>`).join('')}</select>
     <label>Colores</label><div class="opciones colores" role="radiogroup" aria-label="Colores">${Object.entries(PALETAS).map(([k, c]) => `<button type="button" role="radio" aria-checked="${k === MUESTRA.c}" data-c="${k}" title="${c.label}"><i style="background:${c.p}"></i><i style="background:${c.a}"></i><i style="background:${c.bg}"></i></button>`).join('')}</div>
     <label>Estilo de letra</label><div class="opciones estilos" role="radiogroup" aria-label="Estilo de letra">${Object.entries(ENFOQUES).map(([k, e]) => `<button type="button" role="radio" aria-checked="${k === MUESTRA.e}" data-e="${k}"><span style="font-family:${e.fuente};${e.extra}">Aa</span>${e.label}</button>`).join('')}</div></div>
     <a class="btn btn-naranja" id="mIr" href="https://alewox.com/muestra/" target="_blank" rel="noopener">Ver mi muestra completa →</a>`,
-  ia: () => `<h3>Asistente con IA</h3><p class="lema">Contesta tu WhatsApp 24/7.</p>
-    <div class="chat"><div class="c">¿A qué hora abren? 🌮</div><div class="b">¡Hola! De 7 pm a 1 am. ¿Te aparto unos tacos para llevar?</div><div class="c">Sí, 5 de asada</div><div class="b">¡Listo! 5 de asada a tu nombre 🔥</div></div>
-    <ul class="puntos"><li>$350 al mes, instalación $250 (gratis en PRO)</li><li>Conoce tu menú, precios y horarios</li><li>Te avisa de los clientes listos para comprar</li></ul>
-    <a class="btn btn-wa" href="${wa('Hola, me interesa el asistente con IA')}" target="_blank" rel="noopener">Lo quiero</a>`,
-  google: () => `<h3>Que te encuentren</h3><p class="lema">Para que te elijan a ti y no a la competencia.</p>
-    <ul class="puntos"><li>Alta y optimización de tu perfil en Google Maps</li><li>QR con diseño para tu mostrador (en todos los paquetes)</li><li>Fotos profesionales con IA si no tienes buenas</li><li>SEO local para salir más arriba (PRO)</li></ul>`,
-  precios: () => `<h3>Precios Hermosillo</h3><p class="lema">Para negocios de Hermosillo, en pesos mexicanos. Pago único, listos desde 24 horas.</p>
-    <div class="precios"><div class="precio"><div><b>Básico</b><br><span>Una sección, WhatsApp, Maps y QR</span></div><strong>$450</strong></div>
-    <div class="precio"><div><b>Esencial</b><br><span>Diseño a tu medida, .com, galería, Google Maps</span></div><strong>$750</strong></div>
-    <div class="precio"><div><b>PRO</b><br><span>Citas o pedidos, 3D, SEO local, asistente IA</span></div><strong>$950</strong></div></div>
-    <p class="lema" style="margin-top:4px">Extras opcionales</p>
-    <div class="precios"><div class="precio"><span>Asistente de WhatsApp con IA</span><strong style="font-size:17px">$350/mes</strong></div>
-    <div class="precio"><span>Mantenimiento (cambios cuando quieras)</span><strong style="font-size:17px">$150/mes</strong></div>
-    <div class="precio"><span>Dominio propio (tunegocio.com)</span><strong style="font-size:17px">$350/año</strong></div>
-    <div class="precio"><span>Cambio suelto</span><strong style="font-size:17px">$100</strong></div></div>
-    <a class="btn btn-wa" href="${wa('Hola, quiero saber qué paquete me conviene')}" target="_blank" rel="noopener">¿Cuál me conviene?</a>`,
-  planes: () => `<h3>Planes</h3><p class="lema">Para negocios fuera de Hermosillo, en cualquier parte del mundo. Precios en dólares (USD), pago único.</p>
+  planes: () => `<h3>Planes y extras</h3><p class="lema">Tu página lista desde 24 horas, en dólares (USD) y con pago único. Para negocios de cualquier parte del mundo.</p>
     <div class="precios"><div class="precio"><div><b>Básico</b><br><span>Página de una sección, WhatsApp, Maps y QR</span></div><strong>$55</strong></div>
     <div class="precio"><div><b>Esencial</b><br><span>Diseño a tu medida, tu .com, galería, Google Maps</span></div><strong>$85</strong></div>
     <div class="precio"><div><b>PRO</b><br><span>Citas o pedidos, 3D, SEO local, fotos con IA, asistente IA</span></div><strong>$115</strong></div></div>
-    <ul class="puntos"><li>100% en línea: me mandas tus datos y fotos por WhatsApp o correo</li><li>Lista desde 24 horas</li><li>En lugar de visita presencial, fotos profesionales con IA</li></ul>
-    <a class="btn btn-wa" href="${wa('Hola, mi negocio está fuera de Hermosillo y quiero un plan')}" target="_blank" rel="noopener">Quiero mi plan</a>`,
-  extras: () => `<h3>Extras para crecer</h3><p class="lema">Cuando tu página ya está, esto te ayuda a vender más.</p>
-    <ul class="puntos"><li>Asistente de WhatsApp con IA que contesta 24/7 · $350/mes</li><li>Mantenimiento: cambio precios, fotos y promos · $150/mes</li><li>Tu propio dominio .com o .mx · $350/año</li><li>Formularios de citas, pedidos o cotizaciones a tu WhatsApp (PRO)</li><li>Sección de promociones y de opiniones de clientes (PRO)</li><li>Fotos profesionales con IA (Esencial y PRO)</li><li>SEO local para salir en Google en tu ciudad (PRO)</li></ul>
-    <a class="btn btn-wa" href="${wa('Hola, quiero hacer crecer mi negocio con los extras')}" target="_blank" rel="noopener">Quiero crecer</a>`,
+    <p class="lema" style="margin-top:4px">Extras para crecer</p>
+    <ul class="puntos"><li>Asistente de WhatsApp con IA que contesta 24/7</li><li>Mantenimiento: cambio precios, fotos y promos cuando quieras</li><li>Tu propio dominio .com o .mx</li><li>Citas, pedidos o cotizaciones directo a tu WhatsApp</li><li>Promociones, opiniones de clientes y fotos profesionales con IA</li><li>SEO local para salir en Google en tu ciudad</li></ul>
+    <p style="opacity:.75;font-size:14px">¿Eres de Hermosillo? Escríbeme, hay precio especial local.</p>
+    <a class="btn btn-wa" href="${wa('Hola, quiero saber qué plan y extras me convienen')}" target="_blank" rel="noopener">¿Cuál me conviene?</a>`,
+  nosotros: () => `<h3>Todo sobre nosotros</h3><p class="lema">Alewox hace que tu negocio venda más en internet.</p>
+    <p>Soy Alejandro y trabajo desde Hermosillo, 100% en línea, para negocios de aquí y de cualquier parte. Te contesto yo, no un call center.</p>
+    <p class="lema" style="margin-top:4px">Lo que hacemos</p>
+    <ul class="puntos"><li><b>Páginas web</b>: hechas a la medida, perfectas en el celular y conectadas a tu WhatsApp. Listas desde 24 horas, pago único</li><li><b>Asistente con IA</b>: contesta tu WhatsApp 24/7, conoce tu menú, precios y horarios, y te avisa de los clientes listos para comprar</li><li><b>Que te encuentren</b>: tu perfil de Google Maps, QR para tu mostrador y fotos profesionales con IA</li></ul>
+    <p class="lema" style="margin-top:4px">Cómo trabajamos</p>
+    <ul class="puntos"><li>Mira tu muestra gratis antes de pagar</li><li>Me mandas tus datos y fotos por WhatsApp</li><li>Tu página queda lista desde 24 horas</li></ul>
+    <a class="btn btn-wa" href="${wa('Hola Alejandro, quiero saber más de Alewox')}" target="_blank" rel="noopener">Platiquemos</a>`,
   portafolio: () => `<h3>Portafolio</h3><p class="lema">Páginas que ya hicimos.</p>
     <div class="precios">${TRABAJOS.map((t) => `<a class="precio" style="text-decoration:none" href="${t.url}" target="_blank" rel="noopener"><div><b>${t.nombre}</b><br><span>${t.giro}</span></div><span style="color:var(--naranja-2);font-weight:700">${t.real ? 'Cliente real' : 'Ver →'}</span></a>`).join('')}</div>`,
   hablemos: () => `<h3>Hablemos</h3><p class="lema">Te contesto yo, no un call center.</p>
