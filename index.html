@@ -206,6 +206,24 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; }
 .precio { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; border-bottom: 1px solid var(--linea); padding-bottom: 8px; }
 .precio strong { font-size: 22px; font-variant-numeric: tabular-nums; }
 .precio span { color: var(--gris); font-size: 13.5px; }
+/* los planes: tarjetas que se abren al tocarlas con todo lo que incluyen */
+.planes-lista { display: grid; gap: 10px; }
+.plan-t { border: 1px solid var(--linea); border-radius: 16px; background: rgba(244, 239, 232, .04); transition: border-color .25s, background .25s; }
+.plan-t:hover, .plan-t[open] { border-color: rgba(255, 150, 90, .55); background: rgba(255, 122, 61, .07); }
+.plan-t.reco { border-color: rgba(255, 122, 61, .45); }
+.plan-t summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; align-items: center; padding: 14px 16px; }
+.plan-t summary::-webkit-details-marker { display: none; }
+.plan-t summary b { font-size: 17px; }
+.plan-t summary b small { margin-left: 8px; font-size: 11px; font-weight: 700; color: var(--tinta); background: var(--naranja); padding: 2px 8px; border-radius: 99px; vertical-align: 2px; }
+.plan-t summary strong { font-size: 22px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.plan-t summary strong small { font-size: 12px; font-weight: 700; color: var(--gris); margin-left: 3px; }
+.plan-t summary > span { color: var(--gris); font-size: 13.5px; }
+.plan-t summary i { font-style: normal; font-size: 12.5px; font-weight: 700; color: var(--naranja-2); justify-self: end; }
+.plan-t summary i::after { content: " +"; }
+.plan-t[open] summary i::after { content: " −"; }
+.plan-t .puntos { padding: 0 16px 16px; font-size: 14px; }
+.plan-t .puntos .base { color: var(--naranja-2); font-weight: 700; }
+.plan-t .puntos .base::before { content: ""; }
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border-radius: 999px; padding: 12px 18px; font: 700 15px var(--sans); text-decoration: none; border: 0; cursor: pointer; }
 .btn-wa { background: var(--verde-wa); color: #06210f; }
 .btn-naranja { background: var(--naranja); color: var(--tinta); }
@@ -647,6 +665,54 @@ function paginaMuestra() {
     <div style="position:absolute;bottom:12px;left:0;right:0;text-align:center;font-size:13px;opacity:.5">${dominio(MUESTRA.n)}</div></div>`;
 }
 
+// lo que incluye cada plan (lo mismo que en la muestra y el bot)
+const PLANES = [
+  { id: 'Básico', precio: 55, resumen: 'Página de una sección, WhatsApp, Maps y QR', items: [
+    'Página profesional de una sección, adaptada a tu giro, lista en 24 horas',
+    'Tus fotos, logo, colores y hasta 6 servicios con precios',
+    'Botón directo a tu WhatsApp',
+    'Ubicación en Google Maps, horario y redes sociales',
+    'Botón "Cómo llegar" que abre la ruta en Google Maps',
+    'Secciones que aparecen suavemente al navegar',
+    'Perfecta en el celular',
+    'Dirección web gratuita',
+    'Código QR para imprimir en tu negocio',
+    '1 ronda de ajustes antes de publicar: textos, precios, fotos y colores',
+    'Garantía y soporte: si algo falla lo arreglo gratis, y te ayudo por WhatsApp aunque ya haya pasado el periodo gratis',
+  ] },
+  { id: 'Esencial', precio: 85, reco: true, resumen: 'Diseño a tu medida, tu .com por 1 año, galería, Google Maps, fotos con IA y QR de reseñas', items: [
+    '+Todo lo del Básico, y además:',
+    'Diseño hecho a la medida de tu negocio',
+    'Tu propio dominio .com o .mx, válido por 1 año',
+    'Varias secciones: servicios o menú con precios, galería de hasta 12 fotos y contacto',
+    'Botones de WhatsApp con el mensaje listo para cada servicio',
+    'Alta y optimización de tu perfil en Google Maps',
+    'QR con diseño para tu mostrador',
+    'QR de reseñas de Google para que tus clientes te dejen su opinión',
+    'Animaciones: fondo en movimiento y tarjetas que reaccionan al tocarlas',
+    'Fotos profesionales hechas con IA si no tienes buenas fotos',
+    '2 rondas de ajustes antes de publicar: textos, fotos, colores y acomodo de secciones',
+    '1 mes de actualizaciones gratis: precios, promociones, horarios y fotos',
+  ] },
+  { id: 'PRO', precio: 115, resumen: 'Citas o pedidos, 3D, promociones, opiniones, SEO local y asistente IA', items: [
+    '+Todo lo de la Esencial, y además:',
+    'Formularios de citas, pedidos o cotizaciones que te llegan por WhatsApp',
+    'Animaciones premium: portada en 3D y títulos que entran palabra por palabra',
+    'Sección de promociones destacada, que cambiamos cuando quieras',
+    'Sección de opiniones de clientes',
+    'SEO local para aparecer en Google en tu ciudad',
+    'Visita para tomar fotos de tu negocio (en Hermosillo; fuera, fotos con IA)',
+    'Instalación gratis del asistente de WhatsApp con IA',
+    '3 rondas de ajustes antes de publicar, más secciones nuevas y animaciones',
+    '3 meses de actualizaciones gratis, incluidos servicios nuevos',
+  ] },
+];
+// cada plan es una tarjeta; al tocarla se abre con todo lo que incluye (y se cierran las demás)
+const planesHTML = () => `<div class="planes-lista">${PLANES.map((pl) => `<details class="plan-t${pl.reco ? ' reco' : ''}" name="plan">
+  <summary><b>${pl.id}${pl.reco ? '<small>Recomendado</small>' : ''}</b><strong>$${pl.precio}<small>USD</small></strong><span>${pl.resumen}</span><i>Ver qué incluye</i></summary>
+  <ul class="puntos">${pl.items.map((t) => t.startsWith('+') ? `<li class="base">${esc(t.slice(1))}</li>` : `<li>${esc(t)}</li>`).join('')}</ul>
+</details>`).join('')}</div>`;
+
 // ---------- el detalle de cada servicio ----------
 const DETALLE = {
   muestra: () => `<h3>Muestra gratis</h3><p class="lema">Arma tu página aquí mismo y mírala al lado.</p>
@@ -656,17 +722,16 @@ const DETALLE = {
     <label>Estilo de letra</label><div class="opciones estilos" role="radiogroup" aria-label="Estilo de letra">${Object.entries(ENFOQUES).map(([k, e]) => `<button type="button" role="radio" aria-checked="${k === MUESTRA.e}" data-e="${k}"><span style="font-family:${e.fuente};${e.extra}">Aa</span>${e.label}</button>`).join('')}</div></div>
     <a class="btn btn-naranja" id="mIr" href="https://alewox.com/muestra/" target="_blank" rel="noopener">Ver mi muestra completa →</a>`,
   planes: () => `<h3>Planes y extras</h3><p class="lema">Tu página lista desde 24 horas, en dólares (USD) y con pago único. Para negocios de cualquier parte del mundo.</p>
-    <div class="precios"><div class="precio"><div><b>Básico</b><br><span>Página de una sección, WhatsApp, Maps y QR</span></div><strong>$55</strong></div>
-    <div class="precio"><div><b>Esencial</b><br><span>Diseño a tu medida, tu .com por 1 año, galería, Google Maps, fotos con IA y QR de reseñas</span></div><strong>$85</strong></div>
-    <div class="precio"><div><b>PRO</b><br><span>Citas o pedidos, 3D, promociones, opiniones, SEO local y asistente IA</span></div><strong>$115</strong></div></div>
+    <p style="font-size:13.5px;color:var(--naranja-2);margin:0">Toca un plan para ver todo lo que incluye.</p>
+    ${planesHTML()}
     <p style="font-size:14px;margin-top:2px"><b>Todos incluyen garantía y soporte:</b> si algo falla lo arreglo gratis, y te ayudo por WhatsApp aunque ya haya pasado el periodo gratis.</p>
     <p class="lema" style="margin-top:4px">Extras para crecer</p>
-    <div class="precios"><div class="precio"><div><b>Asistente de WhatsApp con IA</b><br><span>Contesta 24/7 · instalación $15 (gratis en PRO)</span></div><strong style="font-size:17px">$35/mes</strong></div>
-    <div class="precio"><div><b>Mantenimiento</b><br><span>Cambio precios, fotos y promos cuando quieras</span></div><strong style="font-size:17px">$15/mes</strong></div>
-    <div class="precio"><div><b>Dominio propio</b><br><span>tunegocio.com o .mx para el Básico (en Esencial y PRO va incluido 1 año)</span></div><strong style="font-size:17px">$25/año</strong></div>
-    <div class="precio"><div><b>Renovación de dominio</b><br><span>A partir del segundo año, para seguir con tu .com</span></div><strong style="font-size:17px">$25/año</strong></div>
-    <div class="precio"><div><b>QR de reseñas de Google</b><br><span>Para tu mostrador, para que tus clientes te dejen su opinión (incluido en Esencial y PRO)</span></div><strong style="font-size:17px">$6</strong></div>
-    <div class="precio"><div><b>Cambio suelto</b><br><span>Un cambio cuando lo necesites</span></div><strong style="font-size:17px">$10</strong></div>
+    <div class="precios"><div class="precio"><div><b>Asistente de WhatsApp con IA</b><br><span>Contesta 24/7 · instalación $15 USD (gratis en PRO)</span></div><strong style="font-size:17px">$35 USD/mes</strong></div>
+    <div class="precio"><div><b>Mantenimiento</b><br><span>Cambio precios, fotos y promos cuando quieras</span></div><strong style="font-size:17px">$15 USD/mes</strong></div>
+    <div class="precio"><div><b>Dominio propio</b><br><span>tunegocio.com o .mx para el Básico (en Esencial y PRO va incluido 1 año)</span></div><strong style="font-size:17px">$25 USD/año</strong></div>
+    <div class="precio"><div><b>Renovación de dominio</b><br><span>A partir del segundo año, para seguir con tu .com</span></div><strong style="font-size:17px">$25 USD/año</strong></div>
+    <div class="precio"><div><b>QR de reseñas de Google</b><br><span>Para tu mostrador, para que tus clientes te dejen su opinión (incluido en Esencial y PRO)</span></div><strong style="font-size:17px">$6 USD</strong></div>
+    <div class="precio"><div><b>Cambio suelto</b><br><span>Un cambio cuando lo necesites</span></div><strong style="font-size:17px">$10 USD</strong></div>
     <div class="precio"><div><b>Citas, pedidos, promociones y SEO local</b><br><span>Directo a tu WhatsApp y para salir en Google</span></div><strong style="font-size:17px">En PRO</strong></div></div>
     <p style="opacity:.75;font-size:14px;margin-top:6px">Todos los precios en dólares (USD).</p>
     <p style="opacity:.75;font-size:14px">¿Eres de Hermosillo? Escríbeme, hay precio especial local.</p>
