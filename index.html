@@ -761,15 +761,15 @@ addEventListener('resize', () => { if (document.body.classList.contains('viendo'
 
 // ---------- abrir y cerrar ----------
 const escena = document.getElementById('escena');
-// 1) al segundo y medio la pantalla empieza a "respirar"; 2) a los 3.5 s un cursor entra, hace click y abre.
+// 1) al segundo la pantalla empieza a "respirar"; 2) a los 2.5 s un cursor entra, hace click y abre.
 // Hasta que el cursor abre, la laptop no se puede tocar (si la animación está apagada, se puede tocar desde el inicio).
 let listo = reducir;
 if (!listo) escena.classList.add('esperando');
 const desbloquear = () => { listo = true; escena.classList.remove('esperando'); };
 // por si algo impide la demostración, a los 8 s la laptop se desbloquea de todos modos
 setTimeout(desbloquear, 8000);
-let llamar = setTimeout(() => escena.classList.add('llamando'), 1500);
-let demo = reducir ? null : setTimeout(demostrar, 3500);
+let llamar = setTimeout(() => escena.classList.add('llamando'), 1000);
+let demo = reducir ? null : setTimeout(demostrar, 2500);
 const cursor = document.getElementById('cursor');
 const onda = document.getElementById('onda');
 function demostrar() {
@@ -782,7 +782,7 @@ function demostrar() {
     { transform: `translate(${desde[0] - 60}px, ${desde[1] - 20}px)`, opacity: 1, offset: 0.12 },
     { transform: `translate(${medio[0]}px, ${medio[1]}px)`, opacity: 1, offset: 0.6 },
     { transform: `translate(${x}px, ${y}px)`, opacity: 1 },
-  ], { duration: 1500, easing: 'cubic-bezier(.45, 0, .2, 1)', fill: 'forwards' });
+  ], { duration: 1200, easing: 'cubic-bezier(.45, 0, .2, 1)', fill: 'forwards' });
   viaje.onfinish = () => {
     if (abierto) return cursor.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 250, fill: 'forwards' });
     // el click: el cursor se encoge, sale una onda de luz y se abre todo
