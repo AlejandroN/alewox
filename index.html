@@ -157,7 +157,7 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; }
 
 /* ---------- detalle de un servicio ---------- */
 /* al elegir un servicio, la cámara entra a la pantalla de la laptop y la pantalla se vuelve la página de ese servicio */
-.entrando .cuadro { transition: transform 1.05s cubic-bezier(.55, 0, .3, 1); }
+.entrando .cuadro { transition: transform .8s cubic-bezier(.5, 0, .3, 1); }
 .entrando .borroso { opacity: 0; transition: opacity .3s; }
 .entrando .hilos, .entrando .pie { opacity: 0; }
 .entrando .bloque { opacity: 0 !important; pointer-events: none !important; transition-delay: 0s !important; }
@@ -692,7 +692,8 @@ function zambullir() {
   const q = T.pantalla.map(([x, y]) => [x * escala, y * escala]);
   const bw = Math.max(...q.map((p) => p[0])) - Math.min(...q.map((p) => p[0]));
   const bh = Math.max(...q.map((p) => p[1])) - Math.min(...q.map((p) => p[1]));
-  const z = Math.max(W / bw, H / bh) * 1.25;
+  // solo se acerca hasta que la pantalla de la laptop casi llena la vista: lo demás lo cubre el fundido de la pantalla de detalle
+  const z = Math.min(Math.max(W / bw, H / bh) * 1.25, 2.6);
   const c = [centroPantalla[0] * escala, centroPantalla[1] * escala];
   cuadro.style.transform = `translate(${W / 2 - izq - c[0] * z}px, ${H / 2 - arr - c[1] * z}px) scale(${z})`;
 }
@@ -716,7 +717,7 @@ function verDetalle(id) {
     vista.setAttribute('aria-hidden', 'false');
     escalarGrande();
     document.getElementById('volver').focus({ preventScroll: true });
-  }, reducir ? 0 : 620);
+  }, reducir ? 0 : 380);
   if (id === 'muestra') {
     // cada cambio se ve al instante en la pantalla grande
     const actualizar = () => {
