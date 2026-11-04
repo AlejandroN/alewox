@@ -56,6 +56,8 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; }
 .abierto .pie { opacity: 1; }
 .cuadro > svg { position: absolute; inset: 0; width: 100%; height: 100%; }
 .pantalla-toque { fill: transparent; cursor: pointer; }
+/* mientras el cursor de demostración no termina, la laptop todavía no se puede tocar */
+.esperando .pantalla-toque { cursor: default; }
 .pantalla-toque:focus { outline: none; }
 /* la pantalla "respira": un resplandor cálido que sube y baja, y que se sale un poco de la pantalla como luz real */
 .brillo { opacity: 0; pointer-events: none; mix-blend-mode: screen; transition: opacity .6s; }
@@ -759,9 +761,15 @@ addEventListener('resize', () => { if (document.body.classList.contains('viendo'
 
 // ---------- abrir y cerrar ----------
 const escena = document.getElementById('escena');
-// 1) a los 2 s la pantalla empieza a "respirar"; 2) a los 6.5 s, si nadie tocó, un cursor entra, hace click y abre
-let llamar = setTimeout(() => escena.classList.add('llamando'), 2000);
-let demo = reducir ? null : setTimeout(demostrar, 6500);
+// 1) al segundo y medio la pantalla empieza a "respirar"; 2) a los 3.5 s un cursor entra, hace click y abre.
+// Hasta que el cursor abre, la laptop no se puede tocar (si la animación está apagada, se puede tocar desde el inicio).
+let listo = reducir;
+if (!listo) escena.classList.add('esperando');
+const desbloquear = () => { listo = true; escena.classList.remove('esperando'); };
+// por si algo impide la demostración, a los 8 s la laptop se desbloquea de todos modos
+setTimeout(desbloquear, 8000);
+let llamar = setTimeout(() => escena.classList.add('llamando'), 1500);
+let demo = reducir ? null : setTimeout(demostrar, 3500);
 const cursor = document.getElementById('cursor');
 const onda = document.getElementById('onda');
 function demostrar() {
@@ -783,6 +791,7 @@ function demostrar() {
     onda.animate([{ opacity: 1, transform: 'scale(.4)' }, { opacity: 0, transform: 'scale(3.2)' }], { duration: 650, delay: 330, easing: 'ease-out' });
     setTimeout(() => {
       abrir();
+      desbloquear();
       cursor.animate([{ opacity: 1, transform: `translate(${x}px, ${y}px)` }, { opacity: 0, transform: `translate(${x + 30}px, ${y + 40}px)` }], { duration: 500, fill: 'forwards' });
     }, 480);
   };
@@ -812,8 +821,8 @@ function cerrar() {
   document.body.classList.remove('abierto');
   cuadro.style.transform = '';
 }
-toque.addEventListener('click', () => (abierto ? cerrar() : abrir()));
-toque.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); abierto ? cerrar() : abrir(); } });
+toque.addEventListener('click', () => { if (listo) abierto ? cerrar() : abrir(); });
+toque.addEventListener('keydown', (e) => { if ((e.key === 'Enter' || e.key === ' ') && listo) { e.preventDefault(); abierto ? cerrar() : abrir(); } });
 document.getElementById('cerrar').addEventListener('click', cerrar);
 addEventListener('keydown', (e) => { if (e.key === 'Escape' && abierto) cerrar(); });
 
