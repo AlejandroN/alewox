@@ -65,6 +65,8 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; }
 .escena:has(.pantalla-toque:hover) .brillo, .escena:has(.pantalla-toque:focus-visible) .brillo { animation: none; opacity: .9; }
 @keyframes respira { 0%, 100% { opacity: .08; } 50% { opacity: .85; } }
 .abierto .brillo { animation: none; opacity: 0; visibility: hidden; transition: opacity .6s, visibility 0s .6s; }
+/* ya abierto, la pantalla también brilla al pasarle el cursor encima (pero no mientras la cámara entra o sale) */
+.abierto:not(.entrando) .escena:has(.pantalla-toque:hover) .brillo, .abierto:not(.entrando) .escena:has(.pantalla-toque:focus-visible) .brillo { visibility: visible; opacity: .9; transition: opacity .35s, visibility 0s; }
 
 /* el cursor de demostración que entra, hace click y abre todo */
 .cursor { position: fixed; z-index: 7; left: 0; top: 0; width: 34px; height: 34px; pointer-events: none; opacity: 0; filter: drop-shadow(0 6px 10px rgba(0, 0, 0, .55)); transform-origin: 4px 3px; }
