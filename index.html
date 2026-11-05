@@ -109,6 +109,8 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; }
 /* la pantalla de la laptop "en vivo": muestra cada servicio */
 .pantalla-viva { position: absolute; left: 0; top: 0; width: 800px; height: 500px; transform-origin: 0 0; overflow: hidden; opacity: 0; transition: opacity .45s; pointer-events: none; background: #0f0d0c; color: #f4efe8; font-family: var(--sans); border-radius: 6px; }
 .pantalla-viva.ver { opacity: 1; }
+/* panel negro, del tono del marco de la laptop, que tapa la pantalla original del video */
+.tapa-pantalla { position: absolute; left: 0; top: 0; width: 800px; height: 500px; transform-origin: 0 0; background: #080707; pointer-events: none; border-radius: 4px; }
 .pantalla-viva.nitida { transition: opacity .2s; }
 /* la pantalla nítida (vector) que tapa la del video mientras la cámara se acerca */
 .p-logo { position: absolute; inset: 0; background: radial-gradient(52% 62% at 50% 46%, #5a2610, #2a140b 55%, #0c0b0a 100%); }
@@ -267,6 +269,7 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; }
     <video id="video" muted loop playsinline autoplay preload="auto" aria-label="Escritorio de noche con lluvia en la ventana y una laptop con el logo de Alewox"></video>
     <div class="relampago" id="relampago"></div>
     <div class="borroso" id="borroso"></div>
+    <div class="tapa-pantalla" id="tapa" aria-hidden="true"></div>
     <div class="pantalla-viva" id="viva" aria-hidden="true"></div>
     <svg id="capa" viewBox="0 0 1080 1920" preserveAspectRatio="none">
       <defs>
@@ -389,11 +392,13 @@ const TOMAS = {
   vertical: {
     video: 'media/escritorio.mp4', ligero: 'media/escritorio-ligero.mp4', foto: 'media/portada.jpg', w: 1080, h: 1920,
     pantalla: [[432, 1021], [864, 1064], [839, 1365], [406, 1285]],
+    tapa: [[427, 1017], [882, 1058], [853, 1373], [400, 1288]],
     laptop: [[415, 995], [912, 1036], [884, 1390], [806, 1645], [172, 1488], [200, 1452], [388, 1300]],
   },
   horizontal: {
     video: 'media/escritorio-h.mp4', ligero: 'media/escritorio-h-ligero.mp4', foto: 'media/portada-h.jpg', w: 1920, h: 1080,
     pantalla: [[897, 491], [1267, 529], [1228, 810], [862, 732]],
+    tapa: [[891, 485], [1281, 524], [1239, 817], [855, 736]],
     laptop: [[885, 462], [1306, 498], [1278, 850], [1266, 862], [1105, 995], [642, 872], [650, 850], [770, 788], [850, 758]],
   },
 };
@@ -509,16 +514,21 @@ const viva = document.getElementById('viva');
 const pantallaNitida = () => `<div class="p-logo"><div class="barra"><span>alewox OS</span><span>${new Date().toLocaleTimeString('es-MX', { hour: 'numeric', minute: '2-digit' })}<i class="bateria"></i></span></div>
   <div class="centro-logo"><svg width="120" height="112" viewBox="0 0 100 100" aria-hidden="true"><defs><linearGradient id="gN" x1="0" y1="1" x2=".6" y2="0"><stop offset="0" stop-color="#ff6a33"/><stop offset="1" stop-color="#ffb06a"/></linearGradient></defs><polygon points="6,98 30,98 64,6 40,6" fill="url(#gN)"/><polygon points="52,38 64,6 98,98 74,98" fill="#f4efe8"/></svg>
   <b>alewox<i>.</i></b><small>Toca para encender</small></div></div>`;
-// ajusta la pantalla en vivo encima de la pantalla del video (en perspectiva)
-function acomodarViva() {
-  const q = T.pantalla.map(([x, y]) => [x * escala, y * escala]);
+// pone un cuadro de 800x500 encima de cuatro esquinas del video (en perspectiva)
+function encima(el, esquinas) {
+  const q = esquinas.map(([x, y]) => [x * escala, y * escala]);
   const [[x0, y0], [x1, y1], [x2, y2], [x3, y3]] = q;
   const dx1 = x1 - x2, dx2 = x3 - x2, dx3 = x0 - x1 + x2 - x3, dy1 = y1 - y2, dy2 = y3 - y2, dy3 = y0 - y1 + y2 - y3;
   const det = dx1 * dy2 - dx2 * dy1;
   const g = (dx3 * dy2 - dx2 * dy3) / det, h = (dx1 * dy3 - dx3 * dy1) / det;
   const a = x1 - x0 + g * x1, b = y1 - y0 + g * y1, c = x3 - x0 + h * x3, d = y3 - y0 + h * y3;
   const w = 800, alto = 500;
-  viva.style.transform = `matrix3d(${a / w},${b / w},0,${g / w},${c / alto},${d / alto},0,${h / alto},0,0,1,0,${x0},${y0},0,1)`;
+  el.style.transform = `matrix3d(${a / w},${b / w},0,${g / w},${c / alto},${d / alto},0,${h / alto},0,0,1,0,${x0},${y0},0,1)`;
+}
+// la pantalla nítida va encima de la del video, y debajo un panel negro que tapa toda la pantalla original
+function acomodarViva() {
+  encima(document.getElementById('tapa'), T.tapa);
+  encima(viva, T.pantalla);
 }
 let activo = null, ciclo = null, hilosRutas = {};
 function activar(id) {
