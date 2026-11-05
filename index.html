@@ -6,9 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="Alewox hace que tu negocio venda más en internet: páginas web para negocios en Hermosillo, Sonora, y en cualquier parte del mundo. Conectadas a tu WhatsApp, listas desde 24 horas, desde $55 USD y con muestra gratis.">
 <link rel="canonical" href="https://alewox.com/">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Cormorant+Garamond:ital,wght@1,600&family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="media/fuentes/fuentes.css">
 <meta name="theme-color" content="#0c0b0a">
 <meta property="og:title" content="Alewox | Hacemos que tu negocio venda más en internet">
 <meta property="og:description" content="Páginas web que te traen más clientes, conectadas a tu WhatsApp. Listas desde 24 horas. Muestra gratis.">
@@ -342,8 +340,8 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; }
   <section>
     <h2>Contacto</h2>
     <ul>
-      <li><a href="muestra/">Crea tu muestra gratis</a></li>
-      <li><a href="formulario/">¿Ya tienes un plan? Llena tu formulario y recibe tu página</a></li>
+      <li><a href="muestra/index.html">Crea tu muestra gratis</a></li>
+      <li><a href="formulario/index.html">¿Ya tienes un plan? Llena tu formulario y recibe tu página</a></li>
       <li><a href="https://wa.me/526624002958">Escríbeme por WhatsApp</a></li>
       <li><a href="mailto:hola@alewox.com">hola@alewox.com</a></li>
       <li><a href="https://www.instagram.com/alewox.web/">Instagram @alewox.web</a></li>
@@ -754,7 +752,7 @@ const DETALLE = {
     <label for="mGiro">Giro</label><select id="mGiro">${Object.entries(GIROS_M).map(([k, g]) => `<option value="${k}"${k === MUESTRA.g ? ' selected' : ''}>${g.label}</option>`).join('')}</select>
     <label>Colores</label><div class="opciones colores" role="radiogroup" aria-label="Colores">${Object.entries(PALETAS).map(([k, c]) => `<button type="button" role="radio" aria-checked="${k === MUESTRA.c}" data-c="${k}" title="${c.label}"><i style="background:${c.p}"></i><i style="background:${c.a}"></i><i style="background:${c.bg}"></i></button>`).join('')}</div>
     <label>Estilo de letra</label><div class="opciones estilos" role="radiogroup" aria-label="Estilo de letra">${Object.entries(ENFOQUES).map(([k, e]) => `<button type="button" role="radio" aria-checked="${k === MUESTRA.e}" data-e="${k}"><span style="font-family:${e.fuente};${e.extra}">Aa</span>${e.label}</button>`).join('')}</div></div>
-    <a class="btn btn-naranja" id="mIr" href="https://alewox.com/muestra/" target="_blank" rel="noopener">Ver mi muestra completa →</a>`,
+    <a class="btn btn-naranja" id="mIr" href="muestra/index.html" target="_blank" rel="noopener">Ver mi muestra completa →</a>`,
   planes: () => `<h3>Planes y extras</h3><p class="lema">Tu página lista desde 24 horas, en dólares (USD) y con pago único. Para negocios de cualquier parte del mundo.</p>
     <p style="font-size:13.5px;color:var(--naranja-2);margin:0">Toca un plan para ver todo lo que incluye.</p>
     ${planesHTML()}
@@ -783,7 +781,7 @@ const DETALLE = {
     <p>Con tu formulario me mandas todo lo que necesito para hacer tu página. Te toma unos minutos.</p>
     <ul class="puntos"><li>Los datos de tu negocio: nombre, dirección, horario y WhatsApp</li><li>Tus servicios o productos con precios</li><li>Tus fotos y tu logo</li><li>Lo que quieres lograr con tu página</li></ul>
     <p>Desde 24 horas después te mando tu página para que la revises.</p>
-    <a class="btn btn-naranja" href="formulario/">Llenar mi formulario →</a>`,
+    <a class="btn btn-naranja" href="formulario/index.html">Llenar mi formulario →</a>`,
   hablemos: () => `<h3>Hablemos</h3><p class="lema">Te contesto yo, no un call center.</p>
     <p>Trabajo 100% en línea desde Hermosillo, para negocios de aquí y de cualquier parte.</p>
     <ul class="puntos"><li>WhatsApp 662 400 2958</li><li>hola@alewox.com</li><li>Instagram @alewox.web</li></ul>
@@ -833,7 +831,7 @@ function verDetalle(id) {
       MUESTRA.g = document.getElementById('mGiro').value;
       grande.innerHTML = paginaMuestra();
       const q = new URLSearchParams(MUESTRA);
-      document.getElementById('mIr').href = `https://alewox.com/muestra/?${q}`;
+      document.getElementById('mIr').href = `muestra/index.html?${q}`;
     };
     detalle.querySelectorAll('input, select').forEach((el) => el.addEventListener('input', actualizar));
     detalle.querySelectorAll('.opciones').forEach((grupo) => grupo.addEventListener('click', (e) => {
