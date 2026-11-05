@@ -131,7 +131,7 @@
     .planes h2 { font-size: clamp(1.8rem, 4.4vw, 2.6rem); letter-spacing: -.04em; line-height: 1.05; }
     .planes h2 .serif { color: var(--clay-2); }
     .planes-sub { color: var(--muted); margin: 8px 0 30px; }
-    .planes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; text-align: left; align-items: stretch; }
+    .planes-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; text-align: left; align-items: stretch; }
     .plan { border: 1.5px solid var(--line); border-radius: 22px; padding: 28px 24px; display: flex; flex-direction: column; position: relative; background: #fff; }
     .plan.rec { border-color: var(--clay); box-shadow: 0 24px 50px rgba(122, 59, 30, .14); }
     .plan .badge { position: absolute; top: -12px; left: 24px; background: var(--clay); color: #fff; font-size: .72rem; font-weight: 700; padding: 5px 12px; border-radius: 999px; text-transform: uppercase; letter-spacing: .06em; }
@@ -236,6 +236,7 @@
       .planes-grid { grid-template-columns: 1fr; max-width: 460px; margin-inline: auto; }
       .plan.rec { order: -1; }
     }
+    @media (max-width: 1180px) and (min-width: 721px) { .planes-grid { grid-template-columns: repeat(2, 1fr); } }
   </style>
 </head>
 <body>
@@ -527,6 +528,18 @@
           '3 rondas de ajustes antes de publicar, más secciones nuevas y animaciones',
           '3 meses de actualizaciones gratis, incluidos servicios nuevos',
           'Garantía y soporte: si algo de tu página falla, lo arreglo gratis, y te ayudo por WhatsApp aunque ya haya pasado el periodo gratis',
+        ] },
+        { id: 'Total', precio: 199, lead: 'Todo lo del PRO, más:', mas: true, items: [
+          'Rondas de ajustes ilimitadas antes de publicar, hasta que te encante',
+          '8 meses de actualizaciones ilimitadas: precios, fotos, promociones, horarios, servicios y secciones nuevas',
+          'Página de varias pantallas: inicio, menú o servicios, galería y contacto por separado',
+          'Asistente de WhatsApp con IA incluido 3 meses (instalación y mensualidad)',
+          'Tu dominio .com incluido el primer año y la renovación del segundo año gratis',
+          'Fotos profesionales con IA para todo tu menú o tus servicios',
+          'Atención prioritaria: tus cambios van primero, en menos de 24 horas',
+          'Reporte mensual de visitas a tu página y mensajes por WhatsApp',
+          'Las actualizaciones ilimitadas son un pedido de cambios a la vez y no incluyen rediseñar toda la página.',
+          'Precio único para todos en dólares: el Total no tiene precio especial de Hermosillo',
         ] },
       ];
       document.getElementById('planes').innerHTML = planes.map(p => {

@@ -304,6 +304,7 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; }
       <li>Básico, $55 USD: página profesional de una sección con tu WhatsApp, Google Maps, horario y código QR.</li>
       <li>Esencial, $85 USD: diseño a tu medida, tu propio dominio .com válido por 1 año, galería de fotos, fotos profesionales con IA, tu perfil de Google Maps optimizado y un QR para que tus clientes te dejen reseñas en Google.</li>
       <li>PRO, $115 USD: todo lo de la Esencial, más formularios de citas, pedidos o cotizaciones, animaciones en 3D, promociones, opiniones de clientes, SEO local y el asistente de WhatsApp con IA instalado.</li>
+      <li>Total, $199 USD: todo lo del PRO, más 8 meses de actualizaciones ilimitadas, rondas de ajustes ilimitadas, página de varias pantallas, asistente de WhatsApp con IA incluido 3 meses, dominio con la renovación del segundo año gratis y atención prioritaria. Mismo precio para todos, sin precio especial local.</li>
     </ul>
     <p>Todos los planes incluyen garantía y soporte: si algo de tu página falla, lo arreglo gratis, y te ayudo por WhatsApp aunque ya haya pasado el periodo gratis.</p>
     <h3>Extras para crecer</h3>
@@ -347,7 +348,7 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; }
   </section>
 </main>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"ProfessionalService","name":"Alewox","url":"https://alewox.com/","image":"https://alewox.com/media/portada-h.jpg","description":"Páginas web para negocios en Hermosillo y en todo el mundo, conectadas a WhatsApp y listas desde 24 horas.","email":"hola@alewox.com","founder":{"@type":"Person","name":"Alejandro Nieblas"},"address":{"@type":"PostalAddress","addressLocality":"Hermosillo","addressRegion":"Sonora","addressCountry":"MX"},"areaServed":["Hermosillo","México","Worldwide"],"priceRange":"$55 - $115 USD","sameAs":["https://www.instagram.com/alewox.web/"]}
+{"@context":"https://schema.org","@type":"ProfessionalService","name":"Alewox","url":"https://alewox.com/","image":"https://alewox.com/media/portada-h.jpg","description":"Páginas web para negocios en Hermosillo y en todo el mundo, conectadas a WhatsApp y listas desde 24 horas.","email":"hola@alewox.com","founder":{"@type":"Person","name":"Alejandro Nieblas"},"address":{"@type":"PostalAddress","addressLocality":"Hermosillo","addressRegion":"Sonora","addressCountry":"MX"},"areaServed":["Hermosillo","México","Worldwide"],"priceRange":"$55 - $199 USD","sameAs":["https://www.instagram.com/alewox.web/"]}
 </script>
 
 <svg class="hilos" id="hilos" aria-hidden="true"></svg>
@@ -454,7 +455,7 @@ const SERVICIOS = [
   // lugar: arriba al centro y pares simétricos (en compu); cel-a arriba y dos filas de dos (en cel)
   { id: 'muestra', dato: 'Gratis', titulo: 'Muestra gratis', texto: 'Mira tu página antes de pagar un peso.', precio: 'En 1 minuto', lugar: 'arriba', cel: 'cel-a', destacado: true },
   { id: 'portafolio', dato: 'Trabajos', titulo: 'Portafolio', texto: 'Páginas que ya hicimos para negocios reales.', precio: 'Ver trabajos', lugar: 'izq-0', cel: 'cel-b1' },
-  { id: 'planes', dato: 'Desde $55 USD', titulo: 'Planes y extras', texto: 'Tu página y todo lo que la hace crecer.', precio: 'Básico $55 · Esencial $85 · PRO $115', lugar: 'der-0', cel: 'cel-b2' },
+  { id: 'planes', dato: 'Desde $55 USD', titulo: 'Planes y extras', texto: 'Tu página y todo lo que la hace crecer.', precio: 'Básico $55 · Esencial $85 · PRO $115 · Total $199', lugar: 'der-0', cel: 'cel-b2' },
   { id: 'nosotros', dato: 'Alewox', titulo: 'Todo sobre nosotros', texto: 'Quiénes somos, qué hacemos y cómo trabajamos.', precio: 'Desde Hermosillo para el mundo', lugar: 'abajo-izq', cel: 'cel-c1' },
   { id: 'hablemos', dato: 'Te contesto yo', titulo: 'Hablemos', texto: 'Escríbeme por WhatsApp y te contesto yo.', precio: '662 400 2958', lugar: 'abajo-der', cel: 'cel-c2' },
   { id: 'formulario', dato: 'Formulario', titulo: '¿Ya tienes un plan?', texto: 'Llena tu formulario y recibe tu página.', precio: 'Llenar formulario', lugar: 'abajo', cel: 'cel-d' },
@@ -481,7 +482,7 @@ const ESCENAS = {
     <div><b>Páginas web</b><strong style="font-size:34px">24 h</strong></div><div><b>Asistente IA</b><strong style="font-size:34px">24/7</strong></div><div><b>Google Maps</b><strong style="font-size:34px">★ 4.9</strong></div></div>
     <div class="p-barra" style="margin-top:6px"><span>Te contesto yo, no un call center</span></div></div>`,
   hablemos: () => `<div class="escena-p p-wa"><i><svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg></i><h4>Escríbeme</h4><div class="p-barra" style="justify-content:center;font-size:26px;color:#f4efe8">662 400 2958</div></div>`,
-  planes: () => `<div class="escena-p"><div class="p-barra"><span>Para todo el mundo</span><span>USD · pago único</span></div><h4>Tu página, y todo para <em>crecer</em></h4><div class="p-precios"><div><b>Básico</b><strong>$55</strong></div><div><b>Esencial</b><strong>$85</strong></div><div><b>PRO</b><strong>$115</strong></div></div>
+  planes: () => `<div class="escena-p"><div class="p-barra"><span>Para todo el mundo</span><span>USD · pago único</span></div><h4>Tu página, y todo para <em>crecer</em></h4><div class="p-precios" style="grid-template-columns:repeat(4,1fr)"><div><b>Básico</b><strong>$55</strong></div><div><b>Esencial</b><strong>$85</strong></div><div><b>PRO</b><strong>$115</strong></div><div style="animation-delay:.3s;border-color:#ffb08a"><b>Total</b><strong>$199</strong></div></div>
     <div class="p-precios" style="margin-top:4px"><div style="animation-delay:.36s"><b>Asistente IA</b><strong style="font-size:28px">24/7</strong></div><div style="animation-delay:.48s"><b>Dominio</b><strong style="font-size:28px">.com</strong></div><div style="animation-delay:.6s"><b>Citas</b><strong style="font-size:28px;display:flex"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg></strong></div></div></div>`,
   formulario: () => `<div class="escena-p"><div class="p-barra"><span>alewox.com/formulario</span><span>Tu plan: Esencial</span></div><h4>Llena tu formulario y <em>recibe tu página</em></h4>
     <div class="p-chat"><div class="b" style="animation-delay:.2s">Negocio: Tacos Don Chuy</div><div class="b" style="animation-delay:.6s">Fotos y logo: 8 archivos</div><div class="c" style="animation-delay:1.1s">Tu página, lista en 24 horas</div></div></div>`,
@@ -715,6 +716,19 @@ const PLANES = [
     'Instalación gratis del asistente de WhatsApp con IA',
     '3 rondas de ajustes antes de publicar, más secciones nuevas y animaciones',
     '3 meses de actualizaciones gratis, incluidos servicios nuevos',
+  ] },
+  { id: 'Total', precio: 199, resumen: 'Todo lo del PRO, con 8 meses de actualizaciones ilimitadas, asistente IA 3 meses y atención prioritaria', items: [
+    '+Todo lo del PRO, y además:',
+    'Rondas de ajustes ilimitadas antes de publicar, hasta que te encante',
+    '8 meses de actualizaciones ilimitadas: precios, fotos, promociones, horarios, servicios y secciones nuevas',
+    'Página de varias pantallas: inicio, menú o servicios, galería y contacto por separado',
+    'Asistente de WhatsApp con IA incluido 3 meses (instalación y mensualidad)',
+    'Tu dominio .com incluido el primer año y la renovación del segundo año gratis',
+    'Fotos profesionales con IA para todo tu menú o tus servicios',
+    'Atención prioritaria: tus cambios van primero, en menos de 24 horas',
+    'Reporte mensual de visitas a tu página y mensajes por WhatsApp',
+    'Las actualizaciones ilimitadas son un pedido de cambios a la vez y no incluyen rediseñar toda la página.',
+    'Precio único para todos en dólares: el Total no tiene precio especial de Hermosillo',
   ] },
 ];
 // cada plan es una tarjeta; al tocarla se abre con todo lo que incluye (y se cierran las demás)
