@@ -832,7 +832,7 @@ function volver() {
   setTimeout(() => {
     enfocar();
     // ya lejos, se regresa a la pantalla del video
-    setTimeout(() => { document.body.classList.remove('entrando'); viva.classList.remove('ver'); arrancarVideo(); }, 1100);
+    setTimeout(() => { document.body.classList.remove('entrando'); arrancarVideo(); }, 1100);
     ciclar();
   }, reducir ? 0 : 250);
 }
@@ -897,7 +897,6 @@ function cerrar() {
   abierto = false;
   clearInterval(ciclo);
   activo = null;
-  viva.classList.remove('ver');
   bloques.forEach((b) => b.classList.remove('activo'));
   document.body.classList.remove('abierto');
   cuadro.style.transform = '';
@@ -1043,6 +1042,10 @@ function relampago() {
 setTimeout(relampago, 6000);
 
 acomodar();
+// la pantalla de la laptop siempre se ve nítida: encima del video va la misma pantalla hecha con código (con su reloj al día)
+viva.innerHTML = pantallaNitida();
+viva.classList.add('nitida', 'ver');
+setInterval(() => { if (!document.body.classList.contains('entrando')) viva.innerHTML = pantallaNitida(); }, 30000);
 document.getElementById('video').play().catch(() => {});
 </script>
 </body>
