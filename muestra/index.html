@@ -320,9 +320,9 @@
 
           <section class="planes" id="planesSec">
             <h2>Elige cómo la <span class="serif">quieres</span></h2>
-            <p class="planes-sub">Pago único en dólares (USD) · Entrega en 24 horas · Te la entregamos lista para compartir<br>¿Eres de Hermosillo? Pregúntanos por el precio especial local.</p>
+            <p class="planes-sub">Precios en dólares (USD) · El Básico, listo en 24 horas; Esencial, PRO y Élite, de 3 a 7 días hábiles<br>Pagas el inicio, tienes meses incluidos y después una mensualidad. ¿Eres de Hermosillo? Pregúntanos por el precio especial de inicio.</p>
             <div class="planes-grid" id="planes"></div>
-            <p class="planes-note">Extras opcionales: asistente de WhatsApp con IA ($35 USD/mes), mantenimiento ($15 USD/mes), dominio y su renovación ($25 USD/año) y QR de reseñas de Google ($6 USD). <a href="../index.html">Ver todos los detalles</a></p>
+            <p class="planes-note">La mensualidad mantiene tu página en línea con hospedaje, soporte y tus cambios del mes; si no se paga, la página se pausa. Extras opcionales: asistente de WhatsApp con IA ($35 USD/mes), dominio y su renovación ($25 USD/año) y QR de reseñas de Google ($6 USD). <a href="../index.html">Ver todos los detalles</a></p>
           </section>
           <div class="result-actions">
             <button type="button" class="btn btn-ghost" id="share">Copiar enlace de mi muestra</button>
@@ -499,10 +499,12 @@
           'Dirección web gratuita',
           'Código QR para imprimir en tu negocio',
           '1 ronda de ajustes antes de publicar: textos, precios, fotos y colores',
-          'Garantía y soporte: si algo de tu página falla, lo arreglo gratis, y te ayudo por WhatsApp aunque ya haya pasado el periodo gratis',
+          '1 mes incluido: hospedaje, soporte y 1 cambio en el mes',
+          'Después, $9 USD al mes: tu página en línea, soporte y 1 cambio al mes',
+          'Garantía: si algo de tu página falla, lo arreglo gratis mientras esté activa',
         ] },
         { id: 'Esencial', precio: 85, rec: true, lead: 'Diseñada a la medida de tu negocio, mucho más completa que esta muestra', items: [
-          'Diseño único hecho para tu negocio',
+          'Diseño único hecho para tu negocio, lista en 3 días hábiles',
           `Tu propio dominio por 1 año: ${dominio}`,
           `Varias secciones: ${g.secTitle.toLowerCase()}, galería de hasta 12 fotos y contacto`,
           'Botones de WhatsApp con el mensaje listo para cada servicio',
@@ -512,10 +514,12 @@
           'Animaciones: fondo en movimiento y tarjetas que reaccionan al tocarlas',
           'Fotos profesionales hechas con IA si no tienes buenas fotos',
           '2 rondas de ajustes antes de publicar: textos, fotos, colores y acomodo de secciones',
-          '1 mes de actualizaciones gratis: precios, promociones, horarios y fotos',
-          'Garantía y soporte: si algo de tu página falla, lo arreglo gratis, y te ayudo por WhatsApp aunque ya haya pasado el periodo gratis',
+          '3 meses incluidos: hospedaje, soporte y 3 cambios al mes (precios, promociones, horarios y fotos)',
+          'Después, $14 USD al mes: 3 cambios al mes y reporte mensual de visitas',
+          'Garantía: si algo de tu página falla, lo arreglo gratis mientras esté activa',
         ] },
         { id: 'PRO', precio: 115, lead: 'Todo lo de la Esencial, más:', mas: true, items: [
+          'Lista en 5 días hábiles',
           `Formulario de ${form} que llega a tu WhatsApp`,
           'Animaciones premium: portada en 3D y títulos que entran palabra por palabra',
           'Sección de promociones destacada, que cambiamos cuando quieras',
@@ -524,20 +528,23 @@
           'Visita para tomar fotos de tu negocio (en Hermosillo; fuera, fotos con IA)',
           'Instalación gratis del asistente de WhatsApp con IA',
           '3 rondas de ajustes antes de publicar, más secciones nuevas y animaciones',
-          '3 meses de actualizaciones gratis, incluidos servicios nuevos',
-          'Garantía y soporte: si algo de tu página falla, lo arreglo gratis, y te ayudo por WhatsApp aunque ya haya pasado el periodo gratis',
+          '6 meses incluidos: hospedaje, soporte y 5 cambios al mes, incluidos servicios nuevos',
+          'Después, $19 USD al mes: 5 cambios al mes, cambio de promoción y reporte mensual',
+          'Garantía: si algo de tu página falla, lo arreglo gratis mientras esté activa',
         ] },
         { id: 'Élite', precio: 199, lead: 'Todo lo del PRO, más:', mas: true, items: [
+          'Lista en 7 días hábiles',
           'Rondas de ajustes ilimitadas antes de publicar, hasta que te encante',
-          '8 meses de actualizaciones ilimitadas: precios, fotos, promociones, horarios, servicios y secciones nuevas',
+          '8 meses incluidos con cambios ilimitados: precios, fotos, promociones, horarios, servicios y secciones nuevas',
+          'Después, $29 USD al mes, con cambios ilimitados y atención prioritaria',
           'Página de varias pantallas: inicio, menú o servicios, galería y contacto por separado',
           'Asistente de WhatsApp con IA incluido 3 meses (instalación y mensualidad)',
           'Tu dominio .com incluido el primer año y la renovación del segundo año gratis',
           'Fotos profesionales con IA para todo tu menú o tus servicios',
           'Atención prioritaria: tus cambios van primero, en menos de 24 horas',
           'Reporte mensual de visitas a tu página y mensajes por WhatsApp',
-          'Las actualizaciones ilimitadas son un pedido de cambios a la vez y no incluyen rediseñar toda la página.',
-          'Precio único para todos en dólares: el Élite no tiene precio especial de Hermosillo',
+          'Los cambios ilimitados son un pedido a la vez y no incluyen rediseñar toda la página.',
+          'Mismo precio para todos en dólares: el Élite no tiene precio especial de Hermosillo',
         ] },
       ];
       document.getElementById('planes').innerHTML = planes.map(p => {
@@ -633,7 +640,7 @@
     if (q.get('n') && GIROS[q.get('g')] && PALETAS[q.get('c')] && ENFOQUES[q.get('e')]) {
       // Muestra preparada para un negocio: se le saluda por su nombre
       document.getElementById('headTitle').innerHTML = `Hola, <span class="serif">${esc(q.get('n').slice(0, 40))}</span>`;
-      document.getElementById('headSub').textContent = 'Les preparamos esta muestra de cómo se vería la página de su negocio. Es gratis y sin compromiso: si les gusta, la dejamos lista en 24 horas.';
+      document.getElementById('headSub').textContent = 'Les preparamos esta muestra de cómo se vería la página de su negocio. Es gratis y sin compromiso: si les gusta, la dejamos lista desde 24 horas.';
       document.getElementById('nombre').value = q.get('n').slice(0, 40);
       document.getElementById(`g-${q.get('g')}`).checked = true;
       document.getElementById(`c-${q.get('c')}`).checked = true;

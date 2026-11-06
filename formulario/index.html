@@ -229,6 +229,7 @@
             <label class="check"><input type="checkbox" name="a2" required><span>Autorizo que esta información y mis datos de contacto se publiquen en internet como parte de mi página.</span></label>
             <label class="check"><input type="checkbox" name="a3" required><span>Las opiniones de clientes que envío son reales y cuento con su permiso.</span></label>
             <label class="check"><input type="checkbox" name="a4" required><span>Revisaré la página antes de publicarla y puedo pedir cambios o que se retire en cualquier momento.</span></label>
+            <label class="check"><input type="checkbox" name="a5" required><span>Entiendo que, al terminar los meses incluidos en mi plan, la página tiene una mensualidad (Básico $9, Esencial $14, PRO $19, Élite $29 USD) con hospedaje, soporte y mis cambios del mes. Si no la pago, la página se pausa hasta ponerme al corriente, y cualquier cambio fuera de mis meses incluidos se cubre con el mes completo.</span></label>
           </div>
           <p class="note" style="margin-top: 18px;">Al enviar, se abrirá WhatsApp con toda tu información lista. Solo presiona <b>enviar</b> en el chat y después manda ahí mismo tu logo y tus fotos.</p>
           <details style="margin-top: 16px;"><summary style="cursor:pointer; color: var(--muted); font-size:.9rem;">Ver resumen antes de enviar</summary><div class="summary" id="preview" style="margin-top:10px;"></div></details>
@@ -242,7 +243,7 @@
           <ol>
             <li>Presiona <b>enviar</b> en el chat de WhatsApp.</li>
             <li>En ese mismo chat, manda tu <b>logo</b> y tus <b>fotos</b>.</li>
-            <li>Te mando tu página para revisarla en <b>24 horas</b>.</li>
+            <li>Te mando tu página para revisarla: el Básico en <b>24 horas</b>; Esencial, PRO y Élite en <b>3 a 7 días hábiles</b>.</li>
           </ol>
           <p style="color: var(--muted); font-size: .9rem;">¿No se abrió WhatsApp? Usa uno de estos botones:</p>
           <div class="row">
@@ -344,7 +345,7 @@
         line('Formularios', forms),
         line('WhatsApp para formularios', v('waFormularios')));
       const fecha = new Date().toLocaleDateString('es-MX', { day: 'numeric', month: 'long', year: 'numeric' });
-      parts.push('', '— AUTORIZACIÓN —', `${v('cliente') || 'El cliente'} aceptó las 4 condiciones de uso y publicación el ${fecha}.`);
+      parts.push('', '— AUTORIZACIÓN —', `${v('cliente') || 'El cliente'} aceptó las 5 condiciones de uso, publicación y mensualidad el ${fecha}.`);
       return parts.filter(p => p !== null).join('\n');
     }
 

@@ -224,6 +224,7 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; }
 .plan-t summary i::after { content: " +"; }
 .plan-t[open] summary i::after { content: " −"; }
 .plan-t .puntos { padding: 0 16px 16px; font-size: 14px; }
+.plan-t summary .mes { display: block; margin-top: 4px; font-style: normal; font-weight: 700; font-size: 12.5px; color: var(--naranja-2); }
 .plan-t .puntos .base { color: var(--naranja-2); font-weight: 700; }
 .plan-t .puntos .base::before { content: ""; }
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border-radius: 999px; padding: 12px 18px; font: 700 15px var(--sans); text-decoration: none; border: 0; cursor: pointer; }
@@ -300,22 +301,20 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; }
   </section>
   <section>
     <h2>Planes</h2>
-    <p>Pago único, en dólares (USD). Los negocios de Hermosillo tienen precio especial local.</p>
+    <p>Un pago de inicio, meses de servicio incluidos (Básico 1, Esencial 3, PRO 6, Élite 8) y después una mensualidad: Básico $9, Esencial $14, PRO $19 y Élite $29 USD al mes. Precios en dólares; los negocios de Hermosillo tienen precio especial en el pago de inicio.</p>
     <ul>
       <li>Básico, $55 USD: página profesional de una sección con tu WhatsApp, Google Maps, horario y código QR.</li>
       <li>Esencial, $85 USD: diseño a tu medida, tu propio dominio .com válido por 1 año, galería de fotos, fotos profesionales con IA, tu perfil de Google Maps optimizado y un QR para que tus clientes te dejen reseñas en Google.</li>
       <li>PRO, $115 USD: todo lo de la Esencial, más formularios de citas, pedidos o cotizaciones, animaciones en 3D, promociones, opiniones de clientes, SEO local y el asistente de WhatsApp con IA instalado.</li>
-      <li>Élite, $199 USD: todo lo del PRO, más 8 meses de actualizaciones ilimitadas, rondas de ajustes ilimitadas, página de varias pantallas, asistente de WhatsApp con IA incluido 3 meses, dominio con la renovación del segundo año gratis y atención prioritaria. Mismo precio para todos, sin precio especial local.</li>
+      <li>Élite, $199 USD: todo lo del PRO, más 8 meses incluidos con cambios ilimitados, rondas de ajustes ilimitadas, página de varias pantallas, asistente de WhatsApp con IA incluido 3 meses, dominio con la renovación del segundo año gratis y atención prioritaria. Mismo precio para todos, sin precio especial local.</li>
     </ul>
     <p>Todos los planes incluyen garantía y soporte: si algo de tu página falla, lo arreglo gratis, y te ayudo por WhatsApp aunque ya haya pasado el periodo gratis.</p>
     <h3>Extras para crecer</h3>
     <ul>
       <li>Asistente de WhatsApp con IA: $35 USD al mes. Contesta a tus clientes 24/7.</li>
-      <li>Mantenimiento: $15 USD al mes.</li>
       <li>Dominio propio para el plan Básico: $25 USD al año.</li>
       <li>Renovación de dominio (a partir del segundo año): $25 USD al año.</li>
       <li>QR de reseñas de Google para tu mostrador: $6 USD (incluido en Esencial y PRO).</li>
-      <li>Cambio suelto: $10 USD.</li>
     </ul>
   </section>
   <section>
@@ -323,17 +322,17 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; }
     <ol>
       <li>Mira tu muestra gratis antes de pagar.</li>
       <li>Me mandas tus datos y fotos por WhatsApp o con el formulario.</li>
-      <li>Tu página queda lista desde 24 horas, para compartir en Google, Instagram, Facebook y WhatsApp.</li>
+      <li>Tu página queda lista para compartir en Google, Instagram, Facebook y WhatsApp: el Básico en 24 horas; Esencial, PRO y Élite de 3 a 7 días hábiles.</li>
     </ol>
   </section>
   <section>
     <h2>Preguntas frecuentes</h2>
     <h3>¿Cuánto tarda en estar lista mi página?</h3>
-    <p>Desde 24 horas, a partir de que me mandas la información y las fotos de tu negocio.</p>
+    <p>El Básico, en 24 horas. La Esencial, en 3 días hábiles; el PRO, en 5, y el Élite, en 7. Se cuenta a partir de que me mandas la información y las fotos de tu negocio.</p>
     <h3>¿Trabajas con negocios fuera de Hermosillo?</h3>
     <p>Sí. Todo es en línea: atiendo negocios de cualquier ciudad de México y del mundo.</p>
-    <h3>¿Es un pago único?</h3>
-    <p>Sí, los planes son pago único. Los extras son opcionales.</p>
+    <h3>¿Hay mensualidad?</h3>
+    <p>Sí. Cada plan incluye meses sin costo (Básico 1, Esencial 3, PRO 6 y Élite 8). Después, la mensualidad mantiene tu página en línea con hospedaje, soporte y tus cambios del mes: Básico $9, Esencial $14, PRO $19 y Élite $29 USD. Si no se paga, la página se pausa.</p>
     <h3>¿Puedo ver cómo quedaría antes de pagar?</h3>
     <p>Sí, con la muestra gratis ves cómo se vería la página de tu negocio.</p>
   </section>
@@ -485,10 +484,10 @@ const ESCENAS = {
     <div><b>Páginas web</b><strong style="font-size:34px">24 h</strong></div><div><b>Asistente IA</b><strong style="font-size:34px">24/7</strong></div><div><b>Google Maps</b><strong style="font-size:34px">★ 4.9</strong></div></div>
     <div class="p-barra" style="margin-top:6px"><span>Te contesto yo, no un call center</span></div></div>`,
   hablemos: () => `<div class="escena-p p-wa"><i><svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg></i><h4>Escríbeme</h4><div class="p-barra" style="justify-content:center;font-size:26px;color:#f4efe8">662 400 2958</div></div>`,
-  planes: () => `<div class="escena-p"><div class="p-barra"><span>Para todo el mundo</span><span>USD · pago único</span></div><h4>Tu página, y todo para <em>crecer</em></h4><div class="p-precios" style="grid-template-columns:repeat(4,1fr)"><div><b>Básico</b><strong>$55</strong></div><div><b>Esencial</b><strong>$85</strong></div><div><b>PRO</b><strong>$115</strong></div><div style="animation-delay:.3s;border-color:#ffb08a"><b>Élite</b><strong>$199</strong></div></div>
+  planes: () => `<div class="escena-p"><div class="p-barra"><span>Para todo el mundo</span><span>USD · inicio + mensualidad</span></div><h4>Tu página, y todo para <em>crecer</em></h4><div class="p-precios" style="grid-template-columns:repeat(4,1fr)"><div><b>Básico</b><strong>$55</strong></div><div><b>Esencial</b><strong>$85</strong></div><div><b>PRO</b><strong>$115</strong></div><div style="animation-delay:.3s;border-color:#ffb08a"><b>Élite</b><strong>$199</strong></div></div>
     <div class="p-precios" style="margin-top:4px"><div style="animation-delay:.36s"><b>Asistente IA</b><strong style="font-size:28px">24/7</strong></div><div style="animation-delay:.48s"><b>Dominio</b><strong style="font-size:28px">.com</strong></div><div style="animation-delay:.6s"><b>Citas</b><strong style="font-size:28px;display:flex"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg></strong></div></div></div>`,
   formulario: () => `<div class="escena-p"><div class="p-barra"><span>alewox.com/formulario</span><span>Tu plan: Esencial</span></div><h4>Llena tu formulario y <em>recibe tu página</em></h4>
-    <div class="p-chat"><div class="b" style="animation-delay:.2s">Negocio: Tacos Don Chuy</div><div class="b" style="animation-delay:.6s">Fotos y logo: 8 archivos</div><div class="c" style="animation-delay:1.1s">Tu página, lista en 24 horas</div></div></div>`,
+    <div class="p-chat"><div class="b" style="animation-delay:.2s">Negocio: Tacos Don Chuy</div><div class="b" style="animation-delay:.6s">Fotos y logo: 8 archivos</div><div class="c" style="animation-delay:1.1s">Tu página, lista en 3 días</div></div></div>`,
   portafolio: () => `<div style="position:absolute;inset:0;padding:26px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px">${TRABAJOS.map((t, i) => `<div style="border-radius:12px;overflow:hidden;position:relative;background:#2a221d;animation:aparece .5s ${i * 0.1}s both"><img src="media/trabajos/${t.img}" alt="" decoding="sync" style="width:100%;height:100%;object-fit:cover;object-position:top"><span style="position:absolute;left:0;right:0;bottom:0;padding:8px 10px;background:linear-gradient(transparent,rgba(0,0,0,.8));font-size:15px;font-weight:700">${t.nombre}</span></div>`).join('')}</div>`,
 };
 const TRABAJOS = [
@@ -686,7 +685,7 @@ function paginaMuestra() {
 
 // lo que incluye cada plan (lo mismo que en la muestra y el bot)
 const PLANES = [
-  { id: 'Básico', precio: 55, resumen: 'Página de una sección, WhatsApp, Maps y QR', items: [
+  { id: 'Básico', precio: 55, mes: 9, entrega: 'Lista en 24 horas', incluidos: '1 mes incluido', resumen: 'Página de una sección, WhatsApp, Maps y QR', items: [
     'Página profesional de una sección, adaptada a tu giro, lista en 24 horas',
     'Tus fotos, logo, colores y hasta 6 servicios con precios',
     'Botón directo a tu WhatsApp',
@@ -697,11 +696,13 @@ const PLANES = [
     'Dirección web gratuita',
     'Código QR para imprimir en tu negocio',
     '1 ronda de ajustes antes de publicar: textos, precios, fotos y colores',
-    'Garantía y soporte: si algo falla lo arreglo gratis, y te ayudo por WhatsApp aunque ya haya pasado el periodo gratis',
+    '1 mes incluido: hospedaje, soporte y 1 cambio en el mes',
+    'Después, $9 USD al mes: tu página en línea, soporte y 1 cambio al mes',
+    'Garantía: si algo de tu página falla, lo arreglo gratis mientras esté activa',
   ] },
-  { id: 'Esencial', precio: 85, reco: true, resumen: 'Diseño a tu medida, tu .com por 1 año, galería, Google Maps, fotos con IA y QR de reseñas', items: [
+  { id: 'Esencial', precio: 85, mes: 14, entrega: 'Lista en 3 días hábiles', incluidos: '3 meses incluidos', reco: true, resumen: 'Diseño a tu medida, tu .com por 1 año, galería, Google Maps, fotos con IA y QR de reseñas', items: [
     '+Todo lo del Básico, y además:',
-    'Diseño hecho a la medida de tu negocio',
+    'Diseño hecho a la medida de tu negocio, lista en 3 días hábiles',
     'Tu propio dominio .com o .mx, válido por 1 año',
     'Varias secciones: servicios o menú con precios, galería de hasta 12 fotos y contacto',
     'Botones de WhatsApp con el mensaje listo para cada servicio',
@@ -711,10 +712,12 @@ const PLANES = [
     'Animaciones: fondo en movimiento y tarjetas que reaccionan al tocarlas',
     'Fotos profesionales hechas con IA si no tienes buenas fotos',
     '2 rondas de ajustes antes de publicar: textos, fotos, colores y acomodo de secciones',
-    '1 mes de actualizaciones gratis: precios, promociones, horarios y fotos',
+    '3 meses incluidos: hospedaje, soporte y 3 cambios al mes (precios, promociones, horarios y fotos)',
+    'Después, $14 USD al mes: 3 cambios al mes y reporte mensual de visitas',
   ] },
-  { id: 'PRO', precio: 115, resumen: 'Citas o pedidos, 3D, promociones, opiniones, SEO local y asistente IA', items: [
+  { id: 'PRO', precio: 115, mes: 19, entrega: 'Lista en 5 días hábiles', incluidos: '6 meses incluidos', resumen: 'Citas o pedidos, 3D, promociones, opiniones, SEO local y asistente IA', items: [
     '+Todo lo de la Esencial, y además:',
+    'Lista en 5 días hábiles',
     'Formularios de citas, pedidos o cotizaciones que te llegan por WhatsApp',
     'Animaciones premium: portada en 3D y títulos que entran palabra por palabra',
     'Sección de promociones destacada, que cambiamos cuando quieras',
@@ -723,25 +726,28 @@ const PLANES = [
     'Visita para tomar fotos de tu negocio (en Hermosillo; fuera, fotos con IA)',
     'Instalación gratis del asistente de WhatsApp con IA',
     '3 rondas de ajustes antes de publicar, más secciones nuevas y animaciones',
-    '3 meses de actualizaciones gratis, incluidos servicios nuevos',
+    '6 meses incluidos: hospedaje, soporte y 5 cambios al mes, incluidos servicios nuevos',
+    'Después, $19 USD al mes: 5 cambios al mes, cambio de promoción y reporte mensual',
   ] },
-  { id: 'Élite', precio: 199, resumen: 'Todo lo del PRO, con 8 meses de actualizaciones ilimitadas, asistente IA 3 meses y atención prioritaria', items: [
+  { id: 'Élite', precio: 199, mes: 29, entrega: 'Lista en 7 días hábiles', incluidos: '8 meses incluidos', resumen: 'Todo lo del PRO, con 8 meses de actualizaciones ilimitadas, asistente IA 3 meses y atención prioritaria', items: [
     '+Todo lo del PRO, y además:',
+    'Lista en 7 días hábiles',
     'Rondas de ajustes ilimitadas antes de publicar, hasta que te encante',
-    '8 meses de actualizaciones ilimitadas: precios, fotos, promociones, horarios, servicios y secciones nuevas',
+    '8 meses incluidos con cambios ilimitados: precios, fotos, promociones, horarios, servicios y secciones nuevas',
+    'Después, $29 USD al mes, con cambios ilimitados y atención prioritaria',
     'Página de varias pantallas: inicio, menú o servicios, galería y contacto por separado',
     'Asistente de WhatsApp con IA incluido 3 meses (instalación y mensualidad)',
     'Tu dominio .com incluido el primer año y la renovación del segundo año gratis',
     'Fotos profesionales con IA para todo tu menú o tus servicios',
     'Atención prioritaria: tus cambios van primero, en menos de 24 horas',
     'Reporte mensual de visitas a tu página y mensajes por WhatsApp',
-    'Las actualizaciones ilimitadas son un pedido de cambios a la vez y no incluyen rediseñar toda la página.',
-    'Precio único para todos en dólares: el Élite no tiene precio especial de Hermosillo',
+    'Los cambios ilimitados son un pedido a la vez y no incluyen rediseñar toda la página.',
+    'Mismo precio para todos en dólares: el Élite no tiene precio especial de Hermosillo',
   ] },
 ];
 // cada plan es una tarjeta; al tocarla se abre con todo lo que incluye (y se cierran las demás)
 const planesHTML = () => `<div class="planes-lista">${PLANES.map((pl) => `<details class="plan-t${pl.reco ? ' reco' : ''}" name="plan">
-  <summary><b>${pl.id}${pl.reco ? '<small>Recomendado</small>' : ''}</b><strong>$${pl.precio}<small>USD</small></strong><span>${pl.resumen}</span><i>Ver qué incluye</i></summary>
+  <summary><b>${pl.id}${pl.reco ? '<small>Recomendado</small>' : ''}</b><strong>$${pl.precio}<small>USD</small></strong><span>${pl.resumen}<em class="mes">${pl.entrega} · ${pl.incluidos}, luego $${pl.mes} USD/mes</em></span><i>Ver qué incluye</i></summary>
   <ul class="puntos">${pl.items.map((t) => t.startsWith('+') ? `<li class="base">${esc(t.slice(1))}</li>` : `<li>${esc(t)}</li>`).join('')}</ul>
 </details>`).join('')}</div>`;
 
@@ -753,34 +759,32 @@ const DETALLE = {
     <label>Colores</label><div class="opciones colores" role="radiogroup" aria-label="Colores">${Object.entries(PALETAS).map(([k, c]) => `<button type="button" role="radio" aria-checked="${k === MUESTRA.c}" data-c="${k}" title="${c.label}"><i style="background:${c.p}"></i><i style="background:${c.a}"></i><i style="background:${c.bg}"></i></button>`).join('')}</div>
     <label>Estilo de letra</label><div class="opciones estilos" role="radiogroup" aria-label="Estilo de letra">${Object.entries(ENFOQUES).map(([k, e]) => `<button type="button" role="radio" aria-checked="${k === MUESTRA.e}" data-e="${k}"><span style="font-family:${e.fuente};${e.extra}">Aa</span>${e.label}</button>`).join('')}</div></div>
     <a class="btn btn-naranja" id="mIr" href="muestra/index.html" target="_blank" rel="noopener">Ver mi muestra completa →</a>`,
-  planes: () => `<h3>Planes y extras</h3><p class="lema">Tu página lista desde 24 horas, en dólares (USD) y con pago único. Para negocios de cualquier parte del mundo.</p>
+  planes: () => `<h3>Planes y extras</h3><p class="lema">El Básico queda listo en 24 horas; Esencial, PRO y Élite, de 3 a 7 días hábiles. Pagas el inicio, tienes meses incluidos y después una mensualidad. Precios en dólares (USD), para negocios de cualquier parte del mundo.</p>
     <p style="font-size:13.5px;color:var(--naranja-2);margin:0">Toca un plan para ver todo lo que incluye.</p>
     ${planesHTML()}
-    <p style="font-size:14px;margin-top:2px"><b>Todos incluyen garantía y soporte:</b> si algo falla lo arreglo gratis, y te ayudo por WhatsApp aunque ya haya pasado el periodo gratis.</p>
+    <p style="font-size:14px;margin-top:2px"><b>Mensualidad:</b> Básico $9 · Esencial $14 · PRO $19 · Élite $29 USD al mes, y empieza cuando terminan tus meses incluidos. La mensualidad mantiene tu página en línea e incluye hospedaje, soporte y tus cambios del mes. Si no se paga, la página se pausa hasta ponerse al corriente. Fuera de tus meses incluidos, cualquier cambio, aunque sea mínimo, se cubre con el mes completo.</p>
     <p class="lema" style="margin-top:4px">Extras para crecer</p>
     <div class="precios"><div class="precio"><div><b>Asistente de WhatsApp con IA</b><br><span>Contesta 24/7 · instalación $15 USD (gratis en PRO)</span></div><strong style="font-size:17px">$35 USD/mes</strong></div>
-    <div class="precio"><div><b>Mantenimiento</b><br><span>Cambio precios, fotos y promos cuando quieras</span></div><strong style="font-size:17px">$15 USD/mes</strong></div>
     <div class="precio"><div><b>Dominio propio</b><br><span>tunegocio.com o .mx para el Básico (en Esencial y PRO va incluido 1 año)</span></div><strong style="font-size:17px">$25 USD/año</strong></div>
     <div class="precio"><div><b>Renovación de dominio</b><br><span>A partir del segundo año, para seguir con tu .com</span></div><strong style="font-size:17px">$25 USD/año</strong></div>
     <div class="precio"><div><b>QR de reseñas de Google</b><br><span>Para tu mostrador, para que tus clientes te dejen su opinión (incluido en Esencial y PRO)</span></div><strong style="font-size:17px">$6 USD</strong></div>
-    <div class="precio"><div><b>Cambio suelto</b><br><span>Un cambio cuando lo necesites</span></div><strong style="font-size:17px">$10 USD</strong></div>
     <div class="precio"><div><b>Citas, pedidos, promociones y SEO local</b><br><span>Directo a tu WhatsApp y para salir en Google</span></div><strong style="font-size:17px">En PRO</strong></div></div>
     <p style="opacity:.75;font-size:14px;margin-top:6px">Todos los precios en dólares (USD).</p>
-    <p style="opacity:.75;font-size:14px">¿Eres de Hermosillo? Escríbeme, hay precio especial local.</p>
+    <p style="opacity:.75;font-size:14px">¿Eres de Hermosillo? Escríbeme: hay precio especial en el pago de inicio.</p>
     <a class="btn btn-wa" href="${wa('Hola, quiero saber qué plan y extras me convienen')}" target="_blank" rel="noopener">¿Cuál me conviene?</a>`,
   nosotros: () => `<h3>Todo sobre nosotros</h3><p class="lema">Alewox hace que tu negocio venda más en internet.</p>
     <p>Soy Alejandro y trabajo desde Hermosillo, 100% en línea, para negocios de aquí y de cualquier parte. Te contesto yo, no un call center.</p>
     <p class="lema" style="margin-top:4px">Lo que hacemos</p>
-    <ul class="puntos"><li><b>Páginas web</b>: hechas a la medida, perfectas en el celular y conectadas a tu WhatsApp. Listas desde 24 horas, pago único</li><li><b>Asistente con IA</b>: contesta tu WhatsApp 24/7, conoce tu menú, precios y horarios, y te avisa de los clientes listos para comprar</li><li><b>Que te encuentren</b>: tu perfil de Google Maps, QR para tu mostrador y fotos profesionales con IA</li></ul>
+    <ul class="puntos"><li><b>Páginas web</b>: hechas a la medida, perfectas en el celular y conectadas a tu WhatsApp. Listas desde 24 horas, con meses de servicio incluidos</li><li><b>Asistente con IA</b>: contesta tu WhatsApp 24/7, conoce tu menú, precios y horarios, y te avisa de los clientes listos para comprar</li><li><b>Que te encuentren</b>: tu perfil de Google Maps, QR para tu mostrador y fotos profesionales con IA</li></ul>
     <p class="lema" style="margin-top:4px">Cómo trabajamos</p>
-    <ul class="puntos"><li>Mira tu muestra gratis antes de pagar</li><li>Me mandas tus datos y fotos por WhatsApp</li><li>Tu página queda lista desde 24 horas</li></ul>
+    <ul class="puntos"><li>Mira tu muestra gratis antes de pagar</li><li>Me mandas tus datos y fotos por WhatsApp</li><li>Tu página queda lista: el Básico en 24 horas; Esencial, PRO y Élite de 3 a 7 días hábiles</li></ul>
     <a class="btn btn-wa" href="${wa('Hola Alejandro, quiero saber más de Alewox')}" target="_blank" rel="noopener">Platiquemos</a>`,
   portafolio: () => `<h3>Portafolio</h3><p class="lema">Páginas que ya hicimos.</p>
     <div class="precios">${TRABAJOS.map((t) => `<a class="precio" style="text-decoration:none" href="${t.url}" target="_blank" rel="noopener"><div><b>${t.nombre}</b><br><span>${t.giro}</span></div><span style="color:var(--naranja-2);font-weight:700">${t.real ? 'Cliente real' : 'Ver →'}</span></a>`).join('')}</div>`,
   formulario: () => `<h3>¿Ya tienes un plan?</h3><p class="lema">Llena tu formulario y recibe tu página.</p>
     <p>Con tu formulario me mandas todo lo que necesito para hacer tu página. Te toma unos minutos.</p>
     <ul class="puntos"><li>Los datos de tu negocio: nombre, dirección, horario y WhatsApp</li><li>Tus servicios o productos con precios</li><li>Tus fotos y tu logo</li><li>Lo que quieres lograr con tu página</li></ul>
-    <p>Desde 24 horas después te mando tu página para que la revises.</p>
+    <p>Te mando tu página para que la revises: el Básico en 24 horas; Esencial, PRO y Élite de 3 a 7 días hábiles.</p>
     <a class="btn btn-naranja" href="formulario/index.html">Llenar mi formulario →</a>`,
   hablemos: () => `<h3>Hablemos</h3><p class="lema">Te contesto yo, no un call center.</p>
     <p>Trabajo 100% en línea desde Hermosillo, para negocios de aquí y de cualquier parte.</p>
