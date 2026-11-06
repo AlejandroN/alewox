@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pagar tu plan | Alewox</title>
+<meta name="description" content="Paga el inicio de tu página web y activa tu mensualidad con PayPal. Tarjeta de crédito, débito o cuenta PayPal.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0c0b0a">
+<link rel="icon" href="../img/logo-app.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../media/fuentes/fuentes.css">
+<style>
+/* Página de pago de Alewox: 1) el pago de inicio (paypal.me) y 2) la mensualidad (suscripción de PayPal con sus meses gratis) */
+:root { --tinta: #0c0b0a; --crema: #f4efe8; --gris: #b8afa5; --linea: rgba(244, 239, 232, .14); --naranja: #ff7a3d; --naranja-2: #ffb08a; --verde-wa: #25d366; }
+* { box-sizing: border-box; margin: 0; }
+body { min-height: 100vh; background: radial-gradient(60% 45% at 85% 0%, rgba(255, 122, 61, .18), transparent 70%), var(--tinta); color: var(--crema); font: 16px/1.5 'Inter Tight', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+a { color: inherit; }
+.serif { font-family: 'Instrument Serif', Georgia, serif; font-style: italic; font-weight: 400; }
+.envoltura { width: min(620px, 100% - 32px); margin: 0 auto; padding: 28px 0 70px; }
+.arriba { display: flex; justify-content: space-between; align-items: center; }
+.logo { display: inline-flex; align-items: center; gap: 9px; font-weight: 800; font-size: 20px; letter-spacing: -.03em; text-decoration: none; }
+.logo b { color: var(--naranja); }
+.volver { font-size: 14px; color: var(--gris); }
+h1 { margin: 40px 0 10px; font-size: clamp(32px, 7vw, 46px); line-height: 1.04; letter-spacing: -.04em; }
+h1 .serif { color: var(--naranja-2); }
+.lema { color: var(--gris); }
+.planes { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 28px 0 22px; }
+.planes button { border: 1px solid var(--linea); background: rgba(244, 239, 232, .04); color: var(--crema); border-radius: 14px; padding: 12px 6px; font: 700 15px 'Inter Tight', sans-serif; cursor: pointer; }
+.planes button small { display: block; font-weight: 500; font-size: 12.5px; color: var(--gris); margin-top: 2px; }
+.planes button[aria-pressed="true"] { border-color: var(--naranja); background: rgba(255, 122, 61, .12); box-shadow: 0 0 0 1px var(--naranja); }
+.paso { border: 1px solid var(--linea); border-radius: 20px; padding: 22px; margin-top: 14px; background: rgba(20, 17, 15, .7); }
+.paso h2 { font-size: 20px; letter-spacing: -.02em; display: flex; gap: 10px; align-items: baseline; }
+.paso h2 span { color: var(--naranja); font-size: 15px; }
+.paso p { color: #e6ded4; margin-top: 6px; font-size: 15px; }
+.paso .nota { color: var(--gris); font-size: 13.5px; }
+.btn { display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 16px; border-radius: 999px; padding: 13px 18px; font-weight: 800; text-decoration: none; font-size: 16px; }
+.btn-pp { background: #ffc439; color: #111; }
+.btn-wa { background: var(--verde-wa); color: #06210f; }
+#botonSuscripcion { margin-top: 16px; min-height: 48px; }
+.listo { display: none; border-color: rgba(37, 211, 102, .5); background: rgba(37, 211, 102, .08); }
+.listo.ver { display: block; }
+.pie { margin-top: 26px; font-size: 13.5px; color: var(--gris); }
+@media (max-width: 480px) { .planes { grid-template-columns: repeat(2, 1fr); } }
+</style>
+</head>
+<body>
+<div class="envoltura">
+  <div class="arriba">
+    <a class="logo" href="../index.html"><svg width="24" height="24" viewBox="0 0 100 100" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="1" x2=".6" y2="0"><stop offset="0" stop-color="#ff6a33"/><stop offset="1" stop-color="#ffb06a"/></linearGradient></defs><polygon points="6,98 30,98 64,6 40,6" fill="url(#lg)"/><polygon points="52,38 64,6 98,98 74,98" fill="#f4efe8"/></svg><span>alewox<b>.</b></span></a>
+    <a class="volver" href="../index.html">← Volver</a>
+  </div>
+
+  <h1>Paga tu plan y <span class="serif">empieza a crecer</span></h1>
+  <p class="lema">Con tarjeta de crédito, débito o tu cuenta PayPal. Precios en dólares (USD).</p>
+
+  <div class="planes" id="planes" role="group" aria-label="Elige tu plan"></div>
+
+  <section class="paso">
+    <h2><span>1</span>Pago de inicio</h2>
+    <p id="txtInicio"></p>
+    <a class="btn btn-pp" id="btnInicio" target="_blank" rel="noopener"></a>
+    <p class="nota" style="margin-top:10px">¿Eres de Hermosillo? El inicio tiene precio especial en pesos por transferencia: escríbeme y te paso los datos.</p>
+  </section>
+
+  <section class="paso">
+    <h2><span>2</span>Activa tu mensualidad</h2>
+    <p id="txtMes"></p>
+    <div id="botonSuscripcion"></div>
+    <p class="nota" id="notaMes" style="margin-top:10px">No se cobra nada hoy: PayPal empieza a cobrar hasta que terminan tus meses incluidos. Sin tiempo mínimo; puedes cancelar cuando quieras desde tu cuenta PayPal.</p>
+  </section>
+
+  <section class="paso listo" id="listo">
+    <h2>Listo, tu mensualidad quedó activada</h2>
+    <p>Mándame tu número de suscripción por WhatsApp para registrarla y empezar tu página.</p>
+    <a class="btn btn-wa" id="btnListo" target="_blank" rel="noopener">Avisarle a Alejandro</a>
+  </section>
+
+  <p class="pie">¿Dudas antes de pagar? <a id="btnDudas" target="_blank" rel="noopener">Escríbeme por WhatsApp</a> y te contesto yo.</p>
+</div>
+
+<script>
+const WHATS = '526624002958';
+const wa = (texto) => `https://wa.me/${WHATS}?text=${encodeURIComponent(texto)}`;
+// cada plan: pago de inicio, meses incluidos, mensualidad y el plan de suscripción de PayPal (vacío = todavía no se crea)
+const PLANES = {
+  basico: { nombre: 'Básico', inicio: 55, meses: 1, mes: 9, planPayPal: 'P-243947550W529982SNLWXH2I' },
+  esencial: { nombre: 'Esencial', inicio: 85, meses: 3, mes: 14, planPayPal: '' },
+  pro: { nombre: 'PRO', inicio: 115, meses: 6, mes: 19, planPayPal: '' },
+  elite: { nombre: 'Élite', inicio: 199, meses: 8, mes: 29, planPayPal: '' },
+};
+const CLIENTE_PAYPAL = 'BAAjb__v6sm3pyosRLw73p58iHCwgC84zc-tiDYdEjMWcJPWf2Xha3sxAbcM_i1c-AZna4Yuq3Cm3o-1JM';
+
+const parametro = (new URLSearchParams(location.search).get('plan') || 'esencial').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+let actual = PLANES[parametro] ? parametro : 'esencial';
+document.getElementById('btnDudas').href = wa('Hola Alejandro, tengo una duda antes de pagar mi plan');
+
+const contenedor = document.getElementById('planes');
+contenedor.innerHTML = Object.entries(PLANES).map(([k, p]) => `<button type="button" data-plan="${k}">${p.nombre}<small>$${p.inicio} USD</small></button>`).join('');
+contenedor.addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) elegir(b.dataset.plan); });
+
+// el SDK de PayPal se carga una sola vez; cada plan solo vuelve a dibujar su botón
+let sdk = null;
+const cargarSDK = () => sdk || (sdk = new Promise((ok, mal) => {
+  const s = document.createElement('script');
+  s.src = `https://www.paypal.com/sdk/js?client-id=${CLIENTE_PAYPAL}&vault=true&intent=subscription&locale=es_MX`;
+  s.setAttribute('data-sdk-integration-source', 'button-factory');
+  s.onload = ok; s.onerror = mal;
+  document.head.appendChild(s);
+}));
+
+function elegir(k) {
+  actual = k;
+  const p = PLANES[k];
+  history.replaceState(null, '', `?plan=${k}`);
+  contenedor.querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', b.dataset.plan === k));
+  document.getElementById('txtInicio').textContent = `El diseño y la entrega de tu página ${p.nombre}: $${p.inicio} USD, una sola vez.`;
+  const inicio = document.getElementById('btnInicio');
+  inicio.href = `https://paypal.me/alewox/${p.inicio}USD`;
+  inicio.textContent = `Pagar $${p.inicio} USD con PayPal`;
+  document.getElementById('txtMes').textContent = `${p.meses === 1 ? 'Tu primer mes va incluido' : `Tus primeros ${p.meses} meses van incluidos`}; después, $${p.mes} USD al mes con hospedaje, soporte y tus cambios del mes.`;
+  const caja = document.getElementById('botonSuscripcion');
+  caja.innerHTML = '';
+  if (!p.planPayPal) {
+    caja.innerHTML = `<a class="btn btn-wa" href="${wa(`Hola Alejandro, quiero activar la mensualidad del plan ${p.nombre}`)}" target="_blank" rel="noopener">Activar mensualidad por WhatsApp</a>`;
+    return;
+  }
+  cargarSDK().then(() => {
+    if (actual !== k) return;
+    paypal.Buttons({
+      style: { shape: 'pill', color: 'gold', layout: 'vertical', label: 'subscribe' },
+      createSubscription: (data, actions) => actions.subscription.create({ plan_id: p.planPayPal }),
+      onApprove: (data) => {
+        document.getElementById('listo').classList.add('ver');
+        document.getElementById('btnListo').href = wa(`Hola Alejandro, ya activé mi mensualidad del plan ${p.nombre}. Mi número de suscripción es ${data.subscriptionID}`);
+        document.getElementById('listo').scrollIntoView({ behavior: 'smooth' });
+      },
+    }).render('#botonSuscripcion');
+  }).catch(() => {
+    caja.innerHTML = `<a class="btn btn-wa" href="${wa(`Hola Alejandro, quiero activar la mensualidad del plan ${p.nombre}`)}" target="_blank" rel="noopener">Activar mensualidad por WhatsApp</a>`;
+  });
+}
+elegir(actual);
+</script>
+</body>
+</html>

@@ -563,7 +563,7 @@
           <p class="lead">${p.lead}</p>
           <ul>${p.items.map(t => `<li${p.mas ? ' class="mas"' : ''}>${esc(t)}</li>`).join('')}</ul>
           <a class="btn ${p.rec ? '' : 'btn-dark'}" href="https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener">Quiero el ${p.id}</a>
-          <a class="pp" href="https://paypal.me/alewox/${p.precio}USD" target="_blank" rel="noopener">o paga $${p.precio} USD con PayPal</a>
+          <a class="pp" href="../pagar/index.html?plan=${encodeURIComponent(p.id.toLowerCase())}" target="_blank" rel="noopener">o paga $${p.precio} USD con PayPal</a>
         </div>`;
       }).join('');
     }
