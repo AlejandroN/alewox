@@ -228,7 +228,12 @@ video::-webkit-media-controls, video::-webkit-media-controls-start-playback-butt
 .plan-t summary i::after { content: " +"; }
 .plan-t[open] summary i::after { content: " −"; }
 .plan-t .puntos { padding: 0 16px 16px; font-size: 14px; }
-.plan-t summary .mes { display: block; margin-top: 4px; font-style: normal; font-weight: 700; font-size: 12.5px; color: var(--naranja-2); }
+/* pagar el inicio del plan: PayPal (tarjeta o cuenta PayPal) o platicarlo por WhatsApp */
+.plan-t .pagar { display: grid; gap: 8px; padding: 0 16px 16px; }
+.btn-pp { background: #ffc439; color: #111; }
+.btn-pp:hover { background: #f2b52b; }
+.btn-txt { text-align: center; font-size: 13px; color: var(--naranja-2); text-decoration: underline; text-underline-offset: 3px; }
+.plan-t summary .mes { display: block; margin-top: 4px; font-family: var(--sans); font-style: normal; font-weight: 700; font-size: 12.5px; color: var(--naranja-2); }
 .plan-t .puntos .base { color: var(--naranja-2); font-weight: 700; }
 .plan-t .puntos .base::before { content: ""; }
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border-radius: 999px; padding: 12px 18px; font: 700 15px var(--sans); text-decoration: none; border: 0; cursor: pointer; }
@@ -757,6 +762,7 @@ const PLANES = [
 const planesHTML = () => `<div class="planes-lista">${PLANES.map((pl) => `<details class="plan-t${pl.reco ? ' reco' : ''}" name="plan">
   <summary><b>${pl.id}${pl.reco ? '<small>Recomendado</small>' : ''}</b><strong>$${pl.precio}<small>USD</small></strong><span>${pl.resumen}<em class="mes">${pl.entrega} · ${pl.incluidos}, luego $${pl.mes} USD/mes</em></span><i>Ver qué incluye</i></summary>
   <ul class="puntos">${pl.items.map((t) => t.startsWith('+') ? `<li class="base">${esc(t.slice(1))}</li>` : `<li>${esc(t)}</li>`).join('')}</ul>
+  <div class="pagar"><a class="btn btn-pp" href="https://paypal.me/alewox/${pl.precio}USD" target="_blank" rel="noopener">Pagar con PayPal · $${pl.precio} USD</a><a class="btn-txt" href="${wa(`Hola Alejandro, quiero el plan ${pl.id}`)}" target="_blank" rel="noopener">o platícalo conmigo por WhatsApp</a></div>
 </details>`).join('')}</div>`;
 
 // ---------- el detalle de cada servicio ----------
@@ -778,7 +784,7 @@ const DETALLE = {
     <div class="precio"><div><b>QR de reseñas de Google</b><br><span>Para tu mostrador, para que tus clientes te dejen su opinión (incluido en Esencial y PRO)</span></div><strong style="font-size:17px">$6 USD</strong></div>
     <div class="precio"><div><b>Citas, pedidos, promociones y SEO local</b><br><span>Directo a tu WhatsApp y para salir en Google</span></div><strong style="font-size:17px">En PRO</strong></div></div>
     <p style="opacity:.75;font-size:14px;margin-top:6px">Todos los precios en dólares (USD).</p>
-    <p style="opacity:.75;font-size:14px">¿Eres de Hermosillo? Escríbeme: hay precio especial en el pago de inicio.</p>
+    <p style="opacity:.75;font-size:14px">Paga con tarjeta o con tu cuenta PayPal en paypal.me/alewox. ¿Eres de Hermosillo? Escríbeme: hay precio especial en el pago de inicio, por transferencia.</p>
     <a class="btn btn-wa" href="${wa('Hola, quiero saber qué plan y extras me convienen')}" target="_blank" rel="noopener">¿Cuál me conviene?</a>`,
   nosotros: () => `<h3>Todo sobre nosotros</h3><p class="lema">Alewox hace que tu negocio venda más en internet.</p>
     <p>Soy Alejandro y trabajo desde Hermosillo, 100% en línea, para negocios de aquí y de cualquier parte. Te contesto yo, no un call center.</p>

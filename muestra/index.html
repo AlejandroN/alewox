@@ -144,6 +144,7 @@
     .plan .btn { justify-content: center; width: 100%; }
     .plan.rec .btn { background: #25d366; color: #fff; }
     .planes-note { color: var(--muted); font-size: .88rem; margin-top: 22px; }
+    .plan .pp { display: block; text-align: center; margin-top: 10px; font-size: .85rem; font-weight: 600; color: inherit; opacity: .75; text-decoration: underline; text-underline-offset: 3px; }
     .planes-note a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
     .result-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 18px; }
 
@@ -562,6 +563,7 @@
           <p class="lead">${p.lead}</p>
           <ul>${p.items.map(t => `<li${p.mas ? ' class="mas"' : ''}>${esc(t)}</li>`).join('')}</ul>
           <a class="btn ${p.rec ? '' : 'btn-dark'}" href="https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener">Quiero el ${p.id}</a>
+          <a class="pp" href="https://paypal.me/alewox/${p.precio}USD" target="_blank" rel="noopener">o paga $${p.precio} USD con PayPal</a>
         </div>`;
       }).join('');
     }
