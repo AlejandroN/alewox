@@ -43,14 +43,18 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; }
 
 /* ---------- la escena ---------- */
 .escena { position: fixed; inset: 0; overflow: hidden; background: radial-gradient(120% 90% at 50% 60%, #2a1a10, #0c0b0a 70%); }
+/* si la cámara deja ver más abajo del video, el cuarto sigue: la misma foto, desenfocada y pegada abajo (la mesa) */
+.escena::before { content: ""; position: absolute; inset: -40px; background: var(--fondo, none) center bottom / cover no-repeat; filter: blur(26px) brightness(.62) saturate(1.1); }
 /* sin will-change: así el navegador vuelve a dibujar nítido al acercar (si no, estira la imagen ya dibujada) */
 .cuadro { position: absolute; transform-origin: 0 0; transition: transform 1.2s cubic-bezier(.2, .75, .1, 1); }
+/* el iPhone pone un botón de play encima si no deja arrancar el video (ahorro de batería): se oculta, y abajo queda la foto del cuarto */
+video::-webkit-media-controls, video::-webkit-media-controls-start-playback-button, video::-webkit-media-controls-overlay-play-button { display: none !important; -webkit-appearance: none; opacity: 0; }
 .cuadro > video, .cuadro > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
 .relampago { position: absolute; inset: 0; background: #cfe0ff; mix-blend-mode: screen; opacity: 0; pointer-events: none; display: none; }
 /* todo se desenfoca menos la laptop: la máscara tiene un hueco con la forma de la laptop */
 .borroso { position: absolute; inset: 0; backdrop-filter: blur(5px) brightness(.72); -webkit-backdrop-filter: blur(5px) brightness(.72); opacity: 0; transition: opacity .9s; pointer-events: none; -webkit-mask-size: 100% 100%; mask-size: 100% 100%; }
 .abierto .borroso { opacity: 1; }
-.pie { position: fixed; z-index: 2; left: 0; right: 0; bottom: 0; height: 240px; background: linear-gradient(transparent, rgba(12, 11, 10, .85) 55%, #0c0b0a); opacity: 0; transition: opacity .9s; pointer-events: none; }
+.pie { position: fixed; z-index: 2; left: 0; right: 0; bottom: 0; height: 240px; background: linear-gradient(transparent, rgba(12, 11, 10, .55) 60%, rgba(12, 11, 10, .7)); opacity: 0; transition: opacity .9s; pointer-events: none; }
 .abierto .pie { opacity: 1; }
 .cuadro > svg { position: absolute; inset: 0; width: 100%; height: 100%; }
 .pantalla-toque { fill: transparent; cursor: pointer; }
@@ -239,6 +243,8 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; }
 .campo input, .campo select { background: rgba(244, 239, 232, .07); border: 1px solid var(--linea); border-radius: 12px; color: var(--crema); font: 600 16px var(--sans); padding: 11px 13px; }
 
 @media (max-width: 720px) {
+  /* la orilla de abajo del video se funde con el cuarto desenfocado, sin línea */
+  .cuadro { -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 90px), transparent); mask-image: linear-gradient(to bottom, #000 calc(100% - 90px), transparent); }
   .bloque { width: 44vw; padding: 11px 12px; border-radius: 14px; }
   .bloque .dato { font-size: 22px; margin-bottom: 4px; }
   .bloque span { display: none; }
@@ -265,7 +271,7 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; }
 <div class="escena" id="escena">
   <div class="cuadro" id="cuadro">
     <img id="foto" alt="" aria-hidden="true">
-    <video id="video" muted loop playsinline autoplay preload="auto" aria-label="Escritorio de noche con lluvia en la ventana y una laptop con el logo de Alewox"></video>
+    <video id="video" muted loop playsinline autoplay preload="auto" disablepictureinpicture disableremoteplayback aria-label="Escritorio de noche con lluvia en la ventana y una laptop con el logo de Alewox"></video>
     <div class="relampago" id="relampago"></div>
     <div class="borroso" id="borroso"></div>
     <div class="tapa-pantalla" id="tapa" aria-hidden="true"></div>
@@ -416,6 +422,7 @@ function usarToma(nombre) {
   const hueco = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 ${T.w} ${T.h}' preserveAspectRatio='none'><filter id='f'><feGaussianBlur stdDeviation='7'/></filter><path filter='url(#f)' fill-rule='evenodd' fill='white' d='M-40 -40H${T.w + 40}V${T.h + 40}H-40Z M${T.laptop.map((p) => p.join(' ')).join(' L')} Z'/></svg>`;
   borroso.style.webkitMaskImage = borroso.style.maskImage = `url("data:image/svg+xml,${encodeURIComponent(hueco)}")`;
   document.getElementById('foto').src = T.foto;
+  document.getElementById('escena').style.setProperty('--fondo', `url("${T.foto}")`);
   video.poster = T.foto;
   // para que el cel deje arrancar el video solo: tiene que ir sin sonido y dentro de la página
   video.muted = video.defaultMuted = true;
@@ -579,6 +586,7 @@ function enfocar() {
   const cx = W / 2, cy = H * (cel ? 0.5 : 0.48);
   tx = Math.min(-izq, Math.max(W - w - izq, cx - izq - centroLaptop[0] * escala * zoom));
   // en celular la laptop puede subir un poco más; la orilla de abajo la tapa un degradado oscuro (.pie)
+  // en cel la laptop puede subir un poco; abajo el cuarto sigue con una copia desenfocada de la mesa (.escena::before)
   ty = Math.min(-arr, Math.max(H - h - arr - (cel ? 170 : 0), cy - arr - centroLaptop[1] * escala * zoom));
   cuadro.style.transform = `translate(${tx}px, ${ty}px) scale(${zoom})`;
   // dónde queda la laptop en pantalla, para acomodar los servicios a su alrededor
