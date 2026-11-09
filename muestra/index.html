@@ -149,6 +149,7 @@
     .plan .name { font-weight: 700; text-transform: uppercase; letter-spacing: .1em; font-size: .85rem; color: var(--muted); }
     .plan .price { font-size: 2.6rem; font-weight: 700; letter-spacing: -.05em; line-height: 1; margin: 10px 0 6px; }
     .plan .price small { font-size: .9rem; font-weight: 500; color: var(--muted); letter-spacing: 0; }
+    .plan .frase { font-size: 1.12rem; font-weight: 700; letter-spacing: -.02em; line-height: 1.25; margin-bottom: 10px; }
     .plan .lead { font-weight: 600; margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
     .plan ul { list-style: none; display: grid; gap: 9px; margin-bottom: 22px; flex: 1; align-content: start; font-size: .93rem; }
     .plan li { display: flex; gap: 10px; }
@@ -512,7 +513,7 @@
       const dominio = `${slug(nombre)}.com`;
       const form = FORMULARIO[giro];
       const planes = [
-        { id: 'Básico', precio: 55, lead: 'Todo para arrancar en internet, con tu información real', items: [
+        { id: 'Básico', precio: 55, frase: 'Lo que necesitas para salir a flote en internet', lead: 'Con tu información real, incluye:', items: [
           'Página personalizada de una sección, lista en 24 horas: portada animada con tu negocio en movimiento, hasta 6 servicios con precios, botón directo a tu WhatsApp, ubicación en Google Maps con botón "Cómo llegar", preguntas frecuentes y dirección web gratuita',
           '1 ronda de ajustes antes de publicar',
           'Logo sencillo si no tienes: 4 opciones',
@@ -528,7 +529,7 @@
           'Después, $9 USD al mes, con 1 cambio al mes',
           'Garantía: si algo de tu página falla, lo arreglo gratis mientras esté activa',
         ] },
-        { id: 'Esencial', precio: 85, rec: true, lead: 'Todo lo del Básico, más:', mas: true, items: [
+        { id: 'Esencial', precio: 85, frase: 'Lo que necesitas para verte profesional en internet', rec: true, lead: 'Todo lo del Básico, más:', mas: true, items: [
           'Página a la medida con varias secciones: servicios o menú, galería de hasta 12 fotos, quiénes somos, contacto, botones de WhatsApp con mensaje listo para cada servicio, animaciones y aviso de privacidad',
           '2 rondas de ajustes y entrega en 3 días hábiles',
           `Tu propio dominio por 1 año (${dominio}) y correo con tu dominio`,
@@ -541,7 +542,7 @@
           '3 meses incluidos con 3 cambios al mes',
           'Después, $14 USD al mes, con 3 cambios y reporte de visitas',
         ] },
-        { id: 'PRO', precio: 115, lead: 'Todo lo de la Esencial, más:', mas: true, items: [
+        { id: 'PRO', precio: 115, frase: 'Lo que necesitas para vender más en internet', lead: 'Todo lo de la Esencial, más:', mas: true, items: [
           `Página hecha para vender: formulario de ${form}, catálogo para pedir por WhatsApp, promociones con cuenta regresiva, opiniones de clientes, portada en 3D y títulos animados`,
           '3 rondas de ajustes y entrega en 5 días hábiles',
           'SEO local y medición de visitas y clics',
@@ -555,7 +556,7 @@
           '6 meses incluidos con 5 cambios al mes',
           'Después, $19 USD al mes, con 5 cambios',
         ] },
-        { id: 'Élite', precio: 199, lead: 'Todo lo del PRO, más:', mas: true, items: [
+        { id: 'Élite', precio: 199, frase: 'Todo lo que necesitas', lead: 'Todo lo del PRO, más:', mas: true, items: [
           'Página única desde cero: varias pantallas, experiencia interactiva o escena 3D, y versión en español e inglés',
           'Rondas de ajustes ilimitadas y entrega en 7 días hábiles',
           'Tu dominio .com por 2 años',
@@ -584,6 +585,7 @@
           ${p.rec ? '<span class="badge">Recomendado</span>' : ''}
           <span class="name">${p.id}</span>
           <div class="price">$${p.precio} <small>USD</small></div>
+          <p class="frase">${p.frase}</p>
           <p class="lead">${p.lead}</p>
           <ul>${p.items.map(t => `<li${p.mas ? ' class="mas"' : ''}>${esc(t)}</li>`).join('')}</ul>
           <a class="btn ${p.rec ? '' : 'btn-dark'}" href="https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener">Quiero el ${p.id}</a>

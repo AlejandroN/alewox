@@ -39,6 +39,7 @@ h1 .serif { color: var(--naranja-2); }
 #botonSuscripcion { margin-top: 16px; min-height: 48px; }
 .listo { display: none; border-color: rgba(37, 211, 102, .5); background: rgba(37, 211, 102, .08); }
 .listo.ver { display: block; }
+.frase { font-size: 19px; font-weight: 700; letter-spacing: -.02em; color: var(--naranja-2); margin-bottom: 4px; }
 .pie { margin-top: 26px; font-size: 13.5px; color: var(--gris); }
 @media (max-width: 480px) { .planes { grid-template-columns: repeat(2, 1fr); } }
 </style>
@@ -54,6 +55,8 @@ h1 .serif { color: var(--naranja-2); }
   <p class="lema">Con tarjeta de crédito, débito o tu cuenta PayPal. Precios en dólares (USD).</p>
 
   <div class="planes" id="planes" role="group" aria-label="Elige tu plan"></div>
+
+  <p class="frase" id="frasePlan"></p>
 
   <section class="paso">
     <h2><span>1</span>Pago de inicio</h2>
@@ -83,10 +86,10 @@ const WHATS = '526624002958';
 const wa = (texto) => `https://wa.me/${WHATS}?text=${encodeURIComponent(texto)}`;
 // cada plan: pago de inicio, meses incluidos, mensualidad y el plan de suscripción de PayPal (vacío = todavía no se crea)
 const PLANES = {
-  basico: { nombre: 'Básico', inicio: 55, meses: 1, mes: 9, planPayPal: 'P-243947550W529982SNLWXH2I' },
-  esencial: { nombre: 'Esencial', inicio: 85, meses: 3, mes: 14, planPayPal: 'P-0YD61835G76951725NLW627Y' },
-  pro: { nombre: 'PRO', inicio: 115, meses: 6, mes: 19, planPayPal: '' },
-  elite: { nombre: 'Élite', inicio: 199, meses: 8, mes: 29, planPayPal: '' },
+  basico: { nombre: 'Básico', frase: 'Lo que necesitas para salir a flote en internet', inicio: 55, meses: 1, mes: 9, planPayPal: 'P-243947550W529982SNLWXH2I' },
+  esencial: { nombre: 'Esencial', frase: 'Lo que necesitas para verte profesional en internet', inicio: 85, meses: 3, mes: 14, planPayPal: 'P-0YD61835G76951725NLW627Y' },
+  pro: { nombre: 'PRO', frase: 'Lo que necesitas para vender más en internet', inicio: 115, meses: 6, mes: 19, planPayPal: '' },
+  elite: { nombre: 'Élite', frase: 'Todo lo que necesitas', inicio: 199, meses: 8, mes: 29, planPayPal: '' },
 };
 const CLIENTE_PAYPAL = 'BAAjb__v6sm3pyosRLw73p58iHCwgC84zc-tiDYdEjMWcJPWf2Xha3sxAbcM_i1c-AZna4Yuq3Cm3o-1JM';
 
@@ -113,6 +116,7 @@ function elegir(k) {
   const p = PLANES[k];
   history.replaceState(null, '', `?plan=${k}`);
   contenedor.querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', b.dataset.plan === k));
+  document.getElementById('frasePlan').textContent = p.frase;
   document.getElementById('txtInicio').textContent = `El diseño y la entrega de tu página ${p.nombre}: $${p.inicio} USD, una sola vez.`;
   const inicio = document.getElementById('btnInicio');
   inicio.href = `https://paypal.me/alewox/${p.inicio}USD`;

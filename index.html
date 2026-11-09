@@ -332,10 +332,10 @@ video::-webkit-media-controls, video::-webkit-media-controls-start-playback-butt
     <h2>Planes</h2>
     <p>Un pago de inicio, meses de servicio incluidos (Básico 1, Esencial 3, PRO 6, Élite 8) y después una mensualidad: Básico $9, Esencial $14, PRO $19 y Élite $29 USD al mes. Precios en dólares; los negocios de Hermosillo tienen precio especial en el pago de inicio.</p>
     <ul>
-      <li>Básico, $55 USD: página personalizada de una sección con portada animada, WhatsApp, Google Maps y QR, más logo sencillo, fotos mejoradas, kit de redes, estados de WhatsApp y videos para arrancar.</li>
-      <li>Esencial, $85 USD: todo lo del Básico, más página a tu medida, dominio .com y correo por 1 año, marca completa, plantillas, 15 fotos con IA, perfil de Google Maps optimizado y QR de reseñas.</li>
-      <li>PRO, $115 USD: todo lo de la Esencial, más página hecha para vender con citas, pedidos y promociones, SEO local, anuncios en video, contenido, estudio de competencia y asistente de WhatsApp con IA (próximamente).</li>
-      <li>Élite, $199 USD: todo lo del PRO, más página única desde cero, escena 3D, español e inglés, video de marca, fotos de máxima calidad, dominio por 2 años, documentos de empresa, 8 meses con cambios ilimitados y asistente con IA 3 meses (próximamente). Mismo precio para todos, sin precio especial local.</li>
+      <li>Básico, $55 USD, lo que necesitas para salir a flote en internet: página personalizada de una sección con portada animada, WhatsApp, Google Maps y QR, más logo sencillo, fotos mejoradas, kit de redes, estados de WhatsApp y videos para arrancar.</li>
+      <li>Esencial, $85 USD, lo que necesitas para verte profesional en internet: todo lo del Básico, más página a tu medida, dominio .com y correo por 1 año, marca completa, plantillas, 15 fotos con IA, perfil de Google Maps optimizado y QR de reseñas.</li>
+      <li>PRO, $115 USD, lo que necesitas para vender más en internet: todo lo de la Esencial, más página hecha para vender con citas, pedidos y promociones, SEO local, anuncios en video, contenido, estudio de competencia y asistente de WhatsApp con IA (próximamente).</li>
+      <li>Élite, $199 USD, todo lo que necesitas: todo lo del PRO, más página única desde cero, escena 3D, español e inglés, video de marca, fotos de máxima calidad, dominio por 2 años, documentos de empresa, 8 meses con cambios ilimitados y asistente con IA 3 meses (próximamente). Mismo precio para todos, sin precio especial local.</li>
     </ul>
     <p>Todos los planes incluyen garantía y soporte: si algo de tu página falla, lo arreglo gratis, y te ayudo por WhatsApp aunque ya haya pasado el periodo gratis.</p>
     <h3>Extras para crecer</h3>
@@ -714,7 +714,7 @@ function paginaMuestra() {
 
 // lo que incluye cada plan (lo mismo que en la muestra y el bot)
 const PLANES = [
-  { id: 'Básico', precio: 55, mes: 9, entrega: 'Lista en 24 horas', incluidos: '1 mes incluido', resumen: 'Tu página, logo, videos y kit de redes para arrancar', items: [
+  { id: 'Básico', precio: 55, mes: 9, entrega: 'Lista en 24 horas', incluidos: '1 mes incluido', resumen: 'Lo que necesitas para salir a flote en internet', items: [
     'Página personalizada de una sección, lista en 24 horas: portada animada con tu negocio en movimiento, hasta 6 servicios con precios, botón directo a tu WhatsApp, ubicación en Google Maps con botón "Cómo llegar", preguntas frecuentes y dirección web gratuita',
     '1 ronda de ajustes antes de publicar',
     'Logo sencillo si no tienes: 4 opciones',
@@ -730,7 +730,7 @@ const PLANES = [
     'Después, $9 USD al mes, con 1 cambio al mes',
     'Garantía: si algo de tu página falla, lo arreglo gratis mientras esté activa',
   ] },
-  { id: 'Esencial', precio: 85, mes: 14, entrega: 'Lista en 3 días hábiles', incluidos: '3 meses incluidos', reco: true, resumen: 'Diseño a tu medida, tu .com, marca completa y fotos con IA', items: [
+  { id: 'Esencial', precio: 85, mes: 14, entrega: 'Lista en 3 días hábiles', incluidos: '3 meses incluidos', reco: true, resumen: 'Lo que necesitas para verte profesional en internet', items: [
     '+Todo lo del Básico, y además:',
     'Página a la medida con varias secciones: servicios o menú, galería de hasta 12 fotos, quiénes somos, contacto, botones de WhatsApp con mensaje listo para cada servicio, animaciones y aviso de privacidad',
     '2 rondas de ajustes y entrega en 3 días hábiles',
@@ -744,7 +744,7 @@ const PLANES = [
     '3 meses incluidos con 3 cambios al mes',
     'Después, $14 USD al mes, con 3 cambios y reporte de visitas',
   ] },
-  { id: 'PRO', precio: 115, mes: 19, entrega: 'Lista en 5 días hábiles', incluidos: '6 meses incluidos', resumen: 'Página hecha para vender, SEO local, anuncios en video y contenido', items: [
+  { id: 'PRO', precio: 115, mes: 19, entrega: 'Lista en 5 días hábiles', incluidos: '6 meses incluidos', resumen: 'Lo que necesitas para vender más en internet', items: [
     '+Todo lo de la Esencial, y además:',
     'Página hecha para vender: formularios de citas, pedidos o cotizaciones, catálogo para pedir por WhatsApp, promociones con cuenta regresiva, opiniones de clientes, portada en 3D y títulos animados',
     '3 rondas de ajustes y entrega en 5 días hábiles',
@@ -759,7 +759,7 @@ const PLANES = [
     '6 meses incluidos con 5 cambios al mes',
     'Después, $19 USD al mes, con 5 cambios',
   ] },
-  { id: 'Élite', precio: 199, mes: 29, entrega: 'Lista en 7 días hábiles', incluidos: '8 meses incluidos', resumen: 'Lo mejor de lo mejor: 3D, video de marca y 8 meses de cambios ilimitados', items: [
+  { id: 'Élite', precio: 199, mes: 29, entrega: 'Lista en 7 días hábiles', incluidos: '8 meses incluidos', resumen: 'Todo lo que necesitas', items: [
     '+Todo lo del PRO, y además:',
     'Página única desde cero: varias pantallas, experiencia interactiva o escena 3D, y versión en español e inglés',
     'Rondas de ajustes ilimitadas y entrega en 7 días hábiles',
