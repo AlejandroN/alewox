@@ -2,6 +2,9 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <!-- El QR de las tarjetas impresas apunta a /muestra/ sin datos: esa dirección exacta lleva a la portada.
+       Los enlaces con datos (/muestra/?n=...) y /muestra/index.html siguen abriendo la muestra. -->
+  <script>if (location.protocol !== 'file:' && location.pathname.endsWith('/muestra/') && !location.search) location.replace('../');</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Crea tu muestra | Alewox</title>
   <link rel="icon" href="../img/logo-app.svg" type="image/svg+xml">
