@@ -155,13 +155,6 @@ video::-webkit-media-controls, video::-webkit-media-controls-start-playback-butt
 @keyframes acerca { from { transform: scale(1.15); } }
 .cerrar { position: fixed; z-index: 8; top: calc(env(safe-area-inset-top, 0px) + 14px); right: max(16px, env(safe-area-inset-right, 0px)); width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--linea); background: rgba(12, 11, 10, .55); color: var(--crema); font-size: 20px; cursor: pointer; opacity: 0; pointer-events: none; transition: opacity .4s; }
 .abierto .cerrar { opacity: 1; pointer-events: auto; }
-/* bocinita para silenciar o prender el sonido, abajo a la izquierda */
-.bocina { position: fixed; z-index: 12; left: max(14px, env(safe-area-inset-left, 0px)); bottom: calc(env(safe-area-inset-bottom, 0px) + 14px); width: 34px; height: 34px; display: grid; place-items: center; border-radius: 50%; border: 1px solid rgba(244, 239, 232, .14); background: rgba(12, 11, 10, .45); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); color: rgba(244, 239, 232, .75); cursor: pointer; padding: 0; transition: color .2s, border-color .2s; }
-.bocina:hover { color: var(--crema); border-color: rgba(255, 150, 90, .5); }
-.bocina svg { width: 17px; height: 17px; }
-.bocina .ondas, .bocina .tache { transition: opacity .2s; }
-.bocina[aria-pressed="false"] .ondas, .bocina .tache { opacity: 0; }
-.bocina[aria-pressed="false"] .tache { opacity: 1; }
 
 /* ---------- detalle de un servicio ---------- */
 /* al elegir un servicio, la cámara entra a la pantalla de la laptop y la pantalla se vuelve la página de ese servicio */
@@ -261,7 +254,7 @@ video::-webkit-media-controls, video::-webkit-media-controls-start-playback-butt
 }
 /* modo ligero (celulares sencillos): sin desenfoques ni resplandores en vivo, con vidrios más oscuros para que se siga leyendo todo */
 .ligero .borroso { backdrop-filter: none; -webkit-backdrop-filter: none; background: rgba(8, 7, 6, .42); }
-.ligero .bloque, .ligero .aviso, .ligero .bocina { backdrop-filter: none; -webkit-backdrop-filter: none; background: rgba(14, 12, 10, .8); box-shadow: none; }
+.ligero .bloque, .ligero .aviso { backdrop-filter: none; -webkit-backdrop-filter: none; background: rgba(14, 12, 10, .8); box-shadow: none; }
 .ligero .detalle { backdrop-filter: none; -webkit-backdrop-filter: none; background: rgba(20, 17, 15, .94); }
 .ligero .hilos path, .ligero .hilos circle, .ligero .cursor { filter: none; }
 .ligero .vista { filter: none; }
@@ -365,9 +358,6 @@ video::-webkit-media-controls, video::-webkit-media-controls-start-playback-butt
 <svg class="hilos" id="hilos" aria-hidden="true"></svg>
 <nav class="anillo" id="anillo" aria-label="Servicios de Alewox"></nav>
 <button class="cerrar" id="cerrar" type="button" aria-label="Cerrar">×</button>
-<button class="bocina" id="bocina" type="button" aria-pressed="false" aria-label="Sonido apagado: tocar para encender">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9h3l5-4v14l-5-4H4z" fill="currentColor" stroke="none"/><path class="ondas" d="M16 9.5a3.5 3.5 0 0 1 0 5M18.5 7a7 7 0 0 1 0 10"/><path class="tache" d="M16 9l5 6M21 9l-5 6"/></svg>
-</button>
 <div class="vista" id="vista" role="dialog" aria-modal="true" aria-label="Detalle del servicio" aria-hidden="true">
   <button class="volver-esc" id="volver" type="button">← Volver al escritorio</button>
   <div class="vista-visual"><div class="grande-marco" id="marco"><div class="grande" id="grande"></div></div></div>
@@ -553,7 +543,7 @@ function ciclar() {
   let i = SERVICIOS.findIndex((s) => s.id === activo);
   ciclo = setInterval(() => { i = (i + 1) % SERVICIOS.length; activar(SERVICIOS[i].id); }, 3400);
 }
-anillo.addEventListener('pointerover', (e) => { const b = e.target.closest('.bloque'); if (b) { clearInterval(ciclo); if (activo !== b.dataset.id) sonido.tic(); activar(b.dataset.id); } });
+anillo.addEventListener('pointerover', (e) => { const b = e.target.closest('.bloque'); if (b) { clearInterval(ciclo); activar(b.dataset.id); } });
 anillo.addEventListener('pointerleave', () => { if (abierto && !document.body.classList.contains('viendo')) ciclar(); });
 
 // ---------- hilos de luz ----------
@@ -606,7 +596,7 @@ function enfocar() {
     // cel: anillo por toda la pantalla (aunque quede encima de la laptop), "Muestra gratis" arriba y
     // cuatro filas en dos columnas pegadas a las orillas, que se abren en medio para dejar libre la pantalla de la laptop
     ? (() => {
-      // las filas se pegan justo arriba y abajo de la pantalla de la laptop; la última queda arriba de la bocinita
+      // las filas se pegan justo arriba y abajo de la pantalla de la laptop
       const cw = W * 0.44, mitad = Math.max(...bloques.map((b) => b.offsetHeight)) / 2, arriba = 12 + mitad;
       const pant = T.pantalla.map(([px, py]) => arr + ty + py * k);
       const abajo = H - 64 - mitad;
@@ -832,7 +822,6 @@ function verDetalle(id) {
   viva.innerHTML = pantallaNitida();
   viva.classList.add('nitida', 'ver');
   document.body.classList.add('entrando');
-  sonido.entrar();
   zambullir();
   clearTimeout(viendoTimer);
   viendoTimer = setTimeout(() => {
@@ -868,7 +857,6 @@ function volver() {
   clearTimeout(viendoTimer);
   document.body.classList.remove('viendo');
   vista.setAttribute('aria-hidden', 'true');
-  sonido.salir();
   setTimeout(() => {
     enfocar();
     // ya lejos, se regresa a la pantalla del video
@@ -927,8 +915,6 @@ function abrir() {
   enfocar();
   void anillo.offsetWidth;
   document.body.classList.add('abierto');
-  sonido.abrir();
-  bloques.forEach((b, i) => setTimeout(() => { if (abierto) sonido.llega(i); }, reducir ? 0 : llegada(i) - 80));
   activo = null;
   setTimeout(() => { if (abierto) { activar(SERVICIOS[1].id); ciclar(); } }, reducir ? 0 : 1200);
 }
@@ -946,128 +932,6 @@ toque.addEventListener('keydown', (e) => { if ((e.key === 'Enter' || e.key === '
 document.getElementById('cerrar').addEventListener('click', cerrar);
 addEventListener('keydown', (e) => { if (e.key === 'Escape' && abierto) cerrar(); });
 
-// ---------- sonido: lluvia y trueno grabados (media/), los efectos se generan aquí mismo ----------
-// Los navegadores no dejan sonar nada hasta que la persona toca algo: arranca con el primer toque o tecla.
-const sonido = (() => {
-  // empieza en silencio; con un toque a la bocina se prende (y la página recuerda si lo dejaron prendido)
-  let ctx = null, maestro = null, prendido = false;
-  try { prendido = localStorage.getItem('alewox-sonido') === 'si'; } catch (e) {}
-  const cel = matchMedia('(max-width: 720px)').matches;
-  const VOLUMEN = cel ? 0.16 : 0.19; // los efectos (click, tintineos, whoosh)
-  const LLUVIA = cel ? 0.21 : 0.25;  // la lluvia, de fondo y suave
-  const TRUENO = cel ? 0.15 : 0.19;  // el trueno, lejano y bajito
-  // en iPhone, el sonido de las páginas se silencia con el switch de silencio; así se trata como el de un video
-  try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch (e) {}
-  // truco para iPhones más viejos: un audio en silencio que se reproduce al primer toque
-  const silencio = new Audio(URL.createObjectURL(new Blob([(() => {
-    // medio segundo de silencio en WAV (8 kHz, 8 bits)
-    const n = 4000, v = new DataView(new ArrayBuffer(44 + n));
-    [...'RIFF'].forEach((c, i) => v.setUint8(i, c.charCodeAt(0))); v.setUint32(4, 36 + n, true);
-    [...'WAVEfmt '].forEach((c, i) => v.setUint8(8 + i, c.charCodeAt(0)));
-    v.setUint32(16, 16, true); v.setUint16(20, 1, true); v.setUint16(22, 1, true); v.setUint32(24, 8000, true); v.setUint32(28, 8000, true); v.setUint16(32, 1, true); v.setUint16(34, 8, true);
-    [...'data'].forEach((c, i) => v.setUint8(36 + i, c.charCodeAt(0))); v.setUint32(40, n, true);
-    for (let i = 0; i < n; i++) v.setUint8(44 + i, 128);
-    return v.buffer;
-  })()], { type: 'audio/wav' })));
-  silencio.loop = true;
-  silencio.setAttribute('playsinline', '');
-  const ruido = (seg, color = 'blanco') => {
-    const b = ctx.createBuffer(1, Math.floor(ctx.sampleRate * seg), ctx.sampleRate), d = b.getChannelData(0);
-    let ult = 0;
-    for (let i = 0; i < d.length; i++) {
-      const w = Math.random() * 2 - 1;
-      if (color === 'cafe') { ult = (ult + 0.02 * w) / 1.02; d[i] = ult * 3.5; } else d[i] = w;
-    }
-    return b;
-  };
-  const filtro = (tipo, f, q = 0.7) => { const x = ctx.createBiquadFilter(); x.type = tipo; x.frequency.value = f; x.Q.value = q; return x; };
-  // la lluvia y el trueno son grabaciones (hechas con IA, ElevenLabs): media/lluvia.mp3 en loop y media/trueno.mp3
-  let truenoBuffer = null, efectos = null;
-  const cargar = (url) => fetch(url).then((r) => r.arrayBuffer()).then((a) => new Promise((ok, mal) => ctx.decodeAudioData(a, ok, mal)));
-  function lluvia() {
-    cargar('media/lluvia.mp3').then((b) => {
-      const s = ctx.createBufferSource(), g = ctx.createGain();
-      s.buffer = b; s.loop = true;
-      // se brinca unas milésimas de cada orilla para que el loop no haga "clic"
-      s.loopStart = 0.05; s.loopEnd = b.duration - 0.05;
-      g.gain.value = LLUVIA;
-      s.connect(g).connect(maestro); s.start(0, 0.05);
-    }).catch(() => {});
-    cargar('media/trueno.mp3').then((b) => { truenoBuffer = b; }).catch(() => {});
-  }
-  // un golpe de ruido filtrado con su envolvente (para clicks, soplidos y truenos)
-  function soplo({ dur, desde, hasta, vol, tipo = 'bandpass', q = 0.9, color = 'blanco', retraso = 0 }) {
-    if (!ctx || !prendido) return;
-    const t = ctx.currentTime + retraso, s = ctx.createBufferSource(), f = filtro(tipo, desde, q), g = ctx.createGain();
-    s.buffer = ruido(dur + 0.1, color);
-    f.frequency.setValueAtTime(desde, t); f.frequency.exponentialRampToValueAtTime(hasta, t + dur);
-    g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(vol, t + Math.min(0.08, dur * 0.25)); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
-    s.connect(f).connect(g).connect(efectos); s.start(t); s.stop(t + dur + 0.1);
-  }
-  function campana(frec, vol, retraso = 0, dur = 0.9) {
-    if (!ctx || !prendido) return;
-    const t = ctx.currentTime + retraso;
-    [1, 2.01].forEach((k, i) => {
-      const o = ctx.createOscillator(), g = ctx.createGain();
-      o.type = 'sine'; o.frequency.value = frec * k;
-      g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(vol / (i + 1), t + 0.01); g.gain.exponentialRampToValueAtTime(0.0001, t + dur / (i + 1));
-      o.connect(g).connect(efectos); o.start(t); o.stop(t + dur);
-    });
-  }
-  function iniciar() {
-    if (ctx) return;
-    const C = window.AudioContext || window.webkitAudioContext;
-    if (!C) return;
-    ctx = new C();
-    // maestro: prendido (1) o apagado (0); los efectos llevan su propio volumen
-    maestro = ctx.createGain();
-    maestro.gain.value = 0;
-    maestro.connect(ctx.destination);
-    efectos = ctx.createGain();
-    efectos.gain.value = VOLUMEN;
-    efectos.connect(maestro);
-    lluvia();
-    if (prendido) maestro.gain.setTargetAtTime(1, ctx.currentTime, 1.6); // la lluvia entra poco a poco
-  }
-  const boton = document.getElementById('bocina');
-  function pintar() {
-    boton.setAttribute('aria-pressed', prendido);
-    boton.setAttribute('aria-label', prendido ? 'Sonido encendido: tocar para silenciar' : 'Sonido apagado: tocar para encender');
-  }
-  boton.addEventListener('click', (e) => {
-    e.stopPropagation();
-    prendido = !prendido;
-    try { localStorage.setItem('alewox-sonido', prendido ? 'si' : 'no'); } catch (err) {}
-    iniciar();
-    if (!ctx) return;
-    ctx.resume();
-    if (prendido) silencio.play().catch(() => {}); else silencio.pause();
-    maestro.gain.setTargetAtTime(prendido ? 1 : 0, ctx.currentTime, prendido ? 0.8 : 0.25);
-    pintar();
-  });
-  pintar();
-  // Safari solo deja arrancar el sonido en toques "completos" (touchend/click), no al apenas tocar
-  ['pointerdown', 'touchend', 'click', 'keydown'].forEach((ev) => addEventListener(ev, () => { iniciar(); if (ctx && ctx.state !== 'running') ctx.resume(); if (prendido) silencio.play().catch(() => {}); }, { passive: true }));
-  return {
-    // click suave al tocar la laptop y un soplido cálido mientras salen las tarjetas
-    abrir() { soplo({ dur: 0.08, desde: 3000, hasta: 1500, vol: 0.18, q: 2 }); soplo({ dur: 1.1, desde: 300, hasta: 2200, vol: 0.09, retraso: 0.15 }); },
-    // tintineo de cristal cuando cada tarjeta aterriza (y una nota distinta para cada una)
-    llega(i) { const notas = [523, 587, 659, 784, 880, 988, 1047, 1175, 1319]; campana(notas[i % notas.length], 0.035, 0, 0.7); },
-    tic() { soplo({ dur: 0.04, desde: 5000, hasta: 3500, vol: 0.05, q: 3 }); },
-    entrar() { soplo({ dur: 0.9, desde: 200, hasta: 2600, vol: 0.14, q: 0.6 }); campana(392, 0.03, 0.55, 1.2); },
-    salir() { soplo({ dur: 0.9, desde: 2600, hasta: 200, vol: 0.12, q: 0.6 }); },
-    // el trueno llega un poco después del destello, lejano y bajito, como cuando la tormenta está lejos
-    trueno() {
-      if (!ctx || !prendido || !truenoBuffer) return;
-      const s = ctx.createBufferSource(), g = ctx.createGain();
-      s.buffer = truenoBuffer;
-      g.gain.value = TRUENO;
-      s.connect(g).connect(maestro);
-      s.start(ctx.currentTime + 0.8 + Math.random() * 1.2);
-    },
-  };
-})();
-
 // ---------- relámpagos de vez en cuando ----------
 const flash = document.getElementById('relampago');
 function relampago() {
@@ -1075,7 +939,6 @@ function relampago() {
     flash.style.display = 'block';
     flash.animate([{ opacity: 0 }, { opacity: .3, offset: .06 }, { opacity: .04, offset: .18 }, { opacity: .2, offset: .28 }, { opacity: 0 }], { duration: 900, easing: 'ease-out' })
       .onfinish = () => { flash.style.display = 'none'; };
-    sonido.trueno();
   }
   setTimeout(relampago, 14000 + Math.random() * 14000);
 }
