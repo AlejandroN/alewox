@@ -151,9 +151,41 @@ video::-webkit-media-controls, video::-webkit-media-controls-start-playback-butt
 .p-precios .elige:hover, .p-precios .elige:focus-visible { border-color: #ffb08a; background: rgba(255, 122, 61, .08); translate: 0 -4px; outline: none; }
 .p-precios .elige[aria-pressed="true"] { border-color: #ff7a3d; background: rgba(255, 122, 61, .18); box-shadow: 0 0 0 1px #ff7a3d, 0 12px 30px rgba(255, 122, 61, .28); }
 .p-guia { margin: 0; font-size: 19px; font-weight: 600; color: #ffb08a; }
-.plan-t, .detalle .precio { scroll-margin-top: 84px; }
-.detalle .precio.resalta { animation: resalta 1.6s ease-out; }
-@keyframes resalta { 0%, 45% { border-color: var(--naranja); background: rgba(255, 122, 61, .2); } }
+/* planes: la pantalla sola en medio; al elegir algo se hace a un lado (arriba en celular) y entra el panel, sin mover la página */
+.vista.modo-planes { display: block; overflow: hidden; padding: 0; --marco: min(900px, 54vw, calc((100svh - 130px) * 1.6)); --panel: min(440px, 34vw); --hueco: 28px; --mover: calc((var(--panel) + var(--hueco)) / 2); --curva: cubic-bezier(.22, .8, .2, 1); }
+.modo-planes .vista-visual { position: absolute; left: 50%; top: calc(50% + 24px); width: calc(var(--marco) + 20px); height: calc(var(--marco) * .625 + 20px); aspect-ratio: auto; max-width: none; transform: translate(-50%, -50%) scale(.97); transition: opacity .5s, transform .65s var(--curva), top .55s var(--curva), height .55s var(--curva); }
+.viendo .modo-planes .vista-visual { transform: translate(-50%, -50%); }
+.viendo .modo-planes.elegido .vista-visual { transform: translate(calc(-50% - var(--mover)), -50%); }
+.modo-planes .detalle { position: absolute; left: calc(50% + (var(--marco) + 20px) / 2 - var(--mover) + var(--hueco)); top: calc(50% + 24px); width: var(--panel); max-height: calc(100svh - 120px); overflow-y: auto; overscroll-behavior: contain; align-content: start; opacity: 0; pointer-events: none; transform: translate(36px, -50%); transition: opacity .35s, transform .6s var(--curva); }
+.viendo .modo-planes .detalle { opacity: 0; transform: translate(36px, -50%); }
+.viendo .modo-planes.elegido .detalle { opacity: 1; pointer-events: auto; transform: translate(0, -50%); }
+.detalle .puntos .base { color: var(--naranja-2); font-weight: 700; }
+.detalle .puntos .base::before { content: ""; }
+.detalle .pagar { display: grid; gap: 8px; }
+.detalle .entrega { font-size: 13.5px; font-weight: 700; color: var(--naranja-2); }
+.detalle .pie-plan { font-size: 13px; color: var(--gris); }
+.detalle h3 small { margin-left: 8px; font: 700 11px var(--sans); letter-spacing: 0; color: var(--tinta); background: var(--naranja); padding: 2px 8px; border-radius: 99px; vertical-align: 5px; }
+@media (max-width: 860px) {
+  .vista.modo-planes { --marco: min(calc(100vw - 40px), calc((100svh - 130px) * .63), 620px); --arriba: calc(env(safe-area-inset-top, 0px) + 66px); }
+  .modo-planes .vista-visual { top: calc(50% + 22px); height: calc(var(--marco) * 1.575 + 20px); }
+  .viendo .modo-planes.elegido .vista-visual { top: var(--arriba); height: calc(var(--marco) * .625 + 20px); transform: translate(-50%, 0); }
+  .modo-planes .detalle { left: 50%; top: calc(var(--arriba) + var(--marco) * .625 + 30px); bottom: calc(env(safe-area-inset-bottom, 0px) + 10px); width: calc(var(--marco) + 20px); max-height: none; padding: 18px; transform: translate(-50%, 30px); }
+  .viendo .modo-planes .detalle { transform: translate(-50%, 30px); }
+  .viendo .modo-planes.elegido .detalle { transform: translate(-50%, 0); }
+  .modo-planes .grande { height: 1260px; }
+  .modo-planes.elegido .grande { height: 500px; }
+  /* con la pantalla sola, todo en grande y de dos en dos */
+  .modo-planes:not(.elegido) .escena-p { padding: 44px 40px; gap: 26px; }
+  .modo-planes:not(.elegido) .p-barra { font-size: 26px; }
+  .modo-planes:not(.elegido) .escena-p h4 { font-size: 68px; line-height: 1; }
+  .modo-planes:not(.elegido) .p-precios { grid-template-columns: repeat(2, 1fr) !important; gap: 20px; }
+  .modo-planes:not(.elegido) .elige { padding: 26px 28px; gap: 8px; }
+  .modo-planes:not(.elegido) .elige b { font-size: 30px; }
+  .modo-planes:not(.elegido) .elige strong { font-size: 82px !important; }
+  .modo-planes:not(.elegido) .p-precios:nth-of-type(3) .elige strong { font-size: 56px !important; }
+  .modo-planes:not(.elegido) .elige svg { width: 56px; height: 56px; }
+  .modo-planes:not(.elegido) .p-guia { font-size: 34px; }
+}
 .p-wa { display: grid; place-items: center; text-align: center; gap: 14px; height: 100%; align-content: center; }
 .p-wa i { width: 110px; height: 110px; border-radius: 30px; background: #25d366; display: grid; place-items: center; font-style: normal; font-size: 60px; animation: late 1.6s ease-in-out infinite; }
 @keyframes late { 50% { transform: scale(1.08); box-shadow: 0 0 40px rgba(37, 211, 102, .6); } }
@@ -213,29 +245,10 @@ video::-webkit-media-controls, video::-webkit-media-controls-start-playback-butt
 .precio strong { font-size: 22px; font-variant-numeric: tabular-nums; }
 .precio span { color: var(--gris); font-size: 13.5px; }
 /* los planes: tarjetas que se abren al tocarlas con todo lo que incluyen */
-.planes-lista { display: grid; gap: 10px; }
-.plan-t { border: 1px solid var(--linea); border-radius: 16px; background: rgba(244, 239, 232, .04); transition: border-color .25s, background .25s; }
-.plan-t:hover, .plan-t[open] { border-color: rgba(255, 150, 90, .55); background: rgba(255, 122, 61, .07); }
-.plan-t.reco { border-color: rgba(255, 122, 61, .45); }
-.plan-t summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; align-items: center; padding: 14px 16px; }
-.plan-t summary::-webkit-details-marker { display: none; }
-.plan-t summary b { font-size: 17px; }
-.plan-t summary b small { margin-left: 8px; font-size: 11px; font-weight: 700; color: var(--tinta); background: var(--naranja); padding: 2px 8px; border-radius: 99px; vertical-align: 2px; }
-.plan-t summary strong { font-size: 22px; font-variant-numeric: tabular-nums; white-space: nowrap; }
-.plan-t summary strong small { font-size: 12px; font-weight: 700; color: var(--gris); margin-left: 3px; }
-.plan-t summary > span { color: var(--gris); font-size: 13.5px; }
-.plan-t summary i { font-style: normal; font-size: 12.5px; font-weight: 700; color: var(--naranja-2); justify-self: end; }
-.plan-t summary i::after { content: " +"; }
-.plan-t[open] summary i::after { content: " −"; }
-.plan-t .puntos { padding: 0 16px 16px; font-size: 14px; }
 /* pagar el inicio del plan: PayPal (tarjeta o cuenta PayPal) o platicarlo por WhatsApp */
-.plan-t .pagar { display: grid; gap: 8px; padding: 0 16px 16px; }
 .btn-pp { background: #ffc439; color: #111; }
 .btn-pp:hover { background: #f2b52b; }
 .btn-txt { text-align: center; font-size: 13px; color: var(--naranja-2); text-decoration: underline; text-underline-offset: 3px; }
-.plan-t summary .mes { display: block; margin-top: 4px; font-family: var(--sans); font-style: normal; font-weight: 700; font-size: 12.5px; color: var(--naranja-2); }
-.plan-t .puntos .base { color: var(--naranja-2); font-weight: 700; }
-.plan-t .puntos .base::before { content: ""; }
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border-radius: 999px; padding: 12px 18px; font: 700 15px var(--sans); text-decoration: none; border: 0; cursor: pointer; }
 .btn-wa { background: var(--verde-wa); color: #06210f; }
 .btn-naranja { background: var(--naranja); color: var(--tinta); }
@@ -494,7 +507,7 @@ const ESCENAS = {
     <div class="p-barra" style="margin-top:6px"><span>Te contesto yo, no un call center</span></div></div>`,
   hablemos: () => `<div class="escena-p p-wa"><i><svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg></i><h4>Escríbeme</h4><div class="p-barra" style="justify-content:center;font-size:26px;color:#f4efe8">662 400 2958</div></div>`,
   planes: () => `<div class="escena-p"><div class="p-barra"><span>Para todo el mundo</span><span>USD · inicio + mensualidad</span></div><h4>Tu página, y todo para <em>crecer</em></h4><div class="p-precios" style="grid-template-columns:repeat(4,1fr)">${PLANES.map((pl, i) => `<button type="button" class="elige" data-plan="${i}" aria-pressed="false" style="animation-delay:${i * 0.1}s"><b>${pl.id}</b><strong>$${pl.precio}</strong></button>`).join('')}</div>
-    <div class="p-precios" style="margin-top:4px"><button type="button" class="elige" data-extra="Asistente" aria-pressed="false" style="animation-delay:.36s"><b>Asistente IA</b><strong style="font-size:28px">Pronto</strong></button><button type="button" class="elige" data-extra="Dominio" aria-pressed="false" style="animation-delay:.48s"><b>Dominio</b><strong style="font-size:28px">.com</strong></button><button type="button" class="elige" data-extra="Citas" aria-pressed="false" style="animation-delay:.6s"><b>Citas</b><strong style="font-size:28px;display:flex"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg></strong></button></div>
+    <div class="p-precios" style="margin-top:4px;grid-template-columns:repeat(4,1fr)"><button type="button" class="elige" data-extra="Asistente" aria-pressed="false" style="animation-delay:.36s"><b>Asistente</b><strong style="font-size:28px">Pronto</strong></button><button type="button" class="elige" data-extra="Dominio" aria-pressed="false" style="animation-delay:.48s"><b>Dominio</b><strong style="font-size:28px">.com</strong></button><button type="button" class="elige" data-extra="QR" aria-pressed="false" style="animation-delay:.54s"><b>Reseñas</b><strong style="font-size:28px">QR</strong></button><button type="button" class="elige" data-extra="Citas" aria-pressed="false" style="animation-delay:.66s"><b>Citas</b><strong style="font-size:28px;display:flex"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg></strong></button></div>
     <p class="p-guia" aria-live="polite">Toca un plan para ver qué incluye</p></div>`,
   formulario: () => `<div class="escena-p"><div class="p-barra"><span>alewox.com/formulario</span><span>Tu plan: Esencial</span></div><h4>Llena tu formulario y <em>recibe tu página</em></h4>
     <div class="p-chat"><div class="b" style="animation-delay:.2s">Negocio: Tacos Don Chuy</div><div class="b" style="animation-delay:.6s">Fotos y logo: 8 archivos</div><div class="c" style="animation-delay:1.1s">Tu página, lista en 3 días</div></div></div>`,
@@ -759,13 +772,6 @@ const PLANES = [
     'Mismo precio para todos en dólares: el Élite no tiene precio especial de Hermosillo',
   ] },
 ];
-// cada plan es una tarjeta; al tocarla se abre con todo lo que incluye (y se cierran las demás)
-const planesHTML = () => `<div class="planes-lista">${PLANES.map((pl) => `<details class="plan-t${pl.reco ? ' reco' : ''}" name="plan">
-  <summary><b>${pl.id}${pl.reco ? '<small>Recomendado</small>' : ''}</b><strong>$${pl.precio}<small>USD</small></strong><span>${pl.resumen}<em class="mes">${pl.entrega} · ${pl.incluidos}, luego $${pl.mes} USD/mes</em></span><i>Ver qué incluye</i></summary>
-  <ul class="puntos">${pl.items.map((t) => t.startsWith('+') ? `<li class="base">${esc(t.slice(1))}</li>` : `<li>${esc(t)}</li>`).join('')}</ul>
-  <div class="pagar"><a class="btn btn-pp" href="pagar/index.html?plan=${encodeURIComponent(pl.id.toLowerCase())}" target="_blank" rel="noopener">Pagar con PayPal · $${pl.precio} USD</a><a class="btn-txt" href="${wa(`Hola Alejandro, quiero el plan ${pl.id}`)}" target="_blank" rel="noopener">o platícalo conmigo por WhatsApp</a></div>
-</details>`).join('')}</div>`;
-
 // ---------- el detalle de cada servicio ----------
 const DETALLE = {
   muestra: () => `<h3>Muestra gratis</h3><p class="lema">Arma tu página aquí mismo y mírala al lado.</p>
@@ -774,19 +780,7 @@ const DETALLE = {
     <label>Colores</label><div class="opciones colores" role="radiogroup" aria-label="Colores">${Object.entries(PALETAS).map(([k, c]) => `<button type="button" role="radio" aria-checked="${k === MUESTRA.c}" data-c="${k}" title="${c.label}"><i style="background:${c.p}"></i><i style="background:${c.a}"></i><i style="background:${c.bg}"></i></button>`).join('')}</div>
     <label>Estilo de letra</label><div class="opciones estilos" role="radiogroup" aria-label="Estilo de letra">${Object.entries(ENFOQUES).map(([k, e]) => `<button type="button" role="radio" aria-checked="${k === MUESTRA.e}" data-e="${k}"><span style="font-family:${e.fuente};${e.extra}">Aa</span>${e.label}</button>`).join('')}</div></div>
     <a class="btn btn-naranja" id="mIr" href="muestra/index.html" target="_blank" rel="noopener">Ver mi muestra completa →</a>`,
-  planes: () => `<h3>Planes y extras</h3><p class="lema">El Básico queda listo en 24 horas; Esencial, PRO y Élite, de 3 a 7 días hábiles. Pagas el inicio, tienes meses incluidos y después una mensualidad. Precios en dólares (USD), para negocios de cualquier parte del mundo.</p>
-    <p style="font-size:13.5px;color:var(--naranja-2);margin:0">Toca un plan para ver todo lo que incluye.</p>
-    ${planesHTML()}
-    <p style="font-size:14px;margin-top:2px"><b>Mensualidad:</b> Básico $9 · Esencial $14 · PRO $19 · Élite $29 USD al mes, y empieza cuando terminan tus meses incluidos. La mensualidad mantiene tu página en línea e incluye hospedaje, soporte y tus cambios del mes. Si no se paga, la página se pausa hasta ponerse al corriente. Fuera de tus meses incluidos, cualquier cambio, aunque sea mínimo, se cubre con el mes completo.</p>
-    <p class="lema" style="margin-top:4px">Extras para crecer</p>
-    <div class="precios"><div class="precio"><div><b>Asistente de WhatsApp con IA</b><br><span>Contestará 24/7 · $35 USD/mes e instalación $15 USD (gratis en PRO y Élite) en cuanto esté disponible</span></div><strong style="font-size:17px">Próximamente</strong></div>
-    <div class="precio"><div><b>Dominio propio .com</b><br><span>Para el Básico; Esencial y PRO lo traen 1 año, Élite 2 años</span></div><strong style="font-size:17px">$25 USD/año</strong></div>
-    <div class="precio"><div><b>Renovación de dominio</b><br><span>Cuando termina el tiempo incluido en tu plan</span></div><strong style="font-size:17px">$25 USD/año</strong></div>
-    <div class="precio"><div><b>QR de reseñas de Google</b><br><span>Para tu mostrador, para que tus clientes te dejen su opinión (incluido del Esencial en adelante)</span></div><strong style="font-size:17px">$6 USD</strong></div>
-    <div class="precio"><div><b>Citas, pedidos, promociones y SEO local</b><br><span>Directo a tu WhatsApp y para salir en Google</span></div><strong style="font-size:17px">En PRO</strong></div></div>
-    <p style="opacity:.75;font-size:14px;margin-top:6px">Todos los precios en dólares (USD).</p>
-    <p style="opacity:.75;font-size:14px">Paga con tarjeta o con tu cuenta PayPal en alewox.com/pagar. ¿Eres de Hermosillo? Escríbeme: hay precio especial en el pago de inicio, por transferencia.</p>
-    <a class="btn btn-wa" href="${wa('Hola, quiero saber qué plan y extras me convienen')}" target="_blank" rel="noopener">¿Cuál me conviene?</a>`,
+  planes: () => '',
   nosotros: () => `<h3>Todo sobre nosotros</h3><p class="lema">Alewox hace que tu negocio venda más en internet.</p>
     <p>Soy Alejandro y trabajo desde Hermosillo, 100% en línea, para negocios de aquí y de cualquier parte. Te contesto yo, no un call center.</p>
     <p class="lema" style="margin-top:4px">Lo que hacemos</p>
@@ -823,34 +817,44 @@ function zambullir() {
   cuadro.style.transform = `translate(${W / 2 - izq - c[0] * z}px, ${H / 2 - arr - c[1] * z}px) scale(${z})`;
 }
 let viendoTimer;
-// la pantalla de planes responde: tocar un plan o un extra lo abre y lo enseña en la lista
-const GUIA_EXTRAS = { Asistente: 'Próximamente: contestará tu WhatsApp las 24 horas', Dominio: 'Tu negocio con su propia dirección .com', Citas: 'Citas, pedidos y promociones vienen en PRO' };
+// la pantalla de planes responde: al tocar un plan o un extra, la pantalla se hace a un lado y entra su información
+const EXTRAS = {
+  Asistente: { dato: 'Próximamente', titulo: 'Asistente de WhatsApp con IA', guia: 'Próximamente: contestará tu WhatsApp las 24 horas', lema: 'Estamos terminando de activarlo.', puntos: ['Contestará a tus clientes 24/7 con la información de tu negocio', '$35 USD al mes en cuanto esté disponible', 'Instalación de $15 USD, gratis en PRO y Élite', 'Incluido 1 mes en PRO y 3 meses en Élite, contados desde que esté disponible'], boton: 'Avísame cuando esté listo', mensaje: 'Hola, avísame cuando el asistente con IA esté disponible' },
+  Dominio: { dato: '$25 USD/año', titulo: 'Dominio propio .com', guia: 'Tu negocio con su propia dirección .com', lema: 'Tu página con el nombre de tu negocio.', puntos: ['Para el Básico: tunegocio.com', 'Esencial y PRO lo traen 1 año; Élite, 2 años', 'Renovación de $25 USD al año cuando termina el tiempo incluido en tu plan'], boton: 'Quiero mi dominio', mensaje: 'Hola, quiero un dominio propio para mi página' },
+  QR: { dato: '$6 USD', titulo: 'QR de reseñas de Google', guia: 'Más opiniones de tus clientes en Google', lema: 'Para tu mostrador, para que tus clientes te dejen su opinión.', puntos: ['Para el Básico', 'Incluido del Esencial en adelante'], boton: 'Quiero mi QR', mensaje: 'Hola, quiero el QR de reseñas de Google' },
+  Citas: { dato: 'En PRO', titulo: 'Citas, pedidos, promociones y SEO local', guia: 'Citas, pedidos y promociones vienen en PRO', lema: 'Directo a tu WhatsApp y para salir en Google.', puntos: ['Formularios de citas, pedidos o cotizaciones', 'Promociones con cuenta regresiva', 'SEO local para aparecer en tu ciudad', 'Vienen en PRO y Élite'], boton: '¿Cuál me conviene?', mensaje: 'Hola, quiero saber qué plan me conviene' },
+};
+const htmlPlan = (pl) => `<i class="dato-grande">$${pl.precio} USD</i><h3>${pl.id}${pl.reco ? '<small>Recomendado</small>' : ''}</h3><p class="lema">${esc(pl.resumen)}</p><p class="entrega">${pl.entrega} · ${pl.incluidos}, luego $${pl.mes} USD/mes</p>
+  <ul class="puntos">${pl.items.map((t) => t.startsWith('+') ? `<li class="base">${esc(t.slice(1))}</li>` : `<li>${esc(t)}</li>`).join('')}</ul>
+  <div class="pagar"><a class="btn btn-pp" href="pagar/index.html?plan=${encodeURIComponent(pl.id.toLowerCase())}" target="_blank" rel="noopener">Pagar con PayPal · $${pl.precio} USD</a><a class="btn-txt" href="${wa(`Hola Alejandro, quiero el plan ${pl.id}`)}" target="_blank" rel="noopener">o platícalo conmigo por WhatsApp</a></div>
+  <p class="pie-plan">La mensualidad empieza al terminar tus meses incluidos y mantiene tu página en línea; si no se paga, la página se pausa. ${pl.id === 'Élite' ? 'Mismo precio para todos.' : '¿Eres de Hermosillo? Escríbeme: hay precio especial en el pago de inicio, por transferencia.'}</p>`;
+const htmlExtra = (x) => `<i class="dato-grande">${x.dato}</i><h3>${x.titulo}</h3><p class="lema">${x.lema}</p><ul class="puntos">${x.puntos.map((t) => `<li>${esc(t)}</li>`).join('')}</ul>
+  <a class="btn btn-wa" href="${wa(x.mensaje)}" target="_blank" rel="noopener">${x.boton}</a>`;
 function conectarPlanes() {
-  const planes = [...detalle.querySelectorAll('.plan-t')], guia = grande.querySelector('.p-guia');
-  const botones = [...grande.querySelectorAll('.elige')], textoInicial = guia.textContent;
-  const marcar = (b, texto) => { botones.forEach((x) => x.setAttribute('aria-pressed', x === b)); guia.textContent = texto; };
-  const mostrar = (el) => requestAnimationFrame(() => el.scrollIntoView({ behavior: reducir ? 'auto' : 'smooth', block: 'start' }));
-  planes.forEach((d, i) => d.addEventListener('toggle', () => {
-    if (d.open) marcar(botones[i], `${PLANES[i].resumen} · ${PLANES[i].entrega}`);
-    else if (!planes.some((x) => x.open) && botones[i].getAttribute('aria-pressed') === 'true') marcar(null, textoInicial);
-  }));
+  const guia = grande.querySelector('.p-guia'), botones = [...grande.querySelectorAll('.elige')], textoInicial = guia.textContent;
   grande.onclick = (e) => {
     const b = e.target.closest('.elige');
     if (!b) return;
-    if (b.dataset.plan !== undefined) { const d = planes[+b.dataset.plan]; d.open = true; mostrar(d); return; }
-    planes.forEach((d) => { d.open = false; });
-    const fila = [...detalle.querySelectorAll('.precio')].find((x) => x.textContent.includes(b.dataset.extra));
-    marcar(b, GUIA_EXTRAS[b.dataset.extra]);
-    if (fila) { fila.classList.remove('resalta'); void fila.offsetWidth; fila.classList.add('resalta'); mostrar(fila); }
+    const yaEstaba = b.getAttribute('aria-pressed') === 'true';
+    botones.forEach((x) => x.setAttribute('aria-pressed', !yaEstaba && x === b));
+    // tocar otra vez la misma opción regresa la pantalla al centro
+    vista.classList.toggle('elegido', !yaEstaba);
+    if (yaEstaba) { guia.textContent = textoInicial; return; }
+    const plan = PLANES[b.dataset.plan], extra = EXTRAS[b.dataset.extra];
+    guia.textContent = plan ? `${plan.resumen} · ${plan.entrega}` : extra.guia;
+    detalle.innerHTML = plan ? htmlPlan(plan) : htmlExtra(extra);
+    detalle.scrollTop = 0;
   };
 }
 function verDetalle(id) {
   const s = SERVICIOS.find((x) => x.id === id);
   clearInterval(ciclo);
   activar(id);
-  detalle.innerHTML = `<i class="dato-grande">${esc(s.dato)}</i>${DETALLE[id]()}`;
+  detalle.innerHTML = id === 'planes' ? '' : `<i class="dato-grande">${esc(s.dato)}</i>${DETALLE[id]()}`;
   grande.innerHTML = id === 'muestra' ? paginaMuestra() : ESCENAS[id]();
   grande.onclick = null;
+  vista.classList.remove('elegido');
+  vista.classList.toggle('modo-planes', id === 'planes');
   if (id === 'planes') conectarPlanes();
   // antes de acercar, la pantalla del video se cambia por la versión nítida
   viva.innerHTML = pantallaNitida();
