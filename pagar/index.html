@@ -10,7 +10,7 @@
 <link rel="icon" href="../img/logo-app.svg" type="image/svg+xml">
 <link rel="stylesheet" href="../media/fuentes/fuentes.css">
 <style>
-/* Página de pago de Alewox: un solo botón de PayPal cobra el inicio, da los meses incluidos y luego la mensualidad; Hermosillo activa solo la mensualidad */
+/* Página de pago de Alewox: un solo botón de PayPal cobra el inicio, da los meses incluidos y luego la mensualidad; Hermosillo paga en efectivo o transferencia */
 :root { --tinta: #0c0b0a; --crema: #f4efe8; --gris: #b8afa5; --linea: rgba(244, 239, 232, .14); --naranja: #ff7a3d; --naranja-2: #ffb08a; --verde-wa: #25d366; }
 * { box-sizing: border-box; margin: 0; }
 body { min-height: 100vh; background: radial-gradient(60% 45% at 85% 0%, rgba(255, 122, 61, .18), transparent 70%), var(--tinta); color: var(--crema); font: 16px/1.5 'Inter Tight', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
@@ -69,8 +69,7 @@ h1 .serif { color: var(--naranja-2); }
 
   <section class="paso" id="hmo">
     <h2>¿Eres de Hermosillo?</h2>
-    <p>El inicio tiene precio especial en pesos por transferencia: <a id="btnHmo" target="_blank" rel="noopener">escríbeme</a> y te paso los datos. Ya que lo pagaste, activa aquí solo tu mensualidad; no se cobra nada hoy.</p>
-    <div id="botonMensual" class="boton-pp"></div>
+    <p>Tienes precio especial en pesos y pagas en efectivo o por transferencia, sin PayPal: <a id="btnHmo" target="_blank" rel="noopener">escríbeme</a> y lo arreglamos.</p>
   </section>
 
   <section class="paso listo" id="listo">
@@ -87,7 +86,8 @@ const WHATS = '526624002958';
 const wa = (texto) => `https://wa.me/${WHATS}?text=${encodeURIComponent(texto)}`;
 // cada plan tiene dos suscripciones de PayPal:
 // completo = cobra el inicio hoy (comisión de apertura), da los meses incluidos y luego la mensualidad
-// mensual = solo la mensualidad, para Hermosillo, que paga el inicio en pesos por transferencia (el Élite no tiene precio local)
+// mensual = solo la mensualidad; ya no se muestra (Hermosillo paga en efectivo o transferencia), se guarda por si se vuelve a usar
+// hmo = el plan tiene precio especial de Hermosillo (el Élite no)
 const PLANES = {
   basico: { nombre: 'Básico', frase: 'Lo que necesitas para salir a flote en internet', inicio: 55, meses: 1, mes: 9, completo: 'P-8DM07359FM407994SNLZTC3Y', mensual: 'P-243947550W529982SNLWXH2I' },
   esencial: { nombre: 'Esencial', frase: 'Lo que necesitas para verte profesional en internet', inicio: 85, meses: 3, mes: 14, completo: 'P-4JY93638BB726614NNLZTKBI', mensual: 'P-0YD61835G76951725NLW627Y' },
@@ -142,9 +142,8 @@ function elegir(k) {
   document.getElementById('txtPlan').textContent = `Hoy pagas $${p.inicio} USD por el diseño y la entrega de tu página. ${p.meses === 1 ? 'Tu primer mes va incluido' : `Tus primeros ${p.meses} meses van incluidos`}; después, $${p.mes} USD al mes con hospedaje, soporte y tus cambios del mes.`;
   boton(k, document.getElementById('botonCompleto'), p.completo, 'completo');
   const hmo = document.getElementById('hmo');
-  hmo.hidden = !p.mensual;
-  document.getElementById('btnHmo').href = wa(`Hola Alejandro, soy de Hermosillo y quiero pagar el inicio del plan ${p.nombre} por transferencia`);
-  if (p.mensual) boton(k, document.getElementById('botonMensual'), p.mensual, 'mensual');
+  hmo.hidden = k === 'elite';
+  document.getElementById('btnHmo').href = wa(`Hola Alejandro, soy de Hermosillo y quiero pagar el plan ${p.nombre} en efectivo o por transferencia`);
 }
 elegir(actual);
 </script>
