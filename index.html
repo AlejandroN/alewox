@@ -56,6 +56,8 @@ video::-webkit-media-controls, video::-webkit-media-controls-start-playback-butt
 .abierto .borroso { opacity: 1; }
 .pie { position: fixed; z-index: 2; left: 0; right: 0; bottom: 0; height: 240px; background: linear-gradient(transparent, rgba(12, 11, 10, .55) 60%, rgba(12, 11, 10, .7)); opacity: 0; transition: opacity .9s; pointer-events: none; }
 .abierto .pie { opacity: 1; }
+/* nombre legal y ciudad, siempre visibles abajo a la izquierda (los pide Meta para verificar el negocio) */
+.legal { position: fixed; z-index: 4; left: 16px; bottom: 10px; margin: 0; font: 500 11px/1.3 var(--sans); color: rgba(244, 239, 232, .55); letter-spacing: .01em; pointer-events: none; }
 .cuadro > svg { position: absolute; inset: 0; width: 100%; height: 100%; }
 .pantalla-toque { fill: transparent; cursor: pointer; }
 /* mientras el cursor de demostración no termina, la laptop todavía no se puede tocar */
@@ -316,6 +318,7 @@ video::-webkit-media-controls, video::-webkit-media-controls-start-playback-butt
 </div>
 <svg class="cursor" id="cursor" viewBox="0 0 34 34" aria-hidden="true"><path d="M4 3 L4 27 L10.5 21 L15 31 L19.5 29 L15 19.2 L24 19.2 Z" fill="#fff" stroke="#111" stroke-width="1.6" stroke-linejoin="round"/></svg>
 <div class="onda" id="onda" aria-hidden="true"></div>
+<p class="legal">Alewox · Alejandro Nieblas Lopez · Hermosillo, Sonora, México</p>
 
 <a class="logo" href="#" aria-label="Alewox">
   <svg width="26" height="26" viewBox="0 0 100 100" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="1" x2=".6" y2="0"><stop offset="0" stop-color="#ff6a33"/><stop offset="1" stop-color="#ffb06a"/></linearGradient></defs><polygon points="6,98 30,98 64,6 40,6" fill="url(#lg)"/><polygon points="52,38 64,6 98,98 74,98" fill="#f4efe8"/></svg>
@@ -377,7 +380,7 @@ video::-webkit-media-controls, video::-webkit-media-controls-start-playback-butt
   </section>
 </main>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"ProfessionalService","name":"Alewox","url":"https://alewox.com/","image":"https://alewox.com/media/portada-h.jpg","description":"Páginas web para negocios en Hermosillo y en todo el mundo, conectadas a WhatsApp y listas desde 24 horas.","email":"hola@alewox.com","founder":{"@type":"Person","name":"Alejandro Nieblas"},"address":{"@type":"PostalAddress","addressLocality":"Hermosillo","addressRegion":"Sonora","addressCountry":"MX"},"areaServed":["Hermosillo","México","Worldwide"],"priceRange":"$55 - $199 USD","sameAs":["https://www.instagram.com/alewox.web/"]}
+{"@context":"https://schema.org","@type":"ProfessionalService","name":"Alewox","url":"https://alewox.com/","image":"https://alewox.com/media/portada-h.jpg","description":"Páginas web para negocios en Hermosillo y en todo el mundo, conectadas a WhatsApp y listas desde 24 horas.","email":"hola@alewox.com","legalName":"Alejandro Nieblas Lopez","founder":{"@type":"Person","name":"Alejandro Nieblas Lopez"},"address":{"@type":"PostalAddress","addressLocality":"Hermosillo","addressRegion":"Sonora","addressCountry":"MX"},"areaServed":["Hermosillo","México","Worldwide"],"priceRange":"$55 - $199 USD","sameAs":["https://www.instagram.com/alewox.web/"]}
 </script>
 
 <svg class="hilos" id="hilos" aria-hidden="true"></svg>
