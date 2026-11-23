@@ -321,6 +321,14 @@ video::-webkit-media-controls, video::-webkit-media-controls-start-playback-butt
 .dia .modo .perilla .icono-luna { opacity: 0; transform: rotate(90deg); }
 .dia .modo .perilla .icono-sol { opacity: 1; transform: none; }
 @media (max-width: 720px) { .abierto .modo { right: calc(max(16px, env(safe-area-inset-right, 0px)) + 48px); } }
+/* portafolio: al entrar aparece de una vez el cuaderno de trabajos, a pantalla completa */
+.vista.modo-cuaderno, .dia .vista.modo-cuaderno { display: block; padding: 0; overflow: hidden; background: #0c0b0a; }
+.modo-cuaderno .vista-visual, .modo-cuaderno .detalle { display: none; }
+.modo-cuaderno::before { content: "Abriendo el cuaderno…"; position: absolute; inset: 0; display: grid; place-items: center; font: 600 15px var(--sans); color: #b8afa5; }
+.cuaderno { display: none; position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: #0c0b0a; opacity: 0; transition: opacity .7s .15s; }
+.modo-cuaderno .cuaderno { display: block; }
+.viendo .modo-cuaderno .cuaderno.cargado { opacity: 1; }
+.modo-cuaderno .volver-esc { z-index: 2; }
 /* dentro de un servicio la × no está: el botón vuelve a la esquina */
 .viendo .modo { right: max(16px, env(safe-area-inset-right, 0px)); }
 
@@ -479,6 +487,7 @@ html.dia {
   <button class="volver-esc" id="volver" type="button">← Volver al escritorio</button>
   <div class="vista-visual"><div class="grande-marco" id="marco"><div class="grande" id="grande"></div></div></div>
   <section class="detalle" id="detalle"></section>
+  <iframe class="cuaderno" id="cuaderno" title="Cuaderno de trabajos de Alewox" allow="fullscreen"></iframe>
 </div>
 
 <script>
@@ -973,7 +982,9 @@ function verDetalle(id) {
   grande.onclick = null;
   vista.classList.remove('elegido');
   vista.classList.toggle('modo-planes', id === 'planes');
+  vista.classList.toggle('modo-cuaderno', id === 'portafolio');
   if (id === 'planes') conectarPlanes();
+  if (id === 'portafolio') cargarCuaderno();
   // antes de acercar, la pantalla del video se cambia por la versión nítida
   viva.innerHTML = pantallaNitida();
   viva.classList.add('nitida', 'ver');
@@ -1020,6 +1031,14 @@ function volver() {
     ciclar();
   }, reducir ? 0 : 250);
 }
+// el cuaderno de trabajos se carga una sola vez; empieza desde que el cursor pasa por la tarjeta del portafolio
+const cuaderno = document.getElementById('cuaderno');
+function cargarCuaderno() {
+  if (cuaderno.src) return;
+  cuaderno.addEventListener('load', () => cuaderno.classList.add('cargado'), { once: true });
+  cuaderno.src = 'https://alejandron.github.io/portafolio/cuaderno/?en-alewox';
+}
+anillo.addEventListener('pointerover', (e) => { if (e.target.closest('.bloque[data-id="portafolio"]')) cargarCuaderno(); });
 anillo.addEventListener('click', (e) => { const b = e.target.closest('.bloque'); if (b) verDetalle(b.dataset.id); });
 document.getElementById('volver').addEventListener('click', volver);
 addEventListener('resize', () => { if (document.body.classList.contains('viendo')) escalarGrande(); });
