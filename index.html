@@ -7,14 +7,28 @@
 <meta name="description" content="Alewox hace que tu negocio venda más en internet: páginas web para negocios en Hermosillo, Sonora, y en cualquier parte del mundo. Conectadas a tu WhatsApp, listas desde 24 horas, desde $55 USD y con muestra gratis.">
 <link rel="canonical" href="https://alewox.com/">
 <link rel="stylesheet" href="media/fuentes/fuentes.css">
-<meta name="theme-color" content="#0c0b0a">
+<meta name="theme-color" content="#0c0b0a" id="color-tema">
 <meta property="og:title" content="Alewox | Hacemos que tu negocio venda más en internet">
 <meta property="og:description" content="Páginas web que te traen más clientes, conectadas a tu WhatsApp. Listas desde 24 horas. Muestra gratis.">
 <meta property="og:image" content="https://alewox.com/media/portada-h.jpg">
 <meta property="og:url" content="https://alewox.com/">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="img/logo-app.svg" type="image/svg+xml">
-<link rel="preload" as="image" href="media/portada-h.jpg">
+<script>
+// modo día o noche antes de dibujar nada (así no parpadea): de 7 de la mañana a 7 de la noche es de día,
+// salvo que el visitante lo haya cambiado con el botón en esta visita
+(() => {
+  let elegido = null;
+  try { elegido = sessionStorage.getItem('alewox-modo'); } catch (e) {}
+  const h = new Date().getHours();
+  const dia = elegido ? elegido === 'dia' : h >= 7 && h < 19;
+  if (dia) document.documentElement.classList.add('dia');
+  const l = document.createElement('link');
+  l.rel = 'preload'; l.as = 'image';
+  l.href = `media/portada${innerWidth / innerHeight < 1 ? '' : '-h'}${dia ? '-dia' : ''}.jpg`;
+  document.head.appendChild(l);
+})();
+</script>
 <style>
 /* Portada de Alewox: un escritorio real de noche con lluvia (video). Al tocar la laptop, todo se desenfoca menos ella
    y los servicios aparecen alrededor. */
@@ -289,6 +303,72 @@ video::-webkit-media-controls, video::-webkit-media-controls-start-playback-butt
   .cuadro, .bloque, .detalle { transition: none; }
   .llamando .pantalla-toque { animation: none; }
 }
+
+/* ---------- botón de día y noche (arriba a la derecha) ---------- */
+.modo { position: fixed; z-index: 10; top: calc(env(safe-area-inset-top, 0px) + 14px); right: max(16px, env(safe-area-inset-right, 0px)); width: 68px; height: 38px; padding: 0; border-radius: 999px; border: 1px solid var(--linea); background: rgba(12, 11, 10, .5); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); cursor: pointer; transition: right .45s cubic-bezier(.2, .8, .2, 1), background .4s, border-color .3s; }
+.modo:hover { border-color: rgba(255, 150, 90, .6); }
+.abierto .modo { right: calc(max(16px, env(safe-area-inset-right, 0px)) + 50px); }
+.modo svg { position: absolute; top: 50%; width: 15px; height: 15px; margin-top: -7.5px; color: var(--gris); opacity: .7; }
+.modo .icono-luna { left: 11px; }
+.modo .icono-sol { right: 11px; }
+/* la perilla se desliza al lado del modo actual y lleva su ícono en color */
+.modo .perilla { position: absolute; top: 3px; left: 3px; width: 30px; height: 30px; border-radius: 50%; background: #2b2530; box-shadow: 0 2px 8px rgba(0, 0, 0, .45), inset 0 0 0 1px rgba(244, 239, 232, .14); transition: transform .5s cubic-bezier(.3, 1.4, .5, 1), background .5s; }
+.modo .perilla svg { left: 50%; top: 50%; margin: -8px 0 0 -8px; width: 16px; height: 16px; opacity: 1; transition: opacity .3s, transform .5s; }
+.modo .perilla .icono-luna { color: #f4efe8; }
+.modo .perilla .icono-sol { color: #fff; opacity: 0; transform: rotate(-90deg); }
+.dia .modo { background: rgba(255, 250, 243, .7); }
+.dia .modo .perilla { transform: translateX(30px); background: linear-gradient(140deg, #ffb347, #ff7a3d); box-shadow: 0 2px 10px rgba(255, 122, 61, .5); }
+.dia .modo .perilla .icono-luna { opacity: 0; transform: rotate(90deg); }
+.dia .modo .perilla .icono-sol { opacity: 1; transform: none; }
+@media (max-width: 720px) { .abierto .modo { right: calc(max(16px, env(safe-area-inset-right, 0px)) + 48px); } }
+/* dentro de un servicio la × no está: el botón vuelve a la esquina */
+.viendo .modo { right: max(16px, env(safe-area-inset-right, 0px)); }
+
+/* ---------- el cambio de día a noche: toda la página se funde de una a otra ---------- */
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: 1.3s; animation-timing-function: cubic-bezier(.4, 0, .2, 1); }
+/* sin ese recurso del navegador: el cuadro anterior queda encima y se desvanece */
+.cortina { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; opacity: 0; }
+
+/* ---------- modo día: la misma página con colores claros ---------- */
+html.dia {
+  --tinta: #f7f1e8;
+  --vidrio: rgba(255, 250, 243, .72);
+  --linea: rgba(70, 45, 25, .16);
+  --crema: #241811;
+  --gris: #6e5f53;
+  --naranja-2: #b4461a;
+  color-scheme: light;
+}
+.dia .escena { background: radial-gradient(120% 90% at 50% 60%, #f6dcc0, #f7f1e8 70%); }
+.dia .escena::before { filter: blur(26px) brightness(.97) saturate(1.05); }
+.dia .relampago { display: none !important; }
+.dia .pie { background: linear-gradient(transparent, rgba(247, 241, 232, .5) 60%, rgba(247, 241, 232, .72)); }
+/* abajo queda la madera del escritorio (oscura aun de día): ahí el texto legal sigue claro */
+.dia .legal { color: rgba(255, 248, 238, .88); text-shadow: 0 1px 6px rgba(40, 20, 10, .75); }
+.dia .logo { text-shadow: 0 1px 14px rgba(255, 248, 238, .95); }
+.dia .logo polygon:last-child { fill: var(--crema); }
+.dia .frase { text-shadow: 0 1px 22px rgba(255, 248, 238, .95), 0 0 2px rgba(255, 248, 238, .6); }
+.dia .aviso { background: rgba(255, 250, 243, .78); box-shadow: 0 6px 20px rgba(80, 50, 30, .18); }
+.dia .borroso { backdrop-filter: blur(6px) brightness(.93) saturate(.95); -webkit-backdrop-filter: blur(6px) brightness(.93) saturate(.95); }
+.dia .bloque { color: var(--crema); background: rgba(255, 250, 243, .58); border-color: rgba(70, 45, 25, .14); box-shadow: 0 18px 40px rgba(80, 50, 30, .18); }
+.dia .bloque span { color: #4a3a2e; }
+.dia .bloque:hover, .dia .bloque.activo { border-color: rgba(214, 96, 40, .55); box-shadow: 0 18px 50px rgba(80, 50, 30, .22), 0 0 30px rgba(255, 122, 61, .2); }
+.dia .bloque.destacado { background: rgba(255, 236, 222, .78); border-color: rgba(214, 96, 40, .6); }
+.dia .hilos path { stroke: rgba(214, 96, 40, .55); }
+.dia .hilos path.activo { stroke: rgba(194, 82, 29, .95); }
+.dia .cerrar, .dia .volver-esc { background: var(--vidrio); }
+.dia .vista { background: radial-gradient(70% 60% at 32% 45%, rgba(255, 122, 61, .16), transparent 70%), radial-gradient(60% 50% at 80% 80%, rgba(255, 176, 138, .14), transparent 70%), #f7f1e8; }
+.dia .vista-visual { box-shadow: 0 0 0 1px rgba(70, 45, 25, .1), 0 40px 100px rgba(80, 50, 30, .3), 0 0 90px rgba(255, 122, 61, .2); }
+.dia .detalle { background: rgba(255, 252, 247, .94); box-shadow: 0 30px 80px rgba(80, 50, 30, .2); }
+.dia .opciones button { background: rgba(36, 24, 17, .04); }
+.dia .colores i { border-color: rgba(0, 0, 0, .15); }
+.dia .campo input, .dia .campo select { background: #fff; }
+.dia .chat { color: #e9edef; }
+.dia .btn-naranja, .dia .detalle h3 small { color: #1c1410; }
+@media (max-width: 720px) { .dia .bloque { background: rgba(255, 250, 243, .88); } }
+.dia.ligero .borroso { background: rgba(255, 250, 243, .38); }
+.dia.ligero .bloque, .dia.ligero .aviso { background: rgba(255, 250, 243, .92); }
+.dia.ligero .detalle { background: rgba(255, 252, 247, .97); }
 </style>
 </head>
 <body>
@@ -297,6 +377,7 @@ video::-webkit-media-controls, video::-webkit-media-controls-start-playback-butt
   <div class="cuadro" id="cuadro">
     <img id="foto" alt="" aria-hidden="true">
     <video id="video" muted loop playsinline autoplay preload="auto" disablepictureinpicture disableremoteplayback aria-label="Escritorio de noche con lluvia en la ventana y una laptop con el logo de Alewox"></video>
+    <canvas class="cortina" id="cortina" aria-hidden="true"></canvas>
     <div class="relampago" id="relampago"></div>
     <div class="borroso" id="borroso"></div>
     <div class="tapa-pantalla" id="tapa" aria-hidden="true"></div>
@@ -325,6 +406,14 @@ video::-webkit-media-controls, video::-webkit-media-controls-start-playback-butt
   <span>alewox<b>.</b></span>
 </a>
 <h1 class="frase">Hacemos que tu negocio <em>venda más</em> en internet.</h1>
+<button class="modo" id="modo" type="button" aria-pressed="false" aria-label="Cambiar a modo día" title="Cambiar a modo día">
+  <svg class="icono-luna" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.5 14.6A8.5 8.5 0 0 1 9.4 3.5a8.5 8.5 0 1 0 11.1 11.1z"/></svg>
+  <svg class="icono-sol" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="currentColor"/><path d="M12 2v2.2M12 19.8V22M2 12h2.2M19.8 12H22M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6"/></svg>
+  <span class="perilla">
+    <svg class="icono-luna" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.5 14.6A8.5 8.5 0 0 1 9.4 3.5a8.5 8.5 0 1 0 11.1 11.1z"/></svg>
+    <svg class="icono-sol" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="currentColor"/><path d="M12 2v2.2M12 19.8V22M2 12h2.2M19.8 12H22M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6"/></svg>
+  </span>
+</button>
 
 <main class="solo-lectores">
   <section>
@@ -420,21 +509,40 @@ const TOMAS = {
     pantalla: [[432, 1021], [864, 1064], [839, 1365], [406, 1285]],
     tapa: [[427, 1017], [882, 1058], [853, 1373], [400, 1288]],
     laptop: [[415, 995], [912, 1036], [884, 1390], [806, 1645], [172, 1488], [200, 1452], [388, 1300]],
+    // de día la IA dejó la laptop unos píxeles más grande: sus propias medidas (sacadas de la foto de día)
+    dia: {
+      video: 'media/escritorio-dia.mp4', ligero: 'media/escritorio-dia-ligero.mp4', foto: 'media/portada-dia.jpg',
+      pantalla: [[428, 1022], [870, 1065], [846, 1364], [404, 1286]],
+      tapa: [[423, 1018], [888, 1059], [860, 1372], [398, 1289]],
+      laptop: [[410, 996], [919, 1037], [892, 1389], [814, 1640], [166, 1489], [194, 1453], [386, 1301]],
+    },
   },
   horizontal: {
     video: 'media/escritorio-h.mp4', ligero: 'media/escritorio-h-ligero.mp4', foto: 'media/portada-h.jpg', w: 1920, h: 1080,
     pantalla: [[897, 491], [1267, 529], [1228, 810], [862, 732]],
     tapa: [[891, 485], [1281, 524], [1239, 817], [855, 736]],
     laptop: [[885, 462], [1306, 498], [1278, 850], [1266, 862], [1105, 995], [642, 872], [650, 850], [770, 788], [850, 758]],
+    dia: {
+      video: 'media/escritorio-h-dia.mp4', ligero: 'media/escritorio-h-dia-ligero.mp4', foto: 'media/portada-h-dia.jpg',
+      pantalla: [[900, 488], [1277, 529], [1236, 820], [866, 741]],
+      tapa: [[894, 482], [1291, 524], [1247, 827], [859, 745]],
+      laptop: [[887, 457], [1317, 497], [1286, 861], [1274, 873], [1112, 1009], [642, 887], [650, 865], [772, 800], [854, 768]],
+    },
   },
 };
-let T = null, caja, centroLaptop, centroPantalla;
+// el modo ya lo decidió el script del <head> (por la hora o por el botón)
+let modo = document.documentElement.classList.contains('dia') ? 'dia' : 'noche';
+let T = null, tomaNombre = null, caja, centroLaptop, centroPantalla;
 const toque = document.getElementById('toque');
 const borroso = document.getElementById('borroso');
 const video = document.getElementById('video');
-function usarToma(nombre) {
-  if (T === TOMAS[nombre]) return;
-  T = TOMAS[nombre];
+function usarToma(nombre, otraVez) {
+  if (!otraVez && T && nombre === tomaNombre) return;
+  tomaNombre = nombre;
+  T = modo === 'dia' ? { ...TOMAS[nombre], ...TOMAS[nombre].dia } : TOMAS[nombre];
+  video.setAttribute('aria-label', modo === 'dia'
+    ? 'Escritorio de día con sol entrando por la ventana y una laptop con el logo de Alewox'
+    : 'Escritorio de noche con lluvia en la ventana y una laptop con el logo de Alewox');
   caja = T.laptop.reduce((c, [x, y]) => ({ x0: Math.min(c.x0, x), y0: Math.min(c.y0, y), x1: Math.max(c.x1, x), y1: Math.max(c.y1, y) }), { x0: 1e9, y0: 1e9, x1: 0, y1: 0 });
   centroLaptop = [(caja.x0 + caja.x1) / 2, (caja.y0 + caja.y1) / 2];
   centroPantalla = T.pantalla.reduce((a, p) => [a[0] + p[0] / 4, a[1] + p[1] / 4], [0, 0]);
@@ -983,7 +1091,7 @@ addEventListener('keydown', (e) => { if (e.key === 'Escape' && abierto) cerrar()
 // ---------- relámpagos de vez en cuando ----------
 const flash = document.getElementById('relampago');
 function relampago() {
-  if (!abierto && !reducir) {
+  if (!abierto && !reducir && modo === 'noche') {
     flash.style.display = 'block';
     flash.animate([{ opacity: 0 }, { opacity: .3, offset: .06 }, { opacity: .04, offset: .18 }, { opacity: .2, offset: .28 }, { opacity: 0 }], { duration: 900, easing: 'ease-out' })
       .onfinish = () => { flash.style.display = 'none'; };
@@ -992,7 +1100,111 @@ function relampago() {
 }
 setTimeout(relampago, 6000);
 
+// ---------- día y noche: por la hora (de 7 am a 7 pm es de día) o con el botón de arriba ----------
+const botonModo = document.getElementById('modo');
+const cortina = document.getElementById('cortina');
+const deDiaPorHora = () => { const h = new Date().getHours(); return h >= 7 && h < 19; };
+let elegidoAMano = false;
+try { elegidoAMano = !!sessionStorage.getItem('alewox-modo'); } catch (e) {}
+function pintarBoton() {
+  const sig = modo === 'dia' ? 'noche' : 'día';
+  botonModo.setAttribute('aria-pressed', String(modo === 'dia'));
+  botonModo.setAttribute('aria-label', `Cambiar a modo ${sig}`);
+  botonModo.title = `Cambiar a modo ${sig}`;
+  document.getElementById('color-tema').content = modo === 'dia' ? '#f7f1e8' : '#0c0b0a';
+}
+// ten listas las fotos del otro modo para que el cambio no espere a la red
+function precargarOtroModo() {
+  Object.values(TOMAS).forEach((t) => { new Image().src = modo === 'dia' ? t.foto : t.dia.foto; });
+}
+// sonido del cambio, hecho al momento (sin archivos): de día un brillo que sube, de noche uno que baja
+let audio = null;
+function sonarCambio(aDia) {
+  try {
+    audio = audio || new (window.AudioContext || window.webkitAudioContext)();
+    const t = audio.currentTime + 0.02;
+    const salida = audio.createGain();
+    salida.gain.value = 0.9;
+    salida.connect(audio.destination);
+    // un soplo de aire filtrado
+    const ruido = audio.createBuffer(1, audio.sampleRate * 1.2, audio.sampleRate);
+    const d = ruido.getChannelData(0);
+    for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+    const soplo = audio.createBufferSource();
+    soplo.buffer = ruido;
+    const filtro = audio.createBiquadFilter();
+    filtro.type = 'bandpass'; filtro.Q.value = 0.8;
+    filtro.frequency.setValueAtTime(aDia ? 500 : 2600, t);
+    filtro.frequency.exponentialRampToValueAtTime(aDia ? 2600 : 500, t + 1.1);
+    const gs = audio.createGain();
+    gs.gain.setValueAtTime(0.0001, t);
+    gs.gain.exponentialRampToValueAtTime(0.05, t + 0.35);
+    gs.gain.exponentialRampToValueAtTime(0.0001, t + 1.15);
+    soplo.connect(filtro).connect(gs).connect(salida);
+    soplo.start(t); soplo.stop(t + 1.2);
+    // dos notas suaves, como campanita de cristal
+    (aDia ? [659.3, 987.8] : [987.8, 587.3]).forEach((f, i) => {
+      const o = audio.createOscillator(), g = audio.createGain();
+      o.type = 'sine'; o.frequency.value = f;
+      const t0 = t + 0.12 + i * 0.16;
+      g.gain.setValueAtTime(0.0001, t0);
+      g.gain.exponentialRampToValueAtTime(0.06, t0 + 0.03);
+      g.gain.exponentialRampToValueAtTime(0.0001, t0 + 1.3);
+      o.connect(g).connect(salida);
+      o.start(t0); o.stop(t0 + 1.35);
+    });
+  } catch (e) {}
+}
+function ponerModo(nuevo, { sonido = false } = {}) {
+  if (nuevo === modo) return;
+  const aplicar = () => {
+    modo = nuevo;
+    document.documentElement.classList.toggle('dia', modo === 'dia');
+    pintarBoton();
+    usarToma(tomaNombre, true);
+    acomodar();
+  };
+  if (sonido) sonarCambio(nuevo === 'dia');
+  if (reducir) aplicar();
+  else if (document.startViewTransition) {
+    // el navegador funde la página completa (escena, colores y tarjetas) de un modo al otro
+    // (espera a que la foto del modo nuevo esté lista, máximo medio segundo, para no fundir hacia un cuadro vacío)
+    document.startViewTransition(() => {
+      aplicar();
+      const foto = document.getElementById('foto');
+      return Promise.race([foto.decode().catch(() => {}), new Promise((r) => setTimeout(r, 500))]);
+    });
+  } else {
+    // sin ese recurso: se congela el cuadro actual encima y se desvanece mientras entra el otro modo
+    const fuente = video.readyState >= 2 ? video : document.getElementById('foto');
+    cortina.width = T.w; cortina.height = T.h;
+    try { cortina.getContext('2d').drawImage(fuente, 0, 0, T.w, T.h); } catch (e) {}
+    cortina.style.transition = 'none';
+    cortina.style.opacity = '1';
+    aplicar();
+    const quitar = () => {
+      cortina.style.transition = 'opacity 1.3s cubic-bezier(.4, 0, .2, 1)';
+      cortina.style.opacity = '0';
+    };
+    let listoVideo = false;
+    const una = () => { if (!listoVideo) { listoVideo = true; quitar(); } };
+    video.addEventListener('loadeddata', una, { once: true });
+    setTimeout(una, 900);
+  }
+  precargarOtroModo();
+}
+botonModo.addEventListener('click', () => {
+  const nuevo = modo === 'dia' ? 'noche' : 'dia';
+  elegidoAMano = true;
+  try { sessionStorage.setItem('alewox-modo', nuevo); } catch (e) {}
+  ponerModo(nuevo, { sonido: true });
+});
+// si la página se queda abierta y pasa la hora (7 am o 7 pm), cambia sola, sin sonido
+setInterval(() => { if (!elegidoAMano) ponerModo(deDiaPorHora() ? 'dia' : 'noche'); }, 60000);
+pintarBoton();
+
 acomodar();
+precargarOtroModo();
 // la pantalla de la laptop siempre se ve nítida: encima del video va la misma pantalla hecha con código (con su reloj al día)
 viva.innerHTML = pantallaNitida();
 viva.classList.add('nitida', 'ver');
