@@ -797,7 +797,8 @@ const DETALLE = {
     <ul class="puntos"><li>Mira tu muestra gratis antes de pagar</li><li>Me mandas tus datos y fotos por WhatsApp</li><li>Tu página queda lista: el Básico en 24 horas; Esencial, PRO y Élite de 3 a 7 días hábiles</li></ul>
     <a class="btn btn-wa" href="${wa('Hola Alejandro, quiero saber más de Alewox')}" target="_blank" rel="noopener">Platiquemos</a>`,
   portafolio: () => `<h3>Portafolio</h3><p class="lema">Páginas que ya hicimos.</p>
-    <div class="precios">${TRABAJOS.map((t) => `<a class="precio" style="text-decoration:none" href="${t.url}" target="_blank" rel="noopener"><div><b>${t.nombre}</b><br><span>${t.giro}</span></div><span style="color:var(--naranja-2);font-weight:700">${t.real ? 'Cliente real' : 'Ver →'}</span></a>`).join('')}</div>`,
+    <div class="precios">${TRABAJOS.map((t) => `<a class="precio" style="text-decoration:none" href="${t.url}" target="_blank" rel="noopener"><div><b>${t.nombre}</b><br><span>${t.giro}</span></div><span style="color:var(--naranja-2);font-weight:700">${t.real ? 'Cliente real' : 'Ver →'}</span></a>`).join('')}</div>
+    <a class="btn btn-naranja" href="https://alejandron.github.io/portafolio/cuaderno/" target="_blank" rel="noopener">Hojear el cuaderno de trabajos →</a>`,
   formulario: () => `<h3>¿Ya tienes un plan?</h3><p class="lema">Llena tu formulario y recibe tu página.</p>
     <p>Con tu formulario me mandas todo lo que necesito para hacer tu página. Te toma unos minutos.</p>
     <ul class="puntos"><li>Los datos de tu negocio: nombre, dirección, horario y WhatsApp</li><li>Tus servicios o productos con precios</li><li>Tus fotos y tu logo</li><li>Lo que quieres lograr con tu página</li></ul>
